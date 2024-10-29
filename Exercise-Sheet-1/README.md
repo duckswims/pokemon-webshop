@@ -15,14 +15,11 @@
 - [ ] Task 4 login.html
 - [ ] Task 5 registration.html
 - [ ] Task 6 logout.html
+- [ ] Task 7 customer.html
 
 ### Yana
 - [ ] Task 1.2
 - [ ] Task 3 index.html
 - [ ] Task 8 about.html
-
-### Unallocated
-- [ ] Task 7 customer.html
-
 
 ## [Pokémon Database](https://www.pokemon.com/us/pokedex) reference
