@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1730489564.10838 "/Users/jiahuidai/Library/CloudStorage/GoogleDrive-daijiahui.de@gmail.com/My Drive/THI WiSe24 25/CAI_WebT - Web Technologies/CAI_WebT.Pr/Exercise-Sheet-1/LaTeX/Exercise1.tex" "Exercise1.pdf" "Exercise1" 1730489564.85205 0
+["pdflatex"] 1730493100.9048 "/Users/jiahuidai/Library/CloudStorage/GoogleDrive-daijiahui.de@gmail.com/My Drive/THI WiSe24 25/CAI_WebT - Web Technologies/CAI_WebT.Pr/Exercise-Sheet-1/LaTeX/Exercise1.tex" "Exercise1.pdf" "Exercise1" 1730493101.64628 0
   "../img/communication-layers.drawio.png" 1730484738.76287 29576 fd3410b489b4e6361732e63d6ceae8db ""
-  "../img/conceptual-model.drawio.png" 1730484738.76331 87710 789fdb3a73ab6d70719279785639dfe9 ""
+  "../img/conceptual-model.drawio.png" 1730493081.70789 156639 69331e5ca6b7bea504c001fd6e4a52bf ""
   "/Users/jiahuidai/Library/CloudStorage/GoogleDrive-daijiahui.de@gmail.com/My Drive/THI WiSe24 25/CAI_WebT - Web Technologies/CAI_WebT.Pr/Exercise-Sheet-1/LaTeX/Exercise1.tex" 1730489291.42881 2659 17ad59d5848b848546839b1ab2ba5df6 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -85,10 +85,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1728901340.57588 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1728901306 8221440 ebd3e85fc3727d6604ff7fe7d441996c ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "Exercise1.aux" 1730489564.79885 1519 6337cf853a37ef46d61dd03b5a689ddd "pdflatex"
-  "Exercise1.out" 1730489564.79955 776 f2d5b1a6380befb3f563c0513c111330 "pdflatex"
+  "Exercise1.aux" 1730493101.5947 1519 6337cf853a37ef46d61dd03b5a689ddd "pdflatex"
+  "Exercise1.out" 1730493101.59524 776 f2d5b1a6380befb3f563c0513c111330 "pdflatex"
   "Exercise1.tex" 1730489291.42881 2659 17ad59d5848b848546839b1ab2ba5df6 ""
-  "Exercise1.toc" 1730489564.79986 603 30eb20be00d9ba8fe9fe20bc467b0a85 "pdflatex"
+  "Exercise1.toc" 1730493101.59546 603 30eb20be00d9ba8fe9fe20bc467b0a85 "pdflatex"
   "Tasks/1-1.tex" 1730489138.44541 23 ca659e5df8d5eda3db31b930ee39816d ""
   "Tasks/1-2.tex" 1730489563.13051 1750 0959d709b6ab0269cab265e02623834d ""
   "Tasks/1-3.tex" 1730489166.80534 766 77ec8e663c8779a889994182a64d3f39 ""
