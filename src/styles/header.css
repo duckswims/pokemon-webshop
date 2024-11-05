@@ -1,0 +1,38 @@
+/* Header Styles */
+header {
+    display: flex; /* Use flexbox layout */
+    justify-content: space-between; /* Space out children */
+    align-items: center; /* Center items vertically */
+    padding: 10px 20px; /* Add some padding */
+    background-color: #f4f4f4; /* Background color for visibility */
+}
+
+/* Logo container styles */
+.logo-container {
+    display: flex; /* Allow the logo and name to be in a row */
+    align-items: center; /* Center logo and text vertically */
+}
+
+/* Logo image styles */
+.logo {
+    width: 100px; /* Adjust the width of the logo */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between logo and text */
+}
+
+/* Navigation link styles */
+.nav-links {
+    display: flex; /* Allow links to be in a row */
+    gap: 20px; /* Space between links */
+}
+
+/* Link styles */
+.nav-links a {
+    text-decoration: none; /* Remove underline */
+    color: #333; /* Link color */
+    transition: color 0.3s; /* Smooth color transition */
+}
+
+.nav-links a:hover {
+    color: #007BFF; /* Change color on hover */
+}
