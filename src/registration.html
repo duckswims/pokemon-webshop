@@ -15,19 +15,24 @@
     </header>
 
     <main>
-        <h1>Registration</h1>
-        <hr />
-        <form action="customer.html">
-            <label for="uName">Username</label><br>
-            <input type="text" name="uName" id="uName" required><br>
-            <label for="password">Password</label><br>
-            <input type="password" name="password" id="password" required><br>
-            <label for="confimation">Confirmation</label><br>
-            <input type="password" name="confimation" id="confimation" required><br><br>
-            <input type="submit" value="Register">
-        </form><br>
-        <a href="login.html"><button type="button">Back to Login</button></a>
-        <a href="index.html"><button type="button">Homepage</button></a>
+        <div class="form-container">
+            <div class="login-box">
+                <h2>Registeration</h2>
+                <form action="customer.html">
+                    <label for="uName">Username</label>
+                    <input type="text" name="uName" id="uName" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                    <label for="confimation">Password Confirmation</label>
+                    <input type="password" name="confimation" id="confimation" required>
+                    <input type="submit" value="Register">
+                </form><br>
+            </div>
+            <div class="register-box">
+                <h2>Existing Customer?</h2>
+                <a href="login.html"><button type="button">Click here to login!</button></a>
+            </div>
+        </div>
     </main>
     
     <!-- Footer -->
