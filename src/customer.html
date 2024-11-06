@@ -9,36 +9,48 @@
     <link rel="stylesheet" href="styles/mystyle.css">
 </head>
 <body>
-    <h1>Profile</h1>
-    <fieldset>
-        <legend>Personal Information</legend>
-        <table>
-            <tr>
-                <td><label for="uName">Username</label></td>
-                <td><input type="text" name="username" id="uName" placeholder="wumpus123" required></td>
-                <td><input type="submit" value="Change"></td>
-            </tr>
-            <tr>
-                <td><label for="password">Password</label></td>
-                <td><input type="password" name="password" id="password" placeholder="abc123" required></td>
-                <td><input type="submit" value="Change"></td>
-            </tr>
-            <tr><td>First Name:</td><td>Ash</td></tr>
-            <tr><td>Last Name:</td><td>Ketchum</td></tr>
-            <tr><td>Address:</td><td>Esplanade 10, 85049 Ingolstadt</td></tr>
-        </table>
-    </fieldset><br>
-    <fieldset>
-        <legend>Recent Orders</legend>
-        <table>
-        <thead>
-            <tr><th>Pokemon</th><th>Date</th><th>Order No.</th></tr>
-        </thead>
-        <tr><td>Pikachu</td><td>dd/mm/yyyy</td><td>000123</td></tr>
-        <tr><td>Bulbasaur</td><td>dd/mm/yyyy</td><td>000124</td></tr>
-        </table>
-    </fieldset><br>
-    <button type="button">Unregister</button>
-    <a href="logout.html"><button type="button">Logout</button></a>
+    <!-- Header -->
+    <header>
+        <iframe src="header.html" class="header-iframe"></iframe>
+    </header>
+
+    <main>
+        <h1>Profile</h1>
+        <fieldset>
+            <legend>Personal Information</legend>
+            <table>
+                <tr>
+                    <td><label for="uName">Username</label></td>
+                    <td><input type="text" name="username" id="uName" placeholder="wumpus123" required></td>
+                    <td><input type="submit" value="Change"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Password</label></td>
+                    <td><input type="password" name="password" id="password" placeholder="abc123" required></td>
+                    <td><input type="submit" value="Change"></td>
+                </tr>
+                <tr><td>First Name:</td><td>Ash</td></tr>
+                <tr><td>Last Name:</td><td>Ketchum</td></tr>
+                <tr><td>Address:</td><td>Esplanade 10, 85049 Ingolstadt</td></tr>
+            </table>
+        </fieldset><br>
+        <fieldset>
+            <legend>Recent Orders</legend>
+            <table>
+            <thead>
+                <tr><th>Pokemon</th><th>Date</th><th>Order No.</th></tr>
+            </thead>
+            <tr><td>Pikachu</td><td>dd/mm/yyyy</td><td>000123</td></tr>
+            <tr><td>Bulbasaur</td><td>dd/mm/yyyy</td><td>000124</td></tr>
+            </table>
+        </fieldset><br>
+        <button type="button">Unregister</button>
+        <a href="logout.html"><button type="button">Logout</button></a>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <iframe src="footer.html" class="footer-iframe"></iframe>
+    </footer>
 </body>
 </html>

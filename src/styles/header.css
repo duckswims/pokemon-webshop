@@ -15,8 +15,8 @@ header {
 
 /* Logo image styles */
 .logo {
-    width: 100px; /* Adjust the width of the logo */
-    height: auto; /* Maintain aspect ratio */
+    height: 100px;
+    width: auto;
     margin-right: 10px; /* Space between logo and text */
 }
 
