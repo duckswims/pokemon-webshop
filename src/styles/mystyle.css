@@ -1,0 +1,141 @@
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    z-index: 1000;
+    background-color: #f4f4f4;
+}
+
+header .header-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 1000;
+    background-color: #333;
+}
+
+footer .footer-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Body */
+body {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Main Content */
+main {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Form Container */
+.form-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Login and Register Box */
+.login-box,
+.register-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+}
+
+/* Label and Input */
+.login-box label,
+.login-box input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.login-box input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Submit Button */
+.login-box input[type="submit"] {
+    cursor: pointer;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    margin-top: 10px;
+}
+
+.login-box input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Register Image */
+.register-image {
+    position: absolute;
+    top: 260px;
+    right: 90px;
+    width: 100px;
+    height: auto;
+}
+
+/* Main Content Layout */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    /* Reduce gap between columns */
+}
+
+/* Column Layout */
+.main-content .main {
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-right: 40px;
+}
+
+/* Description */
+.main-content .description {
+    width: 300px;
+    padding-right: 30px;
+    /* Reduce padding to bring closer to stats */
+}
+
+/* Stats */
+.main-content .stats {
+    flex-grow: 1;
+    width: auto;
+    /* Width adjusts automatically */
+}

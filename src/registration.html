@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="styles/first-style.css">
+    <link rel="stylesheet" href="styles/forms.css">
+    <link rel="stylesheet" href="styles/mystyle.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <iframe src="header.html" class="header-iframe"></iframe>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <div class="login-box">
+                <h2>Registeration</h2>
+                <form action="customer.html">
+                    <label for="uName">Username</label>
+                    <input type="text" name="uName" id="uName" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                    <label for="confimation">Password Confirmation</label>
+                    <input type="password" name="confimation" id="confimation" required>
+                    <input type="submit" value="Register">
+                </form><br>
+            </div>
+            <div class="register-box">
+                <h2>Existing Customer?</h2>
+                <a href="login.html"><button type="button">Click here to login!</button></a>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <iframe src="footer.html" class="footer-iframe"></iframe>
+    </footer>
+</body>
+</html>
