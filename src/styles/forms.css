@@ -1,20 +1,15 @@
-/* Uniform Font */
-body, input, button, label, h2, a {
-    font-family: Arial, sans-serif; 
-}
-
 /* Font Sizes */
 h2 {
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
     margin-bottom: 15px;
 }
 
-label {
-    font-size: 1rem; 
-}
-
-input[type="text"], input[type="password"], input[type="submit"], button {
-    font-size: 1rem; 
+label,
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+button {
+    font-size: 1rem;
 }
 
 /* Spacing and Border Radius */
@@ -23,7 +18,9 @@ input[type="text"], input[type="password"], input[type="submit"], button {
     padding: 25px;
 }
 
-.login-box, .register-box, .profile-box {
+.login-box,
+.register-box,
+.profile-box {
     border-radius: 8px; /* Rounded corners */
 }
 
@@ -37,7 +34,8 @@ input[type="text"], input[type="password"], input[type="submit"], button {
 }
 
 /* Input Field Styling */
-input[type="text"], input[type="password"]{
+input[type="text"],
+input[type="password"] {
     border-radius: 5px;
     margin-bottom: auto;
     background-color: #fff;
@@ -45,7 +43,7 @@ input[type="text"], input[type="password"]{
 
 /* Submit Button */
 .login-box input[type="submit"],
-.profile-box  input[type="submit"]{
+.profile-box input[type="submit"] {
     background-color: #007bff;
     color: white;
     border-radius: 5px;
@@ -56,7 +54,7 @@ input[type="text"], input[type="password"]{
 }
 
 .login-box input[type="submit"]:hover,
-.profile-box  input[type="submit"]:hover {
+.profile-box input[type="submit"]:hover {
     background-color: #0056b3;
 }
 

@@ -1,40 +1,53 @@
-table, th, td {
+table,
+th,
+td {
     border: 1px solid black;
     border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
     padding: 10px;
 }
-body {
-    font-family: cursive;
+
+body,
+button {
+    font-family: cursive, Arial, sans-serif;
     font-size: 12px;
 }
+
 main {
-    width: 50%; 
+    width: 90%;
     margin: auto;
     /* background-color: lightgray;
     justify-content: center;
     align-items: center; */
 }
+
 p {
     text-align: right;
 }
+
 thead {
     background-color: lightgrey;
 }
+
 /* unvisited links */
 a:link {
-    color:blue;
+    color: blue;
 }
+
 /* visited links */
 a:visited {
     color: purple;
 }
+
 /* mouse over link */
 a:hover {
     color: red;
 }
-/* selected link */ 
+
+/* selected link */
 a:active {
     color: black;
 }
