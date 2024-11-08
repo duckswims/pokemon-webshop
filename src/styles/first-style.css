@@ -5,3 +5,36 @@ table, th, td {
 th, td {
     padding: 10px;
 }
+body {
+    font-family: cursive;
+    font-size: 12px;
+}
+main {
+    width: 50%; 
+    margin: auto;
+    /* background-color: lightgray;
+    justify-content: center;
+    align-items: center; */
+}
+p {
+    text-align: right;
+}
+thead {
+    background-color: lightgrey;
+}
+/* unvisited links */
+a:link {
+    color:blue;
+}
+/* visited links */
+a:visited {
+    color: purple;
+}
+/* mouse over link */
+a:hover {
+    color: red;
+}
+/* selected link */ 
+a:active {
+    color: black;
+}
