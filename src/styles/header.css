@@ -36,3 +36,7 @@ header {
 .nav-links a:hover {
     color: #007BFF; /* Change color on hover */
 }
+
+body {
+    font-family: 'Comic Sans MS', Arial, sans-serif;
+}

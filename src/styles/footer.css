@@ -6,3 +6,7 @@ footer {
     width: 100%;
     bottom: 0;
 }
+
+body {
+    font-family: 'Comic Sans MS', Arial, sans-serif;
+}
