@@ -19,9 +19,9 @@ button {
 main {
     width: 90%;
     margin: auto;
-    /* background-color: lightgray;
+    /* background-color: lightgray; */
     justify-content: center;
-    align-items: center; */
+    /* align-items: center; */ 
 }
 
 p {
