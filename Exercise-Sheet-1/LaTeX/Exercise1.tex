@@ -11,6 +11,7 @@
 \usepackage[margin=2.5cm]{geometry} % Adjust the margin here (e.g., 2.5cm)
 \usepackage{graphicx} % For including images
 \usepackage{multirow}
+\usepackage{listings} % import and format code from an external file
 
 
 % Set default path for images
@@ -19,6 +20,21 @@
 % Prevent hyphenation globally
 \hyphenpenalty=10000
 \exhyphenpenalty=10000
+
+% LaTeX HTML content import
+\lstset{
+    language=HTML,
+    inputencoding=utf8, % Ensure the input encoding is set correctly
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    columns=fullflexible,
+    literate={<}{{\textless}}1 
+             {>}{{\textgreater}}1
+             {é}{{\'e}}1  % Map é to its LaTeX command
+             {&}{{\&}}1   % Ensure & is properly escaped
+             {€}{{\texteuro}}1  % Map € to its LaTeX command
+}
+
 
 \title{Web Technologies \\
         \large{Exercise Sheet 1 -- Web-Shop - Presentations and HTML}} % Title
@@ -30,8 +46,8 @@
 \maketitle % Create title
 \hrule % Create a horizontal line
 \tableofcontents % Create table of contents
+\textbf{For a detailed implementation, refer to the source code.}
 \newpage
-
 
 
 \section{General Questions}
@@ -41,84 +57,14 @@
 
 \input{Tasks/2}
 
-
-
-% \section{\texttt{index.html}}
-% Links: 
-% \href{../src/index.html}{\texttt{index.html}}
-
-
-% \section{\texttt{login.html}}
-% Links: 
-% \href{../src/login.html}{\texttt{login.html}}
-
-
-% \section{\texttt{registration.html}}
-% Links: 
-% \href{../src/registration.html}{\texttt{registration.html}}
-
-
-% \section{\texttt{logout.html}}
-% Links: 
-% \href{../src/logout.html}{\texttt{logout.html}}
-
-
-% \section{\texttt{customer.html}}
-% Links: 
-% \href{../src/customer.html}{\texttt{customer.html}}
-
-
-% \section{\texttt{about.html}}
-% Links: 
-% \href{../src/about.html}{\texttt{about.html}}
-
-
-% \section{\texttt{<categoryName>List.html}}
-
-% \begin{tabular}{|c|c|}
-%     \hline
-%     \textbf{Main Categories} & \textbf{Sub-Categories}\\
-%     \hline
-%     % Type
-%     \multirow{3}{*}{Type} & Grass \\
-%     \cline{2-2}
-%     & Poison \\
-%     \cline{2-2}
-%     & Water \\
-%     \hline
-%     % Category
-%     \multirow{4}{*}{Category} & Seed \\
-%     \cline{2-2}
-%     & Tiny Turtle \\
-%     \cline{2-2}
-%     & Turtle \\
-%     \cline{2-2}
-%     & Shellfish \\
-%     \hline
-% \end{tabular}
-
-
-% \section{\texttt{<product\_id>.html}} 
-% \begin{tabular}{|c|c|}
-%     \hline
-%     \textbf{ID} & \textbf{Name}\\
-%     \hline
-%     \#0001 & Bulbasaur\\
-%     \hline
-%     \#0002 & Ivysaur\\
-%     \hline
-%     \#0003 & Venusaur\\
-%     \hline
-%     \#0007 & Squirtle\\
-%     \hline
-%     \#0008 & Wartortle\\
-%     \hline
-%     \#0009 & Blastoise\\
-%     \hline
-% \end{tabular}
-
-
-
+\include{Tasks/3}
+\include{Tasks/4}
+\include{Tasks/5}
+\include{Tasks/6}
+\include{Tasks/7}
+\include{Tasks/8}
+\include{Tasks/9}
+\include{Tasks/10}
 
 
 
