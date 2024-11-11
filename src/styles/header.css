@@ -37,6 +37,6 @@ header {
     color: #007BFF; /* Change color on hover */
 }
 
-body {
-    font-family: 'Comic Sans MS', Arial, sans-serif;
+.nav-links a:visited {
+    color: #333;
 }
