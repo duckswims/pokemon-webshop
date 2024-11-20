@@ -21,7 +21,8 @@ button {
 .login-box,
 .register-box,
 .profile-box {
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 8px;
+    /* Rounded corners */
 }
 
 /* Label Styling */
@@ -85,4 +86,17 @@ input[type="password"] {
         flex-direction: column;
         gap: 20px;
     }
+}
+
+
+/* Dark-Mode Toggle */
+.register-box.dark-mode,
+.login-box.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.login-box.dark-mode label,
+.register-box.dark-mode label {
+    color: white;
 }

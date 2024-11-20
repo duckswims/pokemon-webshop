@@ -1,15 +1,19 @@
 /* Header Styles */
+body,
 header {
-    display: flex; /* Use flexbox layout */
-    justify-content: space-between; /* Space out children */
+    background-color: lightgray;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    background-color: #f4f4f4; 
 }
 
 /* Logo container styles */
 .logo-container {
-    display: flex; /* Allow the logo and name to be in a row */
-    align-items: center; /* Center logo and text vertically */
+    display: flex;
+    align-items: center;
 }
 
 /* Logo image styles */
@@ -21,22 +25,50 @@ header {
 
 /* Navigation link styles */
 .nav-links {
-    display: flex; /* Allow links to be in a row */
+    display: flex;
     gap: 20px;
     margin-right: 20px;
+    align-items: center;
 }
 
 /* Link styles */
 .nav-links a {
-    text-decoration: none; /* Remove underline */
-    color: #333; /* Link color */
-    transition: color 0.3s; /* Smooth color transition */
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
 }
 
 .nav-links a:hover {
-    color: #007BFF; /* Change color on hover */
+    color: #007BFF;
 }
 
 .nav-links a:visited {
     color: #333;
+}
+
+/* Toggle button */
+.mode-img {
+    width: 30px;
+    height: auto;
+}
+
+.mode-button {
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Dark Mode Toggle */
+body.dark-mode,
+body.dark-mode header {
+    background-color: #333;
+}
+
+body.dark-mode header .nav-links a {
+    color: white;
+}
+
+body.dark-mode .mode-button {
+    background-color: #333;
 }

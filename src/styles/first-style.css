@@ -21,11 +21,11 @@ main {
     margin: auto;
     /* background-color: lightgray; */
     justify-content: center;
-    /* align-items: center; */ 
+    /* align-items: center; */
 }
 
 p {
-    text-align: right;
+    /* text-align: right; */
 }
 
 thead {
@@ -50,4 +50,17 @@ a:hover {
 /* selected link */
 a:active {
     color: black;
+}
+
+
+
+/* Dark-Mode */
+body.dark-mode table,
+body.dark-mode th,
+body.dark-mode td {
+    border: 1px solid white;
+}
+
+body.dark-mode thead {
+    background-color: darkgray;
 }
