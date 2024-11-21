@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/first-style.css">
     <link rel="stylesheet" href="../styles/forms.css">
     <link rel="stylesheet" href="../styles/mystyle.css">
+    <script src="../script/collection-list.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -26,7 +27,10 @@
                 </div>
                 <div class="cart">
                     <h2>Price: 10€</h2>
-                    <button type="button">Add to Shopping Cart</button>
+                    <div class="item-selection">
+                        <input type="number" class="quantity-input" id="quantity" value="1" min="1">
+                        <button class="add-to-collection">Add to Collection List</button>
+                    </div>
                 </div>
             </div>
 
@@ -73,6 +77,8 @@
             </div>
         </div>
 
+        <iframe src="collection-list.html" class="collection-list-iframe"></iframe>
+        
         <hr>
         <a href="../categoryList/mainList.html">Back to category list</a><br>
         <a href="../index.html">Back to main page</a><br>
