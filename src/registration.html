@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles/first-style.css">
     <link rel="stylesheet" href="styles/forms.css">
     <link rel="stylesheet" href="styles/mystyle.css">
+    <script src="script/form-validation.js"></script>
+
 </head>
 <body>
     <!-- Header -->
@@ -20,11 +22,14 @@
                 <h2>Registeration</h2>
                 <form action="customer.html">
                     <label for="uName">Username</label>
-                    <input type="text" name="uName" id="uName" required>
+                    <input type="text" id="uName" required>
+                
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" required>
-                    <label for="confimation">Password Confirmation</label>
-                    <input type="password" name="confimation" id="confimation" required>
+                    <input type="password" id="password" required>
+                
+                    <label for="repeatPassword">Repeat Password</label>
+                    <input type="password" id="repeatPassword" required>
+                
                     <input type="submit" value="Register">
                 </form><br>
             </div>
