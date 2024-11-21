@@ -90,13 +90,11 @@ input[type="password"] {
 
 
 /* Dark-Mode Toggle */
-.register-box.dark-mode,
-.login-box.dark-mode {
+.box.dark-mode {
     background-color: #333;
     color: #fff;
 }
 
-.login-box.dark-mode label,
-.register-box.dark-mode label {
+.box.dark-mode label {
     color: white;
 }
