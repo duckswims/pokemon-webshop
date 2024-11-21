@@ -145,3 +145,86 @@ body.dark-mode {
 .dark-mode {
     transition: all 0.3s ease;
 }
+
+
+/* Collection List */
+/* Style for the quantity input */
+
+.item-selection {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+    margin-top: 15px; /* Adjust for spacing from other elements */
+}
+
+.quantity-input {
+    width: 50px;
+    padding: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Style for the "Add to Collection List" button */
+.add-to-collection {
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: #28a745; /* Green background */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-collection:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Style for the collection list section */
+.collection-list {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.collection-list h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#collection-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+#collection-items li {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#collection-items li button {
+    background-color: #dc3545; /* Red background */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#collection-items li button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+

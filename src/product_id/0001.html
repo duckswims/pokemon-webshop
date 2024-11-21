@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/first-style.css">
     <link rel="stylesheet" href="../styles/forms.css">
     <link rel="stylesheet" href="../styles/mystyle.css">
+    <script src="../script/collection-list.js" defer></script>
 </head>
 <body>
     <!-- Header -->
@@ -26,7 +27,11 @@
                 </div>
                 <div class="cart">
                     <h2>Price: 5€</h2>
-                    <button type="button">Add to Shopping Cart</button>
+                    <div class="item-selection">
+                        <input type="number" class="quantity-input" id="quantity" value="1" min="1">
+                        <button class="add-to-collection">Add to Collection List</button>
+                    </div>
+                    
                 </div>
             </div>
 
@@ -74,6 +79,14 @@
                 </ol>
             </div>
         </div>
+
+        <!-- New Section for Collection List -->
+        <section class="collection-list">
+            <h2>Your Collection List</h2>
+            <ul id="collection-items">
+                <!-- Dynamically added collection items will appear here -->
+            </ul>
+        </section>
 
         <hr>
         <a href="../categoryList/mainList.html">Back to category list</a><br>
