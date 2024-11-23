@@ -8,6 +8,8 @@ label,
 input[type="text"],
 input[type="password"],
 input[type="submit"],
+input[type="number"],
+select,
 button {
     font-size: 1rem;
 }
@@ -36,7 +38,9 @@ button {
 
 /* Input Field Styling */
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+select {
     border-radius: 5px;
     margin-bottom: auto;
     background-color: #fff;
@@ -44,7 +48,8 @@ input[type="password"] {
 
 /* Submit Button */
 .login-box input[type="submit"],
-.profile-box input[type="submit"] {
+.profile-box input[type="submit"],
+.login-box button {
     background-color: #007bff;
     color: white;
     border-radius: 5px;
@@ -55,7 +60,8 @@ input[type="password"] {
 }
 
 .login-box input[type="submit"]:hover,
-.profile-box input[type="submit"]:hover {
+.profile-box input[type="submit"]:hover,
+.login-box button:hover {
     background-color: #0056b3;
 }
 
