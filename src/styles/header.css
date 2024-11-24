@@ -47,16 +47,17 @@ header {
 }
 
 /* Toggle button */
-.mode-img {
+.nav-img {
     width: 30px;
     height: auto;
 }
 
-.mode-button {
+.nav-button {
     background-color: lightgray;
     border: none;
     cursor: pointer;
 }
+
 
 
 /* Dark Mode Toggle */
@@ -69,6 +70,6 @@ body.dark-mode header .nav-links a {
     color: white;
 }
 
-body.dark-mode .mode-button {
+body.dark-mode .nav-button {
     background-color: #333;
 }
