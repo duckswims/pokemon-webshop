@@ -70,21 +70,24 @@ main {
 
 /* Label and Input */
 .login-box label,
-.login-box input {
+.login-box input,
+.login-box select {
     display: block;
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
 }
 
-.login-box input {
+.login-box input,
+.login-box select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 /* Submit Button */
-.login-box input[type="submit"] {
+.login-box input[type="submit"],
+.login-box button {
     cursor: pointer;
     background-color: #007BFF;
     color: #fff;
@@ -92,7 +95,8 @@ main {
     margin-top: 10px;
 }
 
-.login-box input[type="submit"]:hover {
+.login-box input[type="submit"]:hover,
+.login-box button:hover {
     background-color: #0056b3;
 }
 
@@ -234,4 +238,21 @@ body.dark-mode {
     height: 200px;
     border: none; 
     overflow: hidden;
+}
+
+
+
+/* Style for the price overview section */
+.price-section {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.price-section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
 }
