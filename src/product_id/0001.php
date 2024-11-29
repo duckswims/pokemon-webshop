@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venusaur #0003</title>
+    <title>Bulbasaur #0001</title>
     <link rel="stylesheet" href="../styles/first-style.css">
     <link rel="stylesheet" href="../styles/forms.css">
     <link rel="stylesheet" href="../styles/mystyle.css">
@@ -12,7 +12,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="../header.html" class="header-iframe"></iframe>
+        <iframe src="../header.php" class="header-iframe"></iframe>
     </header>
 
     <!-- Main Content -->
@@ -21,12 +21,12 @@
         <div class="main-content">
             <div class="main">
                 <div class="info">
-                    <h1>Venusaur #0003</h1>
-                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png" width="200px">
-                    <p>While it basks in the sun, it can convert the light into energy. As a result, it is more powerful in the summertime.</p>
+                    <h1>Bulbasaur #0001</h1>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png" width="200px">
+                    <p>For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow.</p>
                 </div>
                 <div class="cart">
-                    <h2>Price: 20€</h2>
+                    <h2>Price: 5€</h2>
                     <div class="item-selection">
                         <input type="number" class="quantity-input" id="quantity" value="1" min="1">
                         <button class="add-to-collection">Add to Collection List</button>
@@ -38,17 +38,17 @@
             <div class="description">
                 <h2>Description:</h2>
                 <ul>
-                    <li>Height: 6' 07"</li>
-                    <li>Weight: 220.5 lbs</li>
+                    <li>Height: 2' 04"</li>
+                    <li>Weight: 15.2 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.html">Category</a>: <a href="../categoryList/categories/seed.html">Seed</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/seed.php">Seed</a></li>
                     <li>Abilities: Overgrow</li>
                 </ul>
 
-                <h2><a href="../categoryList/types/typeList.html">Type</a></h2>
+                <h2><a href="../categoryList/types/typeList.php">Type</a></h2>
                 <ul>
-                    <li><a href="../categoryList/types/grass.html">Grass</a></li>
-                    <li><a href="../categoryList/types/poison.html">Poison</a></li>
+                    <li><a href="../categoryList/types/grass.php">Grass</a></li>
+                    <li><a href="../categoryList/types/poison.php">Poison</a></li>
                 </ul>
 
                 <h2>Weakness</h2>
@@ -63,33 +63,32 @@
             <div class="stats">
                 <h2>Stats</h2>
                 <ul>
-                    <li>HP: 5/10</li>
-                    <li>Attack: 5/10</li>
-                    <li>Defense: 5/10</li>
-                    <li>Special Attack: 6/10</li>
-                    <li>Special Defense: 6/10</li>
-                    <li>Speed: 6/10</li>
+                    <li>HP: 3/10</li>
+                    <li>Attack: 3/10</li>
+                    <li>Defense: 3/10</li>
+                    <li>Special Attack: 4/10</li>
+                    <li>Special Defense: 4/10</li>
+                    <li>Speed: 3/10</li>
                 </ul>
-
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0001.html">Bulbasaur #0001</a></li> 
-                    <li><a href="0002.html">Ivysaur #0002</a></li>
-                    <li><a href="0003.html">Venusaur #0003</a> (current)</li>
+                    <li><a href="0001.php">Bulbasaur #0001</a> (current)</li> 
+                    <li><a href="0002.php">Ivysaur #0002</a></li>
+                    <li><a href="0003.php">Venusaur #0003</a></li>
                 </ol>
             </div>
         </div>
 
-        <iframe src="collection-list.html" class="collection-list-iframe"></iframe>
-        
+        <iframe src="collection-list.php" class="collection-list-iframe"></iframe>
+
         <hr>
-        <a href="../categoryList/mainList.html">Back to category list</a><br>
-        <a href="../index.html">Back to main page</a><br>
+        <a href="../categoryList/mainList.php">Back to category list</a><br>
+        <a href="../index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="../footer.html" class="footer-iframe"></iframe>
+        <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

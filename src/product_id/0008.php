@@ -12,7 +12,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="../header.html" class="header-iframe"></iframe>
+        <iframe src="../header.php" class="header-iframe"></iframe>
     </header>
     
     <!-- Main Content -->
@@ -41,18 +41,18 @@
                     <li>Height: 3' 03"</li>
                     <li>Weight: 49.6 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.html">Category</a>: <a href="../categoryList/categories/turtle.html">Turtle</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/turtle.php">Turtle</a></li>
                     <li>Abilities: Torrent</li>
                 </ul>
 
-                <h2><a href="../categoryList/types/typeList.html">Type</a></h2>
+                <h2><a href="../categoryList/types/typeList.php">Type</a></h2>
                 <ul>
-                    <li><a href="../categoryList/types/water.html">Water</a></li>
+                    <li><a href="../categoryList/types/water.php">Water</a></li>
                 </ul>
 
                 <h2>Weakness</h2>
                 <ul>
-                    <li><a href="../categoryList/types/grass.html">Grass</a></li>
+                    <li><a href="../categoryList/types/grass.php">Grass</a></li>
                     <li>Electric</li>
                 </ul>
             </div>
@@ -70,23 +70,23 @@
 
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0007.html">Squirtle #0007</a></li> 
-                    <li><a href="0008.html">Wartortle #0008</a> (current)</li>
-                    <li><a href="0009.html">Blastoise #0009</a></li>
+                    <li><a href="0007.php">Squirtle #0007</a></li> 
+                    <li><a href="0008.php">Wartortle #0008</a> (current)</li>
+                    <li><a href="0009.php">Blastoise #0009</a></li>
                 </ol>
             </div>
         </div>
 
-        <iframe src="collection-list.html" class="collection-list-iframe"></iframe>
+        <iframe src="collection-list.php" class="collection-list-iframe"></iframe>
         
         <hr>
-        <a href="../categoryList/mainList.html">Back to category list</a><br>
-        <a href="../index.html">Back to main page</a><br>
+        <a href="../categoryList/mainList.php">Back to category list</a><br>
+        <a href="../index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="../footer.html" class="footer-iframe"></iframe>
+        <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

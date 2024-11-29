@@ -11,7 +11,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="../../header.html" class="header-iframe"></iframe>
+        <iframe src="../../header.php" class="header-iframe"></iframe>
     </header>
     
     <main>
@@ -23,17 +23,17 @@
         <table>
             <thead>
                 <tr>
-                    <td><a href="categoryList.html">Category</a></td>
+                    <td><a href="categoryList.php">Category</a></td>
                     <td>Pokémons</td>
                 </tr>
             </thead>
             <tbody>
                 <!-- Turtle -->
                 <tr>
-                    <td><a href="turtle.html">Turtle</a><br></td>
+                    <td><a href="turtle.php">Turtle</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0008.html">Wartortle #0008</a></li>
+                            <li><a href="../../product_id/0008.php">Wartortle #0008</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -41,13 +41,13 @@
         </table>
         
         <hr>
-        <a href="../mainList.html">Back to category list</a><br>
-        <a href="../../index.html">Back to main page</a><br>
+        <a href="../mainList.php">Back to category list</a><br>
+        <a href="../../index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="../../footer.html" class="footer-iframe"></iframe>
+        <iframe src="../../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

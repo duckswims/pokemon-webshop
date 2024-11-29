@@ -13,7 +13,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="header.html" class="header-iframe"></iframe>
+        <iframe src="header.php" class="header-iframe"></iframe>
     </header>
 
     <main>
@@ -49,12 +49,12 @@
             </table>
         </fieldset><br>
         <button type="button">Unregister</button>
-        <a href="logout.html"><button type="button">Logout</button></a>
+        <a href="logout.php"><button type="button">Logout</button></a>
     </main>
     
     <!-- Footer -->
     <footer>
-        <iframe src="footer.html" class="footer-iframe"></iframe>
+        <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

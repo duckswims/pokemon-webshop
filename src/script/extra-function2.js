@@ -8,22 +8,22 @@ let iChooseYou = document.getElementById("i-choose-you");
         index = Math.floor(Math.random() * 6);
         switch (index) {
             case 0:
-                window.location.href= "product_id/0001.html";
+                window.location.href= "product_id/0001.php";
                 break;
             case 1:
-                window.location.href= "product_id/0002.html";
+                window.location.href= "product_id/0002.php";
                 break;
             case 2:
-                window.location.href= "product_id/0003.html";
+                window.location.href= "product_id/0003.php";
                 break;
             case 3:
-                window.location.href= "product_id/0007.html";
+                window.location.href= "product_id/0007.php";
                 break;
             case 4:
-                window.location.href= "product_id/0008.html";
+                window.location.href= "product_id/0008.php";
                 break;
             case 5:
-                window.location.href= "product_id/0009.html";
+                window.location.href= "product_id/0009.php";
                 break;
         }
 

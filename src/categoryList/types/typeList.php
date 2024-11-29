@@ -11,7 +11,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="../../header.html" class="header-iframe"></iframe>
+        <iframe src="../../header.php" class="header-iframe"></iframe>
     </header>
     
     <main>
@@ -21,41 +21,41 @@
         <table>
             <thead>
                 <tr>
-                    <td><a href="typeList.html">Types</a></td>
+                    <td><a href="typeList.php">Types</a></td>
                     <td>Pokémons</td>
                 </tr>
             </thead>
             <tbody>
                 <!-- Grass -->
                 <tr>
-                    <td><a href="grass.html">Grass</a><br></td>
+                    <td><a href="grass.php">Grass</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0001.html">Bulbasaur #0001</a></li>
-                            <li><a href="../../product_id/0002.html">Ivysaur #0002</a></li>
-                            <li><a href="../../product_id/0003.html">Venusaur #0003</a></li>
+                            <li><a href="../../product_id/0001.php">Bulbasaur #0001</a></li>
+                            <li><a href="../../product_id/0002.php">Ivysaur #0002</a></li>
+                            <li><a href="../../product_id/0003.php">Venusaur #0003</a></li>
                         </ul>
                     </td>
                 </tr>
                 <!-- Poison -->
                 <tr>
-                    <td><a href="poison.html">Poison</a><br></td>
+                    <td><a href="poison.php">Poison</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0001.html">Bulbasaur #0001</a></li>
-                            <li><a href="../../product_id/0002.html">Ivysaur #0002</a></li>
-                            <li><a href="../../product_id/0003.html">Venusaur #0003</a></li>
+                            <li><a href="../../product_id/0001.php">Bulbasaur #0001</a></li>
+                            <li><a href="../../product_id/0002.php">Ivysaur #0002</a></li>
+                            <li><a href="../../product_id/0003.php">Venusaur #0003</a></li>
                         </ul>
                     </td>
                 </tr>
                 <!-- Water -->
                 <tr>
-                    <td><a href="water.html">Water</a><br></td>
+                    <td><a href="water.php">Water</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0007.html">Squirtle #0007</a></li>
-                            <li><a href="../../product_id/0008.html">Wartortle #0008</a></li>
-                            <li><a href="../../product_id/0009.html">Blastoise #0009</a></li>
+                            <li><a href="../../product_id/0007.php">Squirtle #0007</a></li>
+                            <li><a href="../../product_id/0008.php">Wartortle #0008</a></li>
+                            <li><a href="../../product_id/0009.php">Blastoise #0009</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -63,13 +63,13 @@
         </table>
         
         <hr>
-        <a href="../mainList.html">Back to category list</a><br>
-        <a href="../../index.html">Back to main page</a><br>
+        <a href="../mainList.php">Back to category list</a><br>
+        <a href="../../index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="../../footer.html" class="footer-iframe"></iframe>
+        <iframe src="../../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

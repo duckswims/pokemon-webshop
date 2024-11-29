@@ -11,7 +11,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="../../header.html" class="header-iframe"></iframe>
+        <iframe src="../../header.php" class="header-iframe"></iframe>
     </header>
     
     <main>
@@ -23,19 +23,19 @@
         <table>
             <thead>
                 <tr>
-                    <td><a href="categoryList.html">Category</a></td>
+                    <td><a href="categoryList.php">Category</a></td>
                     <td>Pokémons</td>
                 </tr>
             </thead>
             <tbody>
                 <!-- Seed -->
                 <tr>
-                    <td><a href="seed.html">Seed</a><br></td>
+                    <td><a href="seed.php">Seed</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0001.html">Bulbasaur #0001</a></li>
-                            <li><a href="../../product_id/0002.html">Ivysaur #0002</a></li>
-                            <li><a href="../../product_id/0003.html">Venusaur #0003</a></li>
+                            <li><a href="../../product_id/0001.php">Bulbasaur #0001</a></li>
+                            <li><a href="../../product_id/0002.php">Ivysaur #0002</a></li>
+                            <li><a href="../../product_id/0003.php">Venusaur #0003</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -43,13 +43,13 @@
         </table>
         
         <hr>
-        <a href="../mainList.html">Back to category list</a><br>
-        <a href="../../index.html">Back to main page</a><br>
+        <a href="../mainList.php">Back to category list</a><br>
+        <a href="../../index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="../../footer.html" class="footer-iframe"></iframe>
+        <iframe src="../../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

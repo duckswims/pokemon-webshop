@@ -11,15 +11,21 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="header.html" class="header-iframe"></iframe>
+        <iframe src="header.php" class="header-iframe"></iframe>
     </header>
 
     <main>
-        <h1>Seller Information</h1>
+        <?php
+            $sellerHeading = "Seller Information";
+            $aboutHeading = "About Us";
+            $aboutText = "Welcome to the greatest Pokémon store ever! Our mission is to bring you a unique and enjoyable experience
+               as you explore our collection of Pokémon-themed merchandise.";
+        ?>
+
+        <h1><?php echo $sellerHeading; ?></h1>
         <section class="seller-info">
-            <h2>About Us</h2>
-            <p>Welcome to the greatest Pokémon store ever! Our mission is to bring you a unique and enjoyable experience
-               as you explore our collection of Pokémon-themed merchandise.</p>
+            <h2><?php echo $aboutHeading; ?></h2>
+            <p><?php echo $aboutText; ?></p>
             
             <h3>Seller Details</h3>
             <p><strong>Company Name: </strong>PokéMart</p>
@@ -31,12 +37,12 @@
             <p>We ensure top quality in every product we sell, with a focus on customer satisfaction and quick delivery times.
                Whether you're looking for Pokémon-themed items or exclusive collectibles, we're here to help you find what you love.</p>
         </section>
-        <a href="index.html">Back to main page</a><br>
+        <a href="index.php">Back to main page</a><br>
     </main>
 
     <!-- Footer -->
     <footer>
-        <iframe src="footer.html" class="footer-iframe"></iframe>
+        <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 </html>

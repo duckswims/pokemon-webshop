@@ -17,7 +17,7 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="header.html" class="header-iframe"></iframe>
+        <iframe src="header.php" class="header-iframe"></iframe>
     </header>
 
     <!-- Main -->
@@ -61,7 +61,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="footer.html" class="footer-iframe"></iframe>
+        <iframe src="footer.phps" class="footer-iframe"></iframe>
     </footer>
 </body>
 
