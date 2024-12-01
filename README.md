@@ -1,6 +1,7 @@
-# CAI_WebTPr - Web Technologies Practical
+# Web Technologies Practical
 
-Webshop: Pokemon  
-Site: [https://jdai01.github.io/CAI_WebTPr/](https://jdai01.github.io/CAI_WebTPr/)
+Webshop: Pokemon
 
 Reference: [Pokémon Database](https://www.pokemon.com/us/pokedex)
+
+[Link](setup.md) to setup guide
