@@ -31,9 +31,9 @@
                     <td><a href="seed.php">Seed</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0001.php">Bulbasaur #0001</a></li>
-                            <li><a href="../../product_id/0002.php">Ivysaur #0002</a></li>
-                            <li><a href="../../product_id/0003.php">Venusaur #0003</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0001">Bulbasaur #0001</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0002">Ivysaur #0002</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0003">Venusaur #0003</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -42,7 +42,7 @@
                     <td><a href="tiny-turtle.php">Tiny Turtle</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0007.php">Squirtle #0007</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0007">Squirtle #0007</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -51,7 +51,7 @@
                     <td><a href="turtle.php">Turtle</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0008.php">Wartortle #0008</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0008">Wartortle #0008</a></li>
                         </ul>
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
                     <td><a href="shellfish.php">Shellfish</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0009.php">Blastoise #0009</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0009">Blastoise #0009</a></li>
                         </ul>
                     </td>
                 </tr>

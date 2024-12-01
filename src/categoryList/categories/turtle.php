@@ -33,7 +33,7 @@
                     <td><a href="turtle.php">Turtle</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0008.php">Wartortle #0008</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0008">Wartortle #0008</a></li>
                         </ul>
                     </td>
                 </tr>

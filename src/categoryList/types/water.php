@@ -33,9 +33,9 @@
                     <td><a href="water.php">Water</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0007.php">Squirtle #0007</a></li>
-                            <li><a href="../../product_id/0008.php">Wartortle #0008</a></li>
-                            <li><a href="../../product_id/0009.php">Blastoise #0009</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0007">Squirtle #0007</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0008">Wartortle #0008</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0009">Blastoise #0009</a></li>
                         </ul>
                     </td>
                 </tr>

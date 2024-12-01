@@ -33,7 +33,7 @@
                     <td><a href="tiny-turtle.php">Tiny Turtle</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0007.php">Squirtle #0007</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0007">Squirtle #0007</a></li>
                         </ul>
                     </td>
                 </tr>

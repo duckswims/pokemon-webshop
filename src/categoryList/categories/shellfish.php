@@ -33,7 +33,7 @@
                     <td><a href="shellfish.php">Shellfish</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0009.php">Blastoise #0009</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0009">Blastoise #0009</a></li>
                         </ul>
                     </td>
                 </tr>

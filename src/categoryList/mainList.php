@@ -30,7 +30,7 @@
                 <!-- Bulbasaur #0001 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0001.php">
+                        <a href="../product_id/detail.php?pid=0001">
                             <span>Bulbasaur #0001</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png" width="100px">
                         </a>
@@ -44,7 +44,7 @@
                 <!-- Ivysaur #0002 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0002.php">
+                        <a href="../product_id/detail.php?pid=0002">
                             <span>Ivysaur #0002</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png" width="100px">
                         </a>
@@ -58,7 +58,7 @@
                 <!-- Venusaur #0003 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0003.php">
+                        <a href="../product_id/detail.php?pid=0003">
                             <span>Venusaur #0003</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png" width="100px">
                         </a>
@@ -72,7 +72,7 @@
                 <!-- Squirtle #0007 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0007.php">
+                        <a href="../product_id/detail.php?pid=0007">
                             <span>Squirtle #0007</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png" width="100px">
                         </a>
@@ -85,7 +85,7 @@
                 <!-- Wartortle #0008 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0008.php">
+                        <a href="../product_id/detail.php?pid=0008">
                             <span>Wartortle #0008</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png" width="100px">
                         </a>
@@ -98,7 +98,7 @@
                 <!-- Blastoise #0009 -->
                 <tr>
                     <td>
-                        <a href="../product_id/0009.php">
+                        <a href="../product_id/detail.php?pid=0009">
                             <span>Blastoise #0009</span><br>
                             <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png" width="100px">
                         </a>

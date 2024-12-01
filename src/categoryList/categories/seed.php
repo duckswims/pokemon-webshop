@@ -33,9 +33,9 @@
                     <td><a href="seed.php">Seed</a><br></td>
                     <td>
                         <ul>
-                            <li><a href="../../product_id/0001.php">Bulbasaur #0001</a></li>
-                            <li><a href="../../product_id/0002.php">Ivysaur #0002</a></li>
-                            <li><a href="../../product_id/0003.php">Venusaur #0003</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0001">Bulbasaur #0001</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0002">Ivysaur #0002</a></li>
+                            <li><a href="../../product_id/detail.php?pid=0003">Venusaur #0003</a></li>
                         </ul>
                     </td>
                 </tr>
