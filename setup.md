@@ -1,15 +1,14 @@
-# PHP Development with VS Code and XAMPP
+# Setup Guide with PHP on VS Code
 
 This guide explains how to configure Visual Studio Code (VS Code) to run PHP scripts using XAMPP.
 
----
 
 ## Prerequisites
 
-1. **XAMPP**: Download and install [XAMPP for macOS](https://www.apachefriends.org/download.html).
+1. **XAMPP**: Download and install [XAMPP](https://www.apachefriends.org/download.html) for your respective OS.
 2. **VS Code**: Download and install [Visual Studio Code](https://code.visualstudio.com/).
 
----
+
 
 ## Step 1: Install Extensions in VS Code
 
@@ -17,9 +16,9 @@ This guide explains how to configure Visual Studio Code (VS Code) to run PHP scr
 2. Go to the Extensions Marketplace (`Cmd+Shift+X`).
 3. Install the following extensions:
    - [**PHP Intelephense**](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client)
-   - [**PHP Debug**](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug)
+   <!-- - [**PHP Debug**](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) -->
 
----
+
 
 ## Step 2: Configure PHP Path in VS Code
 
@@ -46,7 +45,7 @@ This guide explains how to configure Visual Studio Code (VS Code) to run PHP scr
     ```
 
 
----
+
 
 ## Step 3: Configure Debugging
 
