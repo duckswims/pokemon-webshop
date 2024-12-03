@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logout</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -28,4 +28,5 @@
         <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon List</title>
-    <link rel="stylesheet" href="../styles/first-style.css">
-    <link rel="stylesheet" href="../styles/forms.css">
-    <link rel="stylesheet" href="../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <iframe src="../header.php" class="header-iframe"></iframe>
     </header>
-    
+
     <main>
         <h1>Pokémon List</h1>
-        <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type and category.</p>
+        <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type
+            and category.</p>
 
         <table>
             <thead>
@@ -32,7 +33,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0001">
                             <span>Bulbasaur #0001</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -46,7 +48,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0002">
                             <span>Ivysaur #0002</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -60,7 +63,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0003">
                             <span>Venusaur #0003</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -74,7 +78,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0007">
                             <span>Squirtle #0007</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -87,7 +92,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0008">
                             <span>Wartortle #0008</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -100,7 +106,8 @@
                     <td>
                         <a href="../product_id/detail.php?pid=0009">
                             <span>Blastoise #0009</span><br>
-                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png" width="100px">
+                            <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png"
+                                width="100px">
                         </a>
                     </td>
                     <td>
@@ -110,7 +117,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <hr>
         <a href="../index.php">Back to main page</a><br>
     </main>
@@ -120,4 +127,5 @@
         <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

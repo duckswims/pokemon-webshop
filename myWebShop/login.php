@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="script/form-validation.js"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <iframe src="header.php" class="header-iframe"></iframe>
     </header>
-    
+
     <main>
         <div class="form-container">
             <div class="login-box box">
@@ -40,4 +40,5 @@
         <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

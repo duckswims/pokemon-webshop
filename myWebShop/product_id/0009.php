@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blastoise #0009</title>
-    <link rel="stylesheet" href="../styles/first-style.css">
-    <link rel="stylesheet" href="../styles/forms.css">
-    <link rel="stylesheet" href="../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="../script/collection-list.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -22,8 +22,10 @@
             <div class="main">
                 <div class="info">
                     <h1>Blastoise #0009</h1>
-                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png" width="200px">
-                    <p>It deliberately increases its body weight so it can withstand the recoil of the water jets it fires.</p>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png"
+                        width="200px">
+                    <p>It deliberately increases its body weight so it can withstand the recoil of the water jets it
+                        fires.</p>
                 </div>
                 <div class="cart">
                     <h2>Price: 20€</h2>
@@ -41,7 +43,8 @@
                     <li>Height: 5' 03"</li>
                     <li>Weight: 188.5 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/shellfish.php">Shellfish</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a
+                            href="../categoryList/categories/shellfish.php">Shellfish</a></li>
                     <li>Abilities: Torrent</li>
                 </ul>
 
@@ -70,7 +73,7 @@
 
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0007.php">Squirtle #0007</a></li> 
+                    <li><a href="0007.php">Squirtle #0007</a></li>
                     <li><a href="0008.php">Wartortle #0008</a></li>
                     <li><a href="0009.php">Blastoise #0009</a> (current)</li>
                 </ol>
@@ -78,7 +81,7 @@
         </div>
 
         <iframe src="collection-list.php" class="collection-list-iframe"></iframe>
-        
+
         <hr>
         <a href="../categoryList/mainList.php">Back to category list</a><br>
         <a href="../index.php">Back to main page</a><br>
@@ -89,4 +92,5 @@
         <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

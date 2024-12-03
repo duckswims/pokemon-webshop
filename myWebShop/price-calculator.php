@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Store</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="script/calculating-prices.js"></script>
     <script src="script/extra-function.js"></script>
 

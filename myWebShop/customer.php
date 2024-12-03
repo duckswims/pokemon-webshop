@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="script/form-validation.js"></script>
 
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -32,29 +32,51 @@
                         <td><input type="password" name="password" id="password" placeholder="abc123" required></td>
                         <td><input type="submit" value="Change"></td>
                     </tr>
-                    <tr><td>First Name:</td><td>Ash</td></tr>
-                    <tr><td>Last Name:</td><td>Ketchum</td></tr>
-                    <tr><td>Address:</td><td>Esplanade 10, 85049 Ingolstadt</td></tr>
+                    <tr>
+                        <td>First Name:</td>
+                        <td>Ash</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td>Ketchum</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>Esplanade 10, 85049 Ingolstadt</td>
+                    </tr>
                 </table>
             </fieldset><br>
         </div>
         <fieldset>
             <legend>Recent Orders</legend>
             <table>
-            <thead>
-                <tr><th>Pokemon</th><th>Date</th><th>Order No.</th></tr>
-            </thead>
-            <tr><td>Pikachu</td><td>dd/mm/yyyy</td><td>000123</td></tr>
-            <tr><td>Bulbasaur</td><td>dd/mm/yyyy</td><td>000124</td></tr>
+                <thead>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>Date</th>
+                        <th>Order No.</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>Pikachu</td>
+                    <td>dd/mm/yyyy</td>
+                    <td>000123</td>
+                </tr>
+                <tr>
+                    <td>Bulbasaur</td>
+                    <td>dd/mm/yyyy</td>
+                    <td>000124</td>
+                </tr>
             </table>
         </fieldset><br>
         <button type="button">Unregister</button>
         <a href="logout.php"><button type="button">Logout</button></a>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

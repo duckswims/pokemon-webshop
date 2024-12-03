@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Footer Template</title> -->
-    <link rel="stylesheet" href="styles/footer.css">
-    <link rel="stylesheet" href="styles/first-style.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <footer>
         <p>&copy; PokéMart • 2024 Greatest Pokémon Sellers Ever • All rights reserved.</p>
     </footer>
 </body>
+
 </html>

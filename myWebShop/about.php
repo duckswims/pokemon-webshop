@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Information</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -26,7 +26,7 @@
         <section class="seller-info">
             <h2><?php echo $aboutHeading; ?></h2>
             <p><?php echo $aboutText; ?></p>
-            
+
             <h3>Seller Details</h3>
             <p><strong>Company Name: </strong>PokéMart</p>
             <p><strong>Address: </strong>123 Pokémon Avenue, Kanto Region</p>
@@ -34,8 +34,10 @@
             <p><strong>Phone: </strong>+1 (123) 456-7890</p>
 
             <h3>Our Promise</h3>
-            <p>We ensure top quality in every product we sell, with a focus on customer satisfaction and quick delivery times.
-               Whether you're looking for Pokémon-themed items or exclusive collectibles, we're here to help you find what you love.</p>
+            <p>We ensure top quality in every product we sell, with a focus on customer satisfaction and quick delivery
+                times.
+                Whether you're looking for Pokémon-themed items or exclusive collectibles, we're here to help you find
+                what you love.</p>
         </section>
         <a href="index.php">Back to main page</a><br>
     </main>
@@ -45,5 +47,5 @@
         <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
-</html>
 
+</html>

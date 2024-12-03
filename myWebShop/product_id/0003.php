@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Venusaur #0003</title>
-    <link rel="stylesheet" href="../styles/first-style.css">
-    <link rel="stylesheet" href="../styles/forms.css">
-    <link rel="stylesheet" href="../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="../script/collection-list.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -22,8 +22,10 @@
             <div class="main">
                 <div class="info">
                     <h1>Venusaur #0003</h1>
-                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png" width="200px">
-                    <p>While it basks in the sun, it can convert the light into energy. As a result, it is more powerful in the summertime.</p>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png"
+                        width="200px">
+                    <p>While it basks in the sun, it can convert the light into energy. As a result, it is more powerful
+                        in the summertime.</p>
                 </div>
                 <div class="cart">
                     <h2>Price: 20€</h2>
@@ -41,7 +43,8 @@
                     <li>Height: 6' 07"</li>
                     <li>Weight: 220.5 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/seed.php">Seed</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a
+                            href="../categoryList/categories/seed.php">Seed</a></li>
                     <li>Abilities: Overgrow</li>
                 </ul>
 
@@ -73,7 +76,7 @@
 
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0001.php">Bulbasaur #0001</a></li> 
+                    <li><a href="0001.php">Bulbasaur #0001</a></li>
                     <li><a href="0002.php">Ivysaur #0002</a></li>
                     <li><a href="0003.php">Venusaur #0003</a> (current)</li>
                 </ol>
@@ -81,7 +84,7 @@
         </div>
 
         <iframe src="collection-list.php" class="collection-list-iframe"></iframe>
-        
+
         <hr>
         <a href="../categoryList/mainList.php">Back to category list</a><br>
         <a href="../index.php">Back to main page</a><br>
@@ -92,4 +95,5 @@
         <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

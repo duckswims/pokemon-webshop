@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bulbasaur #0001</title>
-    <link rel="stylesheet" href="../styles/first-style.css">
-    <link rel="stylesheet" href="../styles/forms.css">
-    <link rel="stylesheet" href="../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="../script/collection-list.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -22,8 +22,10 @@
             <div class="main">
                 <div class="info">
                     <h1>Bulbasaur #0001</h1>
-                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png" width="200px">
-                    <p>For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow.</p>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png"
+                        width="200px">
+                    <p>For some time after its birth, it uses the nutrients that are packed into the seed on its back in
+                        order to grow.</p>
                 </div>
                 <div class="cart">
                     <h2>Price: 5€</h2>
@@ -41,7 +43,8 @@
                     <li>Height: 2' 04"</li>
                     <li>Weight: 15.2 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/seed.php">Seed</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a
+                            href="../categoryList/categories/seed.php">Seed</a></li>
                     <li>Abilities: Overgrow</li>
                 </ul>
 
@@ -72,7 +75,7 @@
                 </ul>
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0001.php">Bulbasaur #0001</a> (current)</li> 
+                    <li><a href="0001.php">Bulbasaur #0001</a> (current)</li>
                     <li><a href="0002.php">Ivysaur #0002</a></li>
                     <li><a href="0003.php">Venusaur #0003</a></li>
                 </ol>
@@ -91,4 +94,5 @@
         <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

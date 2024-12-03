@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ivysaur #0002</title>
-    <link rel="stylesheet" href="../styles/first-style.css">
-    <link rel="stylesheet" href="../styles/forms.css">
-    <link rel="stylesheet" href="../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="../script/collection-list.js" defer></script>
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <iframe src="../header.php" class="header-iframe"></iframe>
     </header>
-    
+
     <!-- Main Content -->
     <main>
         <!-- Wrap the main content in a flex container -->
@@ -22,8 +22,10 @@
             <div class="main">
                 <div class="info">
                     <h1>Ivysaur #0002</h1>
-                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png" width="200px">
-                    <p>The more sunlight Ivysaur bathes in, the more strength wells up within it, allowing the bud on its back to grow larger.</p>
+                    <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png"
+                        width="200px">
+                    <p>The more sunlight Ivysaur bathes in, the more strength wells up within it, allowing the bud on
+                        its back to grow larger.</p>
                 </div>
                 <div class="cart">
                     <h2>Price: 10€</h2>
@@ -41,7 +43,8 @@
                     <li>Height: 3' 03"</li>
                     <li>Weight: 28.7 lbs</li>
                     <li>Gender: Male & Female</li>
-                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a href="../categoryList/categories/seed.php">Seed</a></li>
+                    <li><a href="../categoryList/categories/categoryList.php">Category</a>: <a
+                            href="../categoryList/categories/seed.php">Seed</a></li>
                     <li>Abilities: Overgrow</li>
                 </ul>
 
@@ -73,7 +76,7 @@
 
                 <h2>Evolution</h2>
                 <ol>
-                    <li><a href="0001.php">Bulbasaur #0001</a></li> 
+                    <li><a href="0001.php">Bulbasaur #0001</a></li>
                     <li><a href="0002.php">Ivysaur #0002</a> (current)</li>
                     <li><a href="0003.php">Venusaur #0003</a></li>
                 </ol>
@@ -92,4 +95,5 @@
         <iframe src="../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

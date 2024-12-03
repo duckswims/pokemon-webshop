@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
-    <link rel="stylesheet" href="styles/first-style.css">
-    <link rel="stylesheet" href="styles/forms.css">
-    <link rel="stylesheet" href="styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <script src="script/form-validation.js"></script>
 
 </head>
+
 <body>
     <!-- Header -->
     <header>
@@ -23,13 +23,13 @@
                 <form action="customer.php">
                     <label for="uName">Username</label>
                     <input type="text" id="uName" required>
-                
+
                     <label for="password">Password</label>
                     <input type="password" id="password" required>
-                
+
                     <label for="repeatPassword">Repeat Password</label>
                     <input type="password" id="repeatPassword" required>
-                
+
                     <input type="submit" value="Register">
                 </form><br>
             </div>
@@ -39,10 +39,11 @@
             </div>
         </div>
     </main>
-    
+
     <!-- Footer -->
     <footer>
         <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>

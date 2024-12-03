@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon List: Water</title>
-    <link rel="stylesheet" href="../../styles/first-style.css">
-    <link rel="stylesheet" href="../../styles/forms.css">
-    <link rel="stylesheet" href="../../styles/mystyle.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <iframe src="../../header.php" class="header-iframe"></iframe>
     </header>
-    
+
     <main>
         <h1>Pokémon Types</h1>
-        <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type.</p>
+        <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by
+            type.</p>
 
         <h2>Sub-Type: Water</h2>
 
@@ -41,7 +42,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
         <hr>
         <a href="../mainList.php">Back to category list</a><br>
         <a href="../../index.php">Back to main page</a><br>
@@ -52,4 +53,5 @@
         <iframe src="../../footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
+
 </html>
