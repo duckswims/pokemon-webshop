@@ -69,16 +69,7 @@ a:active {
 
 
 
-/* Dark-Mode */
-body.dark-mode table,
-body.dark-mode th,
-body.dark-mode td {
-    border: 1px solid white;
-}
 
-body.dark-mode thead {
-    background-color: darkgray;
-}
 
 footer {
     background-color: #333;
@@ -186,15 +177,7 @@ select {
 }
 
 
-/* Dark-Mode Toggle */
-.box.dark-mode {
-    background-color: #333;
-    color: #fff;
-}
 
-.box.dark-mode label {
-    color: white;
-}
 
 
 /* Header Styles */
@@ -259,19 +242,7 @@ header {
 
 
 
-/* Dark Mode Toggle */
-body.dark-mode,
-body.dark-mode header {
-    background-color: #333;
-}
 
-body.dark-mode header .nav-links a {
-    color: white;
-}
-
-body.dark-mode .nav-button {
-    background-color: #333;
-}
 
 /* Header */
 header {
@@ -415,15 +386,7 @@ main {
 
 
 
-/* Toggle Light/Dark Mode */
-body.dark-mode {
-    background-color: #838383;
-    color: #fff;
-}
 
-.dark-mode {
-    transition: all 0.3s ease;
-}
 
 
 /* Collection List */

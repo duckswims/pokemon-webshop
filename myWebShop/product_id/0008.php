@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wartortle #0008</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/darkmode.css">
     <script src="../script/collection-list.js" defer></script>
 </head>
 

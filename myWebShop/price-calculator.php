@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Store</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/darkmode.css">
     <script src="script/calculating-prices.js"></script>
     <script src="script/extra-function.js"></script>
 
