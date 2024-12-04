@@ -65,7 +65,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="footer.phps" class="footer-iframe"></iframe>
+        <iframe src="footer.php" class="footer-iframe"></iframe>
     </footer>
 </body>
 
