@@ -1,0 +1,58 @@
+{
+    "product": [
+        {
+            "pid": "0001",
+            "name": "Bulbasaur",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png",
+            "desc": "For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow."
+        },
+        {
+            "pid": "0002",
+            "name": "Ivysaur",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png",
+            "desc": "The more sunlight Ivysaur bathes in, the more strength wells up within it, allowing the bud on its back to grow larger."
+        },
+        {
+            "pid": "0003",
+            "name": "Venusaur",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png",
+            "desc": "While it basks in the sun, it can convert the light into energy. As a result, it is more powerful in the summertime."
+        },
+        {
+            "pid": "0004",
+            "name": "Charmander",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png",
+            "desc": "The flame on its tail shows the strength of its life-force. If Charmander is weak, the flame also burns weakly."
+        },
+        {
+            "pid": "0005",
+            "name": "Charmeleon",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png",
+            "desc": "When it swings its burning tail, the temperature around it rises higher and higher, tormenting its opponents."
+        },
+        {
+            "pid": "0006",
+            "name": "Charizard",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png",
+            "desc": "If Charizard becomes truly angered, the flame at the tip of its tail burns in a light blue shade."
+        },
+        {
+            "pid": "0007",
+            "name": "Squirtle",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png",
+            "desc": "After birth, its back swells and hardens into a shell. It sprays a potent foam from its mouth."
+        },
+        {
+            "pid": "0008",
+            "name": "Wartortle",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png",
+            "desc": "Wartortle's long, furry tail is a symbol of longevity, so this Pok\u00e9mon is quite popular among older people."
+        },
+        {
+            "pid": "0009",
+            "name": "Blastoise",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png",
+            "desc": "It deliberately increases its body weight so it can withstand the recoil of the water jets it fires."
+        }
+    ]
+}
