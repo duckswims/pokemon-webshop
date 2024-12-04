@@ -31,7 +31,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="footer.php" class="footer-iframe"></iframe>
+        <?php include ("footer.php"); ?>
     </footer>
 </body>
 

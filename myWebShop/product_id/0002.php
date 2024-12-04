@@ -88,8 +88,6 @@
             </div>
         </div>
 
-        <iframe src="collection-list.php" class="collection-list-iframe"></iframe>
-
         <hr>
         <a href="../categoryList/mainList.php">Back to category list</a><br>
         <a href="../index.php">Back to main page</a><br>
@@ -97,7 +95,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="../footer.php" class="footer-iframe"></iframe>
+        <?php include ("../footer.php"); ?>
     </footer>
 </body>
 

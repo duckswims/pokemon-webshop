@@ -16,7 +16,6 @@
 <body>
     <!-- Header -->
     <header>
-        <!-- <iframe src="header.php" class="header-iframe"></iframe> -->
         <?php include ("header.php"); ?>
     </header>
 
@@ -29,7 +28,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="footer.php" class="footer-iframe"></iframe>
+        <?php include ("footer.php"); ?>
     </footer>
 </body>
 

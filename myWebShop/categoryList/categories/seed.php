@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="../../styles/styles.css">
+    <link rel="stylesheet" href="../../styles/styles.css">
     <link rel="stylesheet" href="../../styles/darkmode.css">
 </head>
 
@@ -55,7 +55,7 @@
 
     <!-- Footer -->
     <footer>
-        <iframe src="../../footer.php" class="footer-iframe"></iframe>
+        <?php include ("../../footer.php"); ?>
     </footer>
 </body>
 
