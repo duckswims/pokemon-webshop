@@ -43,8 +43,7 @@
         </div>
     </header>
 
-    <script src="script/style-modification.js"></script>
-    <script src="script/extra-function2.js"></script>
+    <script src="/myWebShop/script/style-modification.js"></script>
 </body>
 
 </html>
