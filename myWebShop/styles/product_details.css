@@ -1,0 +1,7 @@
+.product-container img {
+    width: 250px;
+}
+
+.product-container .info label {
+    margin-top: 10px;
+}

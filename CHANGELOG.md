@@ -3,6 +3,8 @@
 ## Exercise-Sheet-5
 - Added hamburger menu in header for mobile users
 - Fixed addition of products to collection list
+- Display of all products
+- Display of individual products with functional pid queries
 
 ## Exercise-Sheet-4
 - 
