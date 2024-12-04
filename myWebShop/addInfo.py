@@ -44,25 +44,40 @@ def add_product(json_data):
     }
     json_data['product'].append(new_product)
     print(f"Product #{pid} {name} has been added.")
+def reset_product_list(json_data):
+    """Reset the product list to an empty list."""
+    json_data['product'] = []
+    print("Product list has been reset.")
 
 def main():
     # Load existing JSON data
     json_data = load_json(json_file)
 
+    # Define a switch-case-like structure
+    switch_case = {
+        '1': lambda: add_product(json_data),
+        '2': lambda: reset_product_list(json_data),
+        '0': lambda: print("Exiting...")
+    }
+
     while True:
         print("="*50)
         print("1. Add New Product")
-        print("2. Exit")
+        print("2. Reset Product List")
+        print("0. Exit")
         choice = input("Enter your choice: ")
 
-        if choice == '1':
-            add_product(json_data)
-            save_json(json_file, json_data)
-        elif choice == '2':
-            print("Exiting...")
-            break
+        # Execute the corresponding function based on the user's choice
+        action = switch_case.get(choice)
+        if action:
+            action()
+            if choice != '0':  # Only save and continue if not exiting
+                save_json(json_file, json_data)
         else:
             print("Invalid choice. Please try again.")
+        
+        if choice == '0':
+            break
 
 if __name__ == "__main__":
     main()
