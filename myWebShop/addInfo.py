@@ -1,5 +1,6 @@
 import json
 import os
+import random
 
 # Filepath to the JSON file
 json_file = os.path.join("myWebShop", "json", "product_new.json")
@@ -31,19 +32,50 @@ def save_json(file_path, data):
 
 def add_product(json_data):
     """Prompt the user to input product details and add it to the product list."""
-    pid = input("Enter Product ID (pid): \n").replace("#", "")
-    name = input("Enter Product Name: \n")
-    img_src = input("Enter Image Source URL: \n")
-    desc = input("Enter Product Description: \n")
+    done = "x"
 
+    pid = input(f"{'Product ID (pid)':20s}: ").replace("#", "")
+    name = input(f"{'Product Name':20s}: ")
+    img_src = input(f"{'Image Source':20s}: ")
+    desc = input(f"{'Product Description':20s}: ")
+    
+    # Input price
+    price = random.randint(1,100)
+    
+    # Input type list (iterative input)
+    types = []
+    print(f"Enter Product Types (enter '{done}' to stop):")
+    while True:
+        product_type = input(" - ").capitalize()
+        if product_type.lower() == done:
+            break
+        types.append(product_type)
+    types.sort()
+    
+    # Input weakness list (iterative input)
+    weaknesses = []
+    print(f"Enter Product Weaknesses (enter '{done}' to stop):")
+    while True:
+        weakness = input(" - ").capitalize()
+        if weakness.lower() == done:
+            break
+        weaknesses.append(weakness)
+    weaknesses.sort()
+    
     new_product = {
         "pid": pid,
         "name": name,
         "img_src": img_src,
-        "desc": desc
+        "desc": desc,
+        "price": price,
+        "type": types,
+        "weakness": weaknesses
     }
+    
     json_data['product'].append(new_product)
     print(f"Product #{pid} {name} has been added.")
+
+
 def reset_product_list(json_data):
     """Reset the product list to an empty list."""
     json_data['product'] = []
