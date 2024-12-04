@@ -2,6 +2,7 @@
 
 ## Exercise-Sheet-5
 - Added hamburger menu in header for mobile users
+- Fixed addition of products to collection list
 
 ## Exercise-Sheet-4
 - 
