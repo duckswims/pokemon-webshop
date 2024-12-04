@@ -1,7 +1,7 @@
 # Changelog
 
 ## Exercise-Sheet-5
-- 
+- Added hamburger menu in header for mobile users
 
 ## Exercise-Sheet-4
 - 
