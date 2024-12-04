@@ -49,7 +49,7 @@
                         <div class="right">
                             <h3 class="title">' . ' #' . htmlspecialchars($product['pid']) . " " . htmlspecialchars($product['name']) . '</h3>
                             <p class="desc">' . htmlspecialchars($product['desc']) . '</p>
-
+                            <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
                             <div class="add-div">
                                 <input type="number" class="qty-input" id="quantity" value="1" min="1">
                                 <button class="add-cart">Add to cart</button>
