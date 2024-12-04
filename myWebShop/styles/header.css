@@ -1,0 +1,75 @@
+/* Header Styles */
+body,
+header {
+    background-color: lightgray;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo container styles */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Logo image styles */
+.logo {
+    height: 100px;
+    width: auto;
+    margin-right: 10px;
+}
+
+/* Navigation link styles */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    margin-right: 20px;
+    align-items: center;
+}
+
+/* Link styles */
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007BFF;
+}
+
+.nav-links a:visited {
+    color: #333;
+}
+
+/* Toggle button */
+.nav-button {
+    background-color: lightgray;
+    border: none;
+    cursor: pointer;
+}
+
+button {
+    display: inline-block;
+    width: 32px; /* Match the width of the image file */
+    height: 32px; /* Match the height of the image file */
+    padding: 0; /* Remove extra padding */
+    border: none; /* Remove border if not needed */
+    background-color: transparent; /* Optional: Set to transparent for image-like appearance */
+    cursor: pointer; /* Show pointer to indicate it's clickable */
+}
+
+button img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+button:hover {
+    background-color: transparent; /* No background change on hover */
+    color: inherit; /* Ensures text or content color stays the same */
+    border: none; /* No border changes */
+}
