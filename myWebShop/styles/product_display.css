@@ -2,7 +2,8 @@
 .product-display {
     display: flex;
     flex-wrap: wrap; /* Allow items to wrap when necessary */
-    justify-content: space-between; /* Distribute space between items */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
     gap: 20px; /* Space between items */
 }
 
@@ -10,12 +11,14 @@
 .product-display .box {
     display: flex; /* Enable Flexbox layout */
     flex-direction: horizontal;
-    flex: 1 1 calc(30% - 20px); /* Each box takes 1/3 of the row minus the gap */
+    flex: 1 1; /* Each box takes 1/3 of the row minus the gap */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
     cursor: pointer; /* Change cursor to indicate it's interactive */
     min-width: 300px; /* Minimum width for each box */
+    max-width: 500px;
 }
+
 
 .product-display .box img {
     max-width: 100%; /* Ensure images are responsive */
