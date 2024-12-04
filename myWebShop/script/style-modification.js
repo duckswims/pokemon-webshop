@@ -44,39 +44,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Get the orientation button and the image element
-    const oriButton = document.querySelector('.ori-button');
-    const oriImg = document.querySelector('.ori-img');
-    const parentDoc = window.parent.document; // Access the parent document
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const navLinks = document.querySelector('.nav-links');
 
-    // Retrieve the saved orientation state from localStorage
-    const savedOrientation = localStorage.getItem('orientation') || 'landscape';
-
-    // Set the initial orientation based on saved state
-    if (savedOrientation === 'portrait') {
-        parentDoc.body.style.width = '400px';  // Set the width to simulate portrait mode
-        oriImg.src = 'img/orientation/toHorizontal.png'; // Set image to "horizontal" when in portrait mode
-    } else {
-        parentDoc.body.style.width = '2000px';  // Set the width to simulate landscape mode
-        oriImg.src = 'img/orientation/toPortrait.png'; // Set image to "portrait" when in landscape mode
-    }
-
-    // Function to toggle between portrait and landscape
-    let isPortrait = savedOrientation === 'portrait';  // Initialize based on saved state
-
-    oriButton.addEventListener('click', () => {
-        if (isPortrait) {
-            // If the screen is in portrait mode, change to landscape
-            parentDoc.body.style.width = '2000px'; // Set to landscape width
-            oriImg.src = 'img/orientation/toPortrait.png';
-            localStorage.setItem('orientation', 'landscape');
-        } else {
-            // If the screen is in landscape mode, change to portrait
-            parentDoc.body.style.width = '400px'; // Set to portrait width
-            oriImg.src = 'img/orientation/toHorizontal.png';
-            localStorage.setItem('orientation', 'portrait');
-        }
-        isPortrait = !isPortrait; // Toggle the state
+    hamburgerBtn.addEventListener('click', () => {
+        // Toggle the visibility of the navigation links
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
     });
 });

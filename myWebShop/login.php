@@ -17,7 +17,8 @@
 <body>
     <!-- Header -->
     <header>
-        <iframe src="header.php" class="header-iframe"></iframe>
+        <!-- <iframe src="header.php" class="header-iframe"></iframe> -->
+        <?php include ("header.php"); ?>
     </header>
 
     <main>

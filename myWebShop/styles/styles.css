@@ -73,18 +73,13 @@ main {
 /* Header */
 header {
     width: 100%;
+    height: 100px; /* Optional, ensures full height of the header */
     position: fixed; /* Optional, to keep it at the top */
     top: 0; /* Align to the top of the page */
     left: 0; /* Align to the left edge */
     z-index: 1000; /* Ensure it appears above other content */
 }
 
-header .header-iframe {
-    width: 100%; /* Span the full width */
-    height: 100px; /* Optional, ensures full height of the header */
-    border: none; /* Remove border */
-    display: block; /* Ensure it behaves like a block-level element */
-}
 
 .logo-container {
     display: flex;

@@ -15,20 +15,31 @@
 
 <body>
     <header>
-        <a href="index.php" target="_parent">
-            <div class="logo-container">
-                <img src="img/shop-logo.png" class="logo" alt="PokéMart">
+        <div class="left">
+            <a href="index.php" target="_parent">
+                <div class="logo-container">
+                    <img src="img/shop-logo.png" class="logo" alt="PokéMart">
+                </div>
+            </a>
+        </div>
+        <div class="right">
+            <div class="nav-links">
+                <a href="about.php" target="_parent">About Us</a>
+                <a href="shoppingCart.php" target="_parent">Shopping Cart</a>
+                <a href="login.php" target="_parent">Login</a>
+                <a href="registration.php" target="_parent">Register</a>
+                <a href="price-calculator.php" target="_parent">Price Calculator</a>
             </div>
-        </a>
-        <div class="nav-links">
-            <a href="about.php" target="_parent">About Us</a>
-            <a href="shoppingCart.php" target="_parent">Shopping Cart</a>
-            <a href="login.php" target="_parent">Login</a>
-            <a href="registration.php" target="_parent">Register</a>
-            <a href="price-calculator.php" target="_parent">Price Calculator</a>
-            <button class="nav-button mode-button"><img src="img/mode/light.png" class="nav-img mode-img"></button>
-            <button class="nav-button ori-button"><img src="img/orientation/toPortrait.png"
-                    class="nav-img ori-img"></button>
+            <div>
+                <button class="nav-button mode-button">
+                    <img src="img/mode/light.png" class="nav-img mode-img">
+                </button>
+            </div>
+            <div class="hamburger-menu">
+                <button class="hamburger-btn">
+                    <img src="img/hamburger.png" alt="Menu" class="hamburger-icon">
+                </button>
+            </div>
         </div>
     </header>
 
