@@ -34,3 +34,12 @@ body.dark-mode .nav-button {
     background-color: #333;
     color: #fff;
 }
+
+/* Ensure 'seller-details' retains its original text color in dark mode */
+body.dark-mode .seller-details {
+    color: initial; 
+}
+
+/* Add specific styles for the background of 'Currency' on the Price Calculator page */
+body.dark-mode .login-box:nth-of-type(2) {
+    background-color: #333; 
