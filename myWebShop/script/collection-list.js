@@ -15,7 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // If the collection has items, display the section
             collectionSection.style.display = "block";
 
-            for (const [productName, productData] of Object.entries(collectionList)) {
+            // Sort the collectionList alphabetically by product name
+            const sortedEntries = Object.entries(collectionList).sort(([nameA], [nameB]) => {
+                return nameA.localeCompare(nameB); // Sort alphabetically by product name
+            });
+
+            // Render the sorted collection list
+            sortedEntries.forEach(([productName, productData]) => {
                 const listItem = document.createElement("li");
                 listItem.textContent = `${productName} - Quantity: ${productData.quantity}`;
                 
@@ -28,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
                 listItem.appendChild(removeButton);
                 collectionItemsContainer.appendChild(listItem);
-            }
+            });
         }
     }
 
