@@ -30,44 +30,11 @@
         <h1><?php echo $welcomeMessage; ?></h1>
         <p><?php echo $shopDescription; ?></p>
 
-        <button id="i-choose-you">I Choose You! <img src="img/pokeball.png" width="30px" alt="PokeBall"></button>
+        <div>
+            <button id="i-choose-you">I Choose You! <img src="img/pokeball.png" width="30px" alt="PokeBall"></button>
+            <a href="all-products.php"><button>View All</button></a>
+        </div>
 
-        <h2><a href="all-products.php">All Products</a></h2>
-        <ul class="menu">
-
-            <li><a href="categoryList/types/typeList.php">Types:</span>
-                    <ul class="submenu">
-                        <li>
-                            <a href="categoryList/types/grass.php">
-                                Grass <img src="https://www.serebii.net/pokedex-sv/type/icon/grass.png" width="20px"
-                                    alt="Grass Icon" class="type-icon">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="categoryList/types/poison.php">
-                                Poison <img src="https://www.serebii.net/pokedex-sv/type/icon/poison.png" width="20px"
-                                    alt="Poison Icon" class="type-icon">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="categoryList/types/water.php">
-                                Water <img src="https://www.serebii.net/pokedex-sv/type/icon/water.png" width="20px"
-                                    alt="Water Icon" class="type-icon">
-                            </a>
-                        </li>
-                    </ul>
-            </li>
-
-
-            <li><a href="categoryList/categories/categoryList.php">Category:</span>
-                    <ul class="submenu">
-                        <li><a href="categoryList/categories/seed.php">Seed</a></li>
-                        <li><a href="categoryList/categories/tiny-turtle.php">Tiny-turtle</a></li>
-                        <li><a href="categoryList/categories/turtle.php">Turtle</a></li>
-                        <li><a href="categoryList/categories/shellfish.php">Shellfish</a></li>
-                    </ul>
-            </li>
-        </ul>
     </main>
 
 
