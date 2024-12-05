@@ -3,122 +3,232 @@
         {
             "pid": "0001",
             "name": "Bulbasaur",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png",
-            "info": "For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow.",
-            "price": 5,
-            "height": [2, 4],
-            "weight": 15.2,
-            "gender": "Male & Female",
-            "abilities": "Overgrow",
-            "type": ["Grass", "Poison"],
-            "weakness": ["Fire", "Ice", "Flying", "Psychic"],
-            "hp": "3/10",
-            "attack": "3/10",
-            "defense": "3/10",
-            "special attack": "4/10",
-            "special defense": "4/10",
-            "speed": "3/10",
-            "evolution": ["Bulbasaur #0001", "Ivysaur #0002", "Venusaur #0003"]
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/001.png",
+            "desc": "For some time after its birth, it uses the nutrients that are packed into the seed on its back in order to grow.",
+            "price": 68,
+            "type": [
+                "Grass",
+                "Poison"
+            ],
+            "weakness": [
+                "Fire",
+                "Flying",
+                "Ice",
+                "Psychic"
+            ]
         },
         {
             "pid": "0002",
             "name": "Ivysaur",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png",
-            "info": "The more sunlight Ivysaur bathes in, the more strength wells up within it, allowing the bud on its back to grow larger.",
-            "price": 10,
-            "height": [3, 3],
-            "weight": 28.7,
-            "gender": "Male & Female",
-            "abilities": "Overgrow",
-            "type": ["Grass", "Poison"],
-            "weakness": ["Fire", "Ice", "Flying", "Psychic"],
-            "hp": "4/10",
-            "attack": "4/10",
-            "defense": "4/10",
-            "special attack": "5/10",
-            "special defense": "5/10",
-            "speed": "4/10",
-            "evolution": ["Bulbasaur #0001", "Ivysaur #0002", "Venusaur #0003"]            
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/002.png",
+            "desc": "The more sunlight Ivysaur bathes in, the more strength wells up within it, allowing the bud on its back to grow larger.",
+            "price": 98,
+            "type": [
+                "Grass",
+                "Poison"
+            ],
+            "weakness": [
+                "Fire",
+                "Flying",
+                "Ice",
+                "Psychic"
+            ]
         },
         {
             "pid": "0003",
             "name": "Venusaur",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png",
-            "info": "While it basks in the sun, it can convert the light into energy. As a result, it is more powerful in the summertime.",
-            "price": 20,
-            "height": [6, 7],
-            "weight": 220.5,
-            "gender": "Male & Female",
-            "abilities": "Overgrow",
-            "type": ["Grass", "Poison"],
-            "weakness": ["Fire", "Ice", "Flying", "Psychic"],
-            "hp": "5/10",
-            "attack": "5/10",
-            "defense": "5/10",
-            "special attack": "6/10",
-            "special defense": "6/10",
-            "speed": "6/10",
-            "evolution": ["Bulbasaur #0001", "Ivysaur #0002", "Venusaur #0003"]            
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/003.png",
+            "desc": "While it basks in the sun, it can convert the light into energy. As a result, it is more powerful in the summertime.",
+            "price": 67,
+            "type": [
+                "Grass",
+                "Ice",
+                "Poison"
+            ],
+            "weakness": [
+                "Fire",
+                "Flying",
+                "Ice",
+                "Psychic"
+            ]
+        },
+        {
+            "pid": "0004",
+            "name": "Charmander",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/004.png",
+            "desc": "The flame on its tail shows the strength of its life-force. If Charmander is weak, the flame also burns weakly.",
+            "price": 59,
+            "type": [
+                "Fire"
+            ],
+            "weakness": [
+                "Ground",
+                "Rock",
+                "Water"
+            ]
+        },
+        {
+            "pid": "0005",
+            "name": "Charmeleon",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png",
+            "desc": "When it swings its burning tail, the temperature around it rises higher and higher, tormenting its opponents.",
+            "price": 48,
+            "type": [
+                "Fire"
+            ],
+            "weakness": [
+                "Ground",
+                "Rock",
+                "Water"
+            ]
+        },
+        {
+            "pid": "0006",
+            "name": "Charizard",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png",
+            "desc": "If Charizard becomes truly angered, the flame at the tip of its tail burns in a light blue shade.",
+            "price": 47,
+            "type": [
+                "Fire",
+                "Flying"
+            ],
+            "weakness": [
+                "Electric",
+                "Rock",
+                "Water"
+            ]
         },
         {
             "pid": "0007",
             "name": "Squirtle",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png",
-            "info": "After birth, its back swells and hardens into a shell. It sprays a potent foam from its mouth.",
-            "price": 5,
-            "height": [1, 8],
-            "weight": 19.8,
-            "gender": "Male & Female",
-            "abilities": "Torrent",
-            "type": ["Water"],
-            "weakness": ["Grass", "Electric"],
-            "hp": "3/10",
-            "attack": "3/10",
-            "defense": "4/10",
-            "special attack": "3/10",
-            "special defense": "4/10",
-            "speed": "3/10",
-            "evolution": ["Squirtle #0007", "Wartortle #0008", "Blastoise #0009"]            
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/007.png",
+            "desc": "After birth, its back swells and hardens into a shell. It sprays a potent foam from its mouth.",
+            "price": 23,
+            "type": [
+                "Water"
+            ],
+            "weakness": [
+                "Electric",
+                "Grass"
+            ]
         },
         {
             "pid": "0008",
             "name": "Wartortle",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png",
-            "info": "Wartortle's long, furry tail is a symbol of longevity, so this Pokémon is quite popular among older people.",
-            "price": 10,
-            "height": [3, 3],
-            "weight": 49.6,
-            "gender": "Male & Female",
-            "abilities": "Torrent",
-            "type": ["Water"],
-            "weakness": ["Grass", "Electric"],
-            "hp": "4/10",
-            "attack": "4/10",
-            "defense": "5/10",
-            "special attack": "4/10",
-            "special defense": "5/10",
-            "speed": "4/10",
-            "evolution": ["Squirtle #0007", "Wartortle #0008", "Blastoise #0009"]            
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/008.png",
+            "desc": "Wartortle\u2019s long, furry tail is a symbol of longevity, so this Pok\u00e9mon is quite popular among older people.",
+            "price": 99,
+            "type": [
+                "Water"
+            ],
+            "weakness": [
+                "Electric",
+                "Grass"
+            ]
         },
         {
             "pid": "0009",
             "name": "Blastoise",
-            "image src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png",
-            "info": "It deliberately increases its body weight so it can withstand the recoil of the water jets it fires.",
-            "price": 20,
-            "height": [5, 3],
-            "weight": 188.5,
-            "gender": "Male & Female",
-            "abilities": "Torrent",
-            "type": ["Water"],
-            "weakness": ["Grass", "Electric"],
-            "hp": "5/10",
-            "attack": "5/10",
-            "defense": "6/10",
-            "special attack": "5/10",
-            "special defense": "7/10",
-            "speed": "5/10",
-            "evolution": ["Squirtle #0007", "Wartortle #0008", "Blastoise #0009"]            
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png",
+            "desc": "It deliberately increases its body weight so it can withstand the recoil of the water jets it fires.",
+            "price": 32,
+            "type": [
+                "Water"
+            ],
+            "weakness": [
+                "Electric",
+                "Grass"
+            ]
+        },
+        {
+            "pid": "0147",
+            "name": "Dratini",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/147.png",
+            "desc": "It sheds many layers of skin as it grows larger. During this process, it is protected by a rapid waterfall.",
+            "price": 28,
+            "type": [
+                "Dragon"
+            ],
+            "weakness": [
+                "Dragon",
+                "Fairy",
+                "Ice"
+            ]
+        },
+        {
+            "pid": "0148",
+            "name": "Dragonair",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/148.png",
+            "desc": "They say that if it emits an aura from its whole body, the weather will begin to change instantly.",
+            "price": 89,
+            "type": [
+                "Dragon"
+            ],
+            "weakness": [
+                "Dragon",
+                "Fairy",
+                "Ice"
+            ]
+        },
+        {
+            "pid": "0149",
+            "name": "Dragonite",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/149.png",
+            "desc": "It is said that somewhere in the ocean lies an island where these gather. Only they live there.",
+            "price": 58,
+            "type": [
+                "Dragon",
+                "Flying"
+            ],
+            "weakness": [
+                "Dragon",
+                "Fairy",
+                "Ice",
+                "Rock"
+            ]
+        },
+        {
+            "pid": "0172",
+            "name": "Pichu",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/172.png",
+            "desc": "It is unskilled at storing electric power. Any kind of shock causes it to discharge energy spontaneously.",
+            "price": 100,
+            "type": [
+                "Electric"
+            ],
+            "weakness": [
+                "Ground"
+            ]
+        },
+        {
+            "pid": "0363",
+            "name": "Spheal",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/363.png",
+            "desc": "This Pok\u00e9mon\u2019s body is covered in blubber and impressively round. It\u2019s faster for Spheal to roll around than walk.",
+            "price": 35,
+            "type": [
+                "Ice",
+                "Water"
+            ],
+            "weakness": [
+                "Electric",
+                "Fighting",
+                "Grass",
+                "Rock"
+            ]
+        },
+        {
+            "pid": "0831",
+            "name": "Wooloo",
+            "img_src": "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/831.png",
+            "desc": "Its curly fleece is such an effective cushion that this Pok\u00e9mon could fall off a cliff and stand right back up at the bottom, unharmed.",
+            "price": 66,
+            "type": [
+                "Normal"
+            ],
+            "weakness": [
+                "Fighting"
+            ]
         }
-    ]       
+    ]
 }

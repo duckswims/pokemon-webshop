@@ -32,7 +32,7 @@
         <div class="product-display">
             <?php
             // Load the JSON file
-            $jsonString = file_get_contents('json/product_new.json');
+            $jsonString = file_get_contents('json/product.json');
             $data = json_decode($jsonString, true);
 
             // Check if the JSON contains the 'product' key

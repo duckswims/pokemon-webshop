@@ -32,7 +32,7 @@
 
         <button id="i-choose-you">I Choose You! <img src="img/pokeball.png" width="30px" alt="PokeBall"></button>
 
-        <h2><a href="allProducts.php">All Products</a></h2>
+        <h2><a href="all-products.php">All Products</a></h2>
         <ul class="menu">
 
             <li><a href="categoryList/types/typeList.php">Types:</span>
