@@ -5,7 +5,7 @@ $pid1 = isset($_GET['pid1']) ? $_GET['pid1'] : null;
 $pid2 = isset($_GET['pid2']) ? $_GET['pid2'] : null;
 
 // Load and decode the JSON data
-$jsonData = file_get_contents('json/product_new.json');
+$jsonData = file_get_contents('json/product.json');
 $products = json_decode($jsonData, true);
 
 // Find the products by pid, pid1, and pid2
