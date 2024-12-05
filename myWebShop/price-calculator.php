@@ -25,7 +25,7 @@
 
     <!-- Main -->
     <main>
-        <div class="form-container">
+        <div class="container">
             <div class="login-box box">
                 <h2>Price Calculator</h2><br>
                 <label for="priceWOTax">Price without Tax (€)</label>

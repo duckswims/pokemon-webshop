@@ -22,7 +22,7 @@
     </header>
 
     <main>
-        <div class="form-container">
+        <div class="container">
             <div class="login-box box">
                 <h2>Registeration</h2>
                 <form action="customer.php">

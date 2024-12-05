@@ -21,7 +21,7 @@
     </header>
 
     <main>
-        <div class="form-container">
+        <div class="container">
             <div class="login-box box">
                 <h2>Login</h2>
                 <form action="customer.php">
