@@ -1,0 +1,123 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* About Us Section */
+main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.section-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.subheading {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.seller-details {
+    list-style-type: none;
+}
+
+.seller-details li {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.seller-details a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.seller-details a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.back-to-main {
+    font-size: 1.2rem;
+    color: #4CAF50;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+}
+
+.back-to-main:hover {
+    background-color: #4CAF50;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+
+
+
+/* Contact form styling */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    font-size: 1rem;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    /* border-color: #4CAF50; */
+    outline: none;
+}
+
+.contact-form .submit-btn {
+    /* background-color: #4CAF50; */
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form .submit-btn:hover {
+    /* background-color: #45a049; */
+}
+
+.contact-form .submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
