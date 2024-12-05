@@ -82,13 +82,13 @@ if ($pid1 && $pid2) {
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product1['type'] as $type): ?>
-                        <button><?= $type; ?></button>
+                        <button class="<?= $type; ?>" disabled><?= $type; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product1['weakness'] as $weakness): ?>
-                        <button><?= $weakness; ?></button>
+                        <button class="<?= $weakness; ?>" disabled><?= $weakness; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>
@@ -114,13 +114,13 @@ if ($pid1 && $pid2) {
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product2['type'] as $type): ?>
-                        <button><?= $type; ?></button>
+                        <button class="<?= htmlspecialchars($type); ?>"><?= $type; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product2['weakness'] as $weakness): ?>
-                        <button><?= $weakness; ?></button>
+                        <button class="<?= htmlspecialchars($weakness); ?>"><?= $weakness; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>

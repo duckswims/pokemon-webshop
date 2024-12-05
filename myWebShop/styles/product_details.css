@@ -5,3 +5,104 @@
 .product-container .info label {
     margin-top: 10px;
 }
+
+.product-container .product .info button,
+.product-container .product .info button{
+    width: 100px;
+    padding: 7.5px; /* Set the button padding (size) */
+    border-radius: 5px; /* Optional: rounded corners */
+    cursor: pointer; /* Make the cursor a pointer to indicate interactivity */
+    transition: background-color 0.3s ease; /* Optional: smooth background color transition */
+}
+
+
+.product-container .product .info .Bug {
+    color: white !important; 
+    background-color: rgb(101,143,63) !important;
+}
+
+.product-container .product .info .Dragon {
+    color: white !important; 
+    background: linear-gradient(to bottom, rgb(68,155,197) 50%, rgb(243,96,80) 50%) !important;
+}
+
+.product-container .product .info .Fairy {
+    color: black !important; 
+    background: rgb(255,176,288) !important;
+}
+
+.product-container .product .info .Fire {
+    color: white !important; 
+    background-color: rgb(255,110,44) !important;
+}
+
+
+.product-container .product .info .Ghost {
+    color: white !important; 
+    background-color: rgb(112,88,150) !important;
+}
+
+.product-container .product .info .Ground {
+    color: black !important; 
+    background: linear-gradient(to bottom, rgb(247,217,72) 50%, rgb(162,142,65) 50%) !important;
+}
+
+.product-container .product .info .Normal {
+    color: black !important; 
+    background: rgb(154,162,165) !important;
+}
+
+.product-container .product .info .Psychic {
+    color: white !important; 
+    background: rgb(245,88,174) !important;
+}
+
+.product-container .product .info .Steel {
+    color: black !important; 
+    background: rgb(146,175,175) !important;
+}
+
+.product-container .product .info .Dark {
+    color: white !important; 
+    background: rgb(100,100,100) !important;
+}
+
+.product-container .product .info .Electric {
+    color: black !important; 
+    background: rgb(237,206,65) !important;
+}
+
+.product-container .product .info .Fighting {
+    color: white !important; 
+    background: rgb(210,90,40) !important;
+}
+
+.product-container .product .info .Flying {
+    color: black !important; 
+    background: linear-gradient(to bottom, rgb(39,193,233) 50%, rgb(181,176,175) 50%) !important;
+}
+
+.product-container .product .info .Grass {
+    color: black !important; 
+    background-color: rgb(142,196,80) !important;
+}
+
+.product-container .product .info .Ice {
+    color: black !important; 
+    background-color: rgb(38,193,235) !important;
+}
+
+.product-container .product .info .Poison {
+    color: white !important; 
+    background-color: rgb(178,115,195) !important;
+}
+
+.product-container .product .info .Rock {
+    color: white !important; 
+    background-color: rgb(154,128,42) !important;
+}
+
+.product-container .product .info .Water {
+    color: white !important; 
+    background-color: rgb(55,136,186) !important;
+}
