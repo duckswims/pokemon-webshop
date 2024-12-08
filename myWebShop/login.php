@@ -34,6 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
 }
 ?>
+<?php
+// Generate a random number between 1 and 1025
+$randomNumber = rand(1, 1025);
+
+// Format the number to always be 3 digits (e.g., 001, 010, 100, etc.)
+$formattedNumber = sprintf("%03d", $randomNumber);
+
+// Construct the image URL using the formatted number
+$imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/$formattedNumber.png";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container">
             <div class="box box-content box-blank">
                 <h2>Welcome back!</h2>
-                <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/083.png">
+                <img src="<?php echo $imageUrl; ?>" alt="Random Pokémon">
             </div>
             <div class="box box-content">
                 <h2>Login</h2>
