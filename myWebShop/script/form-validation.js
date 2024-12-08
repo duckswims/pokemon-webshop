@@ -16,26 +16,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Validate Username
             if (!validateUsername(usernameField.value)) {
-                highlightField(usernameField, false);
+                alert("Username should be at least 5 characters, and contain at least 1 capital letter and 1 lower case letter.");
                 isValid = false;
-            } else {
-                highlightField(usernameField, true);
             }
 
             // Validate Password
             if (!validatePassword(passwordField.value)) {
-                highlightField(passwordField, false);
+                alert("Password should have at least 10 characters.");
                 isValid = false;
-            } else {
-                highlightField(passwordField, true);
             }
 
             // Validate Password Repetition
             if (repeatPasswordField && passwordField.value !== repeatPasswordField.value) {
-                highlightField(repeatPasswordField, false);
+                alert("Passwords do not match. Please ensure both passwords are identical.");
                 isValid = false;
-            } else if (repeatPasswordField) {
-                highlightField(repeatPasswordField, true);
             }
 
             if (!isValid) e.preventDefault();

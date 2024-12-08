@@ -25,26 +25,6 @@
 
     <main>
         <div class="container">
-            <!-- <div class="box box-content">
-                <h2>Registeration</h2>
-                <form action="customer.php">
-                    <label for="uName">Username</label>
-                    <input type="text" id="uName" required>
-
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-
-                    <label for="repeatPassword">Repeat Password</label>
-                    <input type="password" id="repeatPassword" required>
-
-                    <input type="submit" value="Register">
-                </form><br>
-            </div>
-            <div class="box box-content">
-                <h2>Existing Customer?</h2>
-                <a href="login.php"><button type="button">Click here to login!</button></a>
-            </div> -->
-
             <div class="box box-content box-blank">
                 <h2>Welcome!</h2>
                 <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/083.png">
