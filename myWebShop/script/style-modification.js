@@ -47,9 +47,32 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener('DOMContentLoaded', () => {
     const hamburgerBtn = document.querySelector('.hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
+    const mediaQuery = window.matchMedia('(max-width: 756px)');
 
+    // Function to toggle the display of the nav links based on screen size
+    const toggleNavLinks = () => {
+        if (mediaQuery.matches) {
+            // If on a small screen, use the hamburger menu to toggle nav links visibility
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        } else {
+            // If on a larger screen, show the nav links normally
+            navLinks.style.display = 'flex';
+        }
+    };
+
+    // Initial check for screen size
+    toggleNavLinks();
+
+    // Toggle the navigation links visibility when hamburger button is clicked
     hamburgerBtn.addEventListener('click', () => {
-        // Toggle the visibility of the navigation links
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        if (mediaQuery.matches) {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+    });
+
+    // Watch for window resize and adjust nav links display
+    mediaQuery.addEventListener('change', () => {
+        toggleNavLinks();
     });
 });
+
