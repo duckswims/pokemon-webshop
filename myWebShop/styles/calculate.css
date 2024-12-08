@@ -1,0 +1,11 @@
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select {
+    display: flex;
+    width: calc(100% - 16px); 
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}

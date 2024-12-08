@@ -11,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/calculate.css">
     <script src="script/calculating-prices.js"></script>
     <script src="script/extra-function.js"></script>
 
@@ -34,17 +36,16 @@
                 <input type="number" id="tax-result" value="" disabled><br>
                 <label for="priceWTax">Price with Tax (€)</label>
                 <input type="number" id="priceWTax" value="" disabled><br>
-                <button id="calculate-button">Calculate</button><br>
-
+                <button id="calculate-button" class="btn-blue">Calculate</button><br>
             </div>
             <div class="box box-content">
                 <h2>Currency</h2><br>
-                <label for="from-currency">from EUR</label>
+                <label for="from-currency">Convert from EUR</label>
                 <input type="number" id="from-currency" required><br>
                 <label for="to-currency">To</label>
                 <select name="to-currency" id="to-currency">
                     <option value="usd">USD - United States Dollar</option>
-                    <option value="gbp">GBP - Pound sterling</option>
+                    <option value="gbp">GBP - Pound Sterling</option>
                     <option value="cad">CAD - Canadian Dollar</option>
                     <option value="aud">AUD - Australian Dollar</option>
                     <option value="jpy">JPY - Japanese Yen</option>
@@ -52,12 +53,12 @@
                     <option value="hkd">HKD - Hong Kong Dollar</option>
                     <option value="cny">CNY - Chinese Yuan</option>
                     <option value="myr">MYR - Malaysian Ringgit</option>
-                    <option value="krw">KRW - South Korean won</option>
+                    <option value="krw">KRW - South Korean Won</option>
                     <option value="btc">BTC - Bitcoin</option>
                 </select><br>
                 <label for="converted-result">Converted</label>
                 <input type="number" id="converted-result" value="" disabled><br>
-                <button id="convert-button">Convert</button><br>
+                <button id="convert-button" class="btn-blue">Convert</button><br>
             </div>
         </div>
     </main>
