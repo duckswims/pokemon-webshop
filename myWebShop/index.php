@@ -41,7 +41,7 @@ if (isset($_SESSION['username'])) {
                 <?php
                 // Check if the username exists in the session
                 if (isset($username)) {
-                    echo "Welcome, " . htmlspecialchars($username) . "!";
+                    echo "Welcome back, " . htmlspecialchars($username) . "!";
                 } else {
                     echo "Welcome to Our Pokémon Store!";
                 }
