@@ -100,6 +100,31 @@ header .hamburger-icon {
     height: 32px;
 }
 
+/* Cart container styles */
+#cart-container {
+    position: relative; /* Aligns relative to its parent */
+    display: flex;
+    align-items: center;
+}
+
+#cart-icon {
+    width: 32px; /* Adjust size for consistent appearance */
+    cursor: pointer;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    display: none; /* Hidden when count is 0 */
+}
+
 
 /* Responsive styles for screens smaller than 756px */
 @media (max-width: 756px) {
@@ -125,5 +150,9 @@ header .hamburger-icon {
 
     header .hamburger-menu {
         display: block; /* Show hamburger menu */
+    }
+
+    #cart-container {
+        margin-left: auto; /* Ensure alignment with other icons */
     }
 }

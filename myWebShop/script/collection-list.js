@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const collectionItemsContainer = document.getElementById("collection-items");
     const collectionSection = document.querySelector(".collection-list"); // Get the section element
     const addToCartButtons = document.querySelectorAll(".add-cart");
-    const collectionList = {};
+    window.collectionList = {};
 
     // Function to render the collection list
     function renderCollectionList() {
@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 removeButton.addEventListener("click", () => {
                     delete collectionList[productName];
                     renderCollectionList();
+                    // Update the cart icon when an item is removed
+                    updateCartIcon();
                 });
                 listItem.appendChild(removeButton);
                 collectionItemsContainer.appendChild(listItem);
@@ -59,6 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 collectionList[productName] = { quantity };
             }
             renderCollectionList();
+            renderCollectionList();
+            updateCartIcon(); // Update the cart icon when an item is added
         });
     });
 

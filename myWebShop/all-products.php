@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_display.css">
     <script src="script/collection-list.js"></script>
+    <script src="script/cart-update.js"></script>
 </head>
 
 <body>
