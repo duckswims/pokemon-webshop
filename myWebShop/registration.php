@@ -1,3 +1,43 @@
+<?php
+// Start the session to track the user
+session_start();
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get form data
+    $uName = $_POST['uName'];
+    $password = $_POST['password'];
+    $repeatPassword = $_POST['repeatPassword'];
+
+    // Check if username already exists
+    $dirPath = 'users/' . $uName;
+    if (file_exists($dirPath)) {
+        $errorMessage = 'Username already exists. Please choose another.';
+    }
+
+    // Create a folder named after the username
+    if (!file_exists($dirPath)) {
+        mkdir($dirPath, 0777, true);
+    }
+
+    // Create info.json with username and password
+    $info = array('username' => $uName, 'password' => $password);
+    file_put_contents($dirPath . '/info.json', json_encode($info, JSON_PRETTY_PRINT));
+
+    // Create empty shoppingCart.json
+    file_put_contents($dirPath . '/shoppingCart.json', json_encode([], JSON_PRETTY_PRINT));
+
+    // Create empty orderHistory.json
+    file_put_contents($dirPath . '/orderHistory.json', json_encode([], JSON_PRETTY_PRINT));
+
+    // Store the username in the session
+    $_SESSION['username'] = $uName;
+
+    // Redirect to a success page or login page after successful registration
+    header("Location: customer.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +55,6 @@
     <link rel="stylesheet" href="styles/forms.css">
     <script src="script/form-validation.js"></script>
     <script src="script/user-creation.js"></script>
-
 </head>
 
 <body>
@@ -32,12 +71,16 @@
             </div>
             <div class="box box-content">
                 <h2>Register</h2>
-                <form action="customer.php">
-                    <input type="text" id="uName" placeholder="Username" required>
-                    <input type="password" id="password" placeholder="Password" required>
-                    <input type="password" id="repeatPassword" placeholder="Confirm Password" required>
+                <form action="registration.php" method="POST">
+                    <input type="text" id="uName" name="uName" placeholder="Username" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                    <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Confirm Password"
+                        required>
                     <input type="submit" value="Register" class="btn btn-blue">
-                </form><br>
+                </form>
+                <?php if (!empty($errorMessage)): ?>
+                <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
+                <?php endif; ?>
                 <p class="stretch">or</p>
                 <p>Already a member? <a href="login.php">Login</a></p>
             </div>
@@ -48,6 +91,8 @@
     <footer>
         <?php include ("footer.php"); ?>
     </footer>
+
+    <script src="script/user-creation.js"></script>
 </body>
 
 </html>

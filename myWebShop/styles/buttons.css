@@ -8,6 +8,11 @@
     color: white !important;
 }
 
+.btn-red {
+    background-color: red !important;
+    color: white !important;
+}
+
 .btn-aqua {
     background-color: aqua !important;
     color: black;

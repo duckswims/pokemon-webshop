@@ -1,3 +1,14 @@
+<?php
+// Start the session to access session variables
+session_start();
+
+// Check if the user is logged in by checking if the username is set in the session
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username']; // Retrieve the username from the session
+} else {
+    $username = null; // User is not logged in
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,12 +37,17 @@
     <!-- Main -->
     <main class="welcome">
         <div class="info-board">
-            <?php
-            $welcomeMessage = "Welcome to Our Pokémon Store!";
-            $shopDescription = "We offer a wide variety of Pokémon-themed products to suit your needs.";
-            ?>
-            <h1><?php echo $welcomeMessage; ?></h1>
-            <p><?php echo $shopDescription; ?></p>
+            <h1>
+                <?php
+                // Check if the username exists in the session
+                if (isset($username)) {
+                    echo "Welcome, " . htmlspecialchars($username) . "!";
+                } else {
+                    echo "Welcome to Our Pokémon Store!";
+                }
+                ?>
+            </h1>
+            <p>We offer a wide variety of Pokémon-themed products to suit your needs.</p>
 
             <div class="container">
                 <button id="i-choose-you" class="btn btn-pastel-blue">I Choose You!

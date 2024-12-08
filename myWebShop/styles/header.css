@@ -140,6 +140,12 @@ header .hamburger-icon {
     width: 100%;
 }
 
+.user-dropdown strong {
+    font-size: 1em;
+    color: black;
+    padding: 1px;
+}
+
 /* .user-dropdown a {
     padding: 10px;
     display: block;

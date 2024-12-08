@@ -8,6 +8,10 @@ if (isset($_SESSION['username'])) {
 } else {
     $username = null; // User is not logged in
 }
+
+// Destroy all session variables
+session_unset();
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +27,6 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/information.css">
 </head>
 
 <body>
@@ -33,30 +36,11 @@ if (isset($_SESSION['username'])) {
     </header>
 
     <main>
-        <h2 class="section-title">Contact Us</h2>
-        <p class="section-text">
-            We’d love to hear from you! If you have any questions, comments, or feedback, feel free to reach out to us
-            using the form below.
+        <h1>Sorry to see you go :(</h1>
+        <p>
+            Your account information has been deleted.
         </p>
-
-        <!-- Contact Form -->
-        <form action="submit-form.php" method="POST" class="contact-form">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required placeholder="Your full name">
-
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required placeholder="Your email address">
-
-            <label for="subject">Subject:</label>
-            <input type="text" id="subject" name="subject" required placeholder="Subject of your message">
-
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="5" required placeholder="Your message"></textarea>
-
-            <button type="submit" class="submit-btn">Submit</button>
-        </form>
     </main>
-
 
     <!-- Footer -->
     <footer>

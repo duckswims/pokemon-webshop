@@ -1,3 +1,39 @@
+<?php
+// Start session to manage login state
+session_start();
+
+$errorMessage = ''; // Initialize an error message variable
+
+// Check if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['uName'];
+    $password = $_POST['password'];
+
+    // Define the path to the JSON file
+    $jsonFile = "users/$username/info.json";
+
+    // Check if the user exists
+    if (file_exists($jsonFile)) {
+        // Read the JSON file
+        $userData = json_decode(file_get_contents($jsonFile), true);
+
+        // Check if the password matches
+        if ($userData['password'] === $password) {
+            // Set session variables for the logged-in user
+            $_SESSION['username'] = $username;
+
+            // Redirect to the customer page
+            header("Location: customer.php");
+            exit;
+        } else {
+            $errorMessage = 'Password does not match.';
+        }
+    } else {
+        $errorMessage = 'User does not exist.';
+    }
+    
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,11 +66,15 @@
             </div>
             <div class="box box-content">
                 <h2>Login</h2>
-                <form action="customer.php">
-                    <input type="text" id="uName" placeholder="Username" required>
-                    <input type="password" id="password" placeholder="Password" required>
+                <form action="login.php" method="POST">
+                    <input type="text" name="uName" id="uName" placeholder="Username" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
                     <input type="submit" value="Login" class="btn btn-blue">
-                </form><br>
+                </form>
+                <br>
+                <?php if (!empty($errorMessage)): ?>
+                <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
+                <?php endif; ?>
                 <p class="stretch">or</p>
                 <p>Not a member? <a href="registration.php">Sign Up</a></p>
             </div>
