@@ -35,16 +35,12 @@
                     <span id="cart-count" style="display: none;">0</span>
                 </div>
             </a>
-            <div>
-                <button class="nav-button mode-button">
-                    <img src="/myWebShop/img/mode/light.png" class="nav-img mode-img">
-                </button>
-            </div>
-            <div class="hamburger-menu">
-                <button class="hamburger-btn">
-                    <img src="/myWebShop/img/hamburger.png" alt="Menu" class="hamburger-icon">
-                </button>
-            </div>
+            <button class="mode-button">
+                <img src="/myWebShop/img/mode/light.png" class="nav-img mode-img">
+            </button>
+            <button class="hamburger-btn hamburger-menu">
+                <img src="/myWebShop/img/hamburger.png" alt="Menu" class="hamburger-icon">
+            </button>
         </div>
     </header>
 

@@ -56,12 +56,6 @@ header .nav-links a {
     color: #333;
 }
 
-/* Toggle button */
-header .nav-button {
-    background-color: lightgray;
-    border: none;
-    cursor: pointer;
-}
 
 header button {
     display: inline-block;
