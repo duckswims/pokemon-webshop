@@ -37,9 +37,9 @@ session_destroy();
 
     <main>
         <h1>Sorry to see you go :(</h1>
-        <p>
-            Your account information has been deleted.
-        </p>
+        <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/dcb3f1a2-7821-444b-8ca8-91b482d4935d/dhwwbhn-b7dc1906-550e-4b1d-925f-40c3d2cb4427.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2RjYjNmMWEyLTc4MjEtNDQ0Yi04Y2E4LTkxYjQ4MmQ0OTM1ZFwvZGh3d2Jobi1iN2RjMTkwNi01NTBlLTRiMWQtOTI1Zi00MGMzZDJjYjQ0MjcucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0._I0cHaa2UQyNoquy8w910S73j8nwpIOYfJ87tRY9nuk"
+            alt="" width="300px">
+        <p>Your account information has been deleted.</p>
     </main>
 
     <!-- Footer -->
