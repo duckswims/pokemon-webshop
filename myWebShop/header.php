@@ -25,11 +25,16 @@
         <div class="right">
             <div class="nav-links">
                 <a href="/myWebShop/about.php" target="_parent">About Us</a>
-                <a href="/myWebShop/shoppingCart.php" target="_parent">Shopping Cart</a>
                 <a href="/myWebShop/login.php" target="_parent">Login</a>
                 <a href="/myWebShop/registration.php" target="_parent">Register</a>
                 <a href="/myWebShop/price-calculator.php" target="_parent">Price Calculator</a>
             </div>
+            <a href="/myWebShop/shoppingCart.php" target="_parent">
+                <div id="cart-container">
+                    <img id="cart-icon" src="/myWebShop/img/cart.png" alt="Shopping Cart" width="30px">
+                    <span id="cart-count" style="display: none;">0</span>
+                </div>
+            </a>
             <div>
                 <button class="nav-button mode-button">
                     <img src="/myWebShop/img/mode/light.png" class="nav-img mode-img">
