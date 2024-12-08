@@ -120,6 +120,37 @@ header .hamburger-icon {
 }
 
 
+.user-dropdown {
+    display: none; /* Initially hidden */
+    flex-direction: column;
+    background-color: white;
+    position: fixed; /* Position relative to the viewport */
+    top: 100px; /* Adjust to appear below the button */
+    right: 10px; /* Align to the right edge of the screen */
+    width: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it appears above other content */
+    padding: 10px; /* Add some padding inside the dropdown */
+    gap: 10px;
+}
+
+.user-dropdown button {
+    width: 100%;
+}
+
+/* .user-dropdown a {
+    padding: 10px;
+    display: block;
+    text-align: left;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ddd;
+} */
+
+
+
 /* Responsive styles for screens smaller than 756px */
 @media (max-width: 756px) {
     header .nav-links {
@@ -127,7 +158,7 @@ header .hamburger-icon {
         flex-direction: column;
         background-color: white;
         position: fixed; /* Position relative to the viewport */
-        top: 60px; /* Adjust to appear below the header */
+        top: 100px; /* Adjust to appear below the header */
         right: 10px; /* Align to the right edge of the screen */
         width: 200px;
         border: 1px solid #ccc;

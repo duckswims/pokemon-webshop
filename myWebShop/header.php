@@ -39,8 +39,8 @@
                 <img src="img/user.png" class="nav-img user-img">
             </button>
             <div class="user-dropdown">
-                <a href="login.php" target="_parent">Login</a>
-                <a href="registration.php" target="_parent">Register</a>
+                <a href="login.php" target="_parent"><button class="btn-blue">Login</button></a>
+                <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
             </div>
             <button class="mode-button">
                 <img src="img/mode/light.png" class="nav-img mode-img">
