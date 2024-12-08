@@ -11,6 +11,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
+    <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_display.css">
     <script src="script/collection-list.js"></script>
 </head>
@@ -41,10 +42,12 @@
                     echo '
                     <div class="box product-box">
                         <div class="left">
-                            <img src="' . htmlspecialchars($product['img_src']) . '" width="100px">
-                            <a href="product.php?pid=' . htmlspecialchars($product['pid']) . '">
-                                <button>View Product</button>
-                            </a>
+                            <div class="box-content box-blank">
+                                <img src="' . htmlspecialchars($product['img_src']) . '" width="100px">
+                                <a href="product.php?pid=' . htmlspecialchars($product['pid']) . '">
+                                    <button>View</button>
+                                </a>
+                            </div>
                         </div>
                         <div class="right">
                             <h3 class="title">' . ' #' . htmlspecialchars($product['pid']) . " " . htmlspecialchars($product['name']) . '</h3>
@@ -52,7 +55,7 @@
                             <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
                             <div class="add-div">
                                 <input type="number" class="qty-input" id="quantity" value="1" min="1">
-                                <button class="add-cart">Add to cart</button>
+                                <button class="btn-blue add-cart">Add to cart</button>
                             </div>
                         </div>
                     </div>
