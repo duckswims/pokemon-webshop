@@ -11,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/main.css">
     <script src="script/extra-function2.js"></script>
 
 </head>
@@ -22,19 +24,22 @@
     </header>
 
     <!-- Main -->
-    <main>
-        <?php
+    <main class="welcome">
+        <div class="info-board">
+            <?php
             $welcomeMessage = "Welcome to Our Pokémon Store!";
             $shopDescription = "We offer a wide variety of Pokémon-themed products to suit your needs.";
-        ?>
-        <h1><?php echo $welcomeMessage; ?></h1>
-        <p><?php echo $shopDescription; ?></p>
+            ?>
+            <h1><?php echo $welcomeMessage; ?></h1>
+            <p><?php echo $shopDescription; ?></p>
 
-        <div>
-            <button id="i-choose-you">I Choose You! <img src="img/pokeball.png" width="30px" alt="PokeBall"></button>
-            <a href="all-products.php"><button>View All</button></a>
+            <div class="container">
+                <button id="i-choose-you" class="btn btn-pastel-blue">I Choose You!
+                    <img src="img/pokeball.png" width="10%" alt="PokeBall">
+                </button>
+                <a href="all-products.php"><button class="btn btn-pastel-blue">View All Products</button></a>
+            </div>
         </div>
-
     </main>
 
 

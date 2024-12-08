@@ -1,0 +1,36 @@
+body {
+    background: 
+        linear-gradient(to bottom, transparent 120px, transparent 120px), 
+        url('https://wallpapers-clan.com/wp-content/uploads/2024/03/pokemon-bulbasaur-landscape-desktop-wallpaper-preview.jpg');
+    background-size: cover;
+    margin-top: 120px;
+    height: 100%;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
+    color: white; /* Optional: Adjust text visibility */
+    /* text-align: center; */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-board {
+    padding: 7em 4em;
+}
+
+.container {
+    padding: 10px;
+    gap: 10px !important;
+}
+
+button {
+    font-size: 2em;
+    width: 180px;
+    height: 40px;
+    border: white;
+}
