@@ -101,12 +101,23 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.login-box,
-.register-box,
-.profile-box {
+.box-blank {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.box-content {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+.box-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 label {
@@ -116,41 +127,18 @@ label {
     display: block;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="number"],
-select {
-    display: block;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-}
+
 
 input[type="submit"],
 button {
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    background-color: lightgrey;
+    border: white;
+    color: black;             /* Custom text color */
+    font-size: 1em;
+    padding: 5px 15px;
+    border-radius: 8px;       /* Rounded corners */
 }
 
-input[type="submit"]:hover,
-button:hover {
-    background-color: #0056b3;
-}
-
-.register-box button {
-    background-color: #28a745;
-}
-
-.register-box button:hover {
-    background-color: #218838;
-}
 
 /* Collections */
 .collection-list {

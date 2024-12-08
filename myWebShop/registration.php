@@ -11,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/forms.css">
     <script src="script/form-validation.js"></script>
 
 </head>
@@ -23,7 +25,7 @@
 
     <main>
         <div class="container">
-            <div class="login-box box">
+            <!-- <div class="box box-content">
                 <h2>Registeration</h2>
                 <form action="customer.php">
                     <label for="uName">Username</label>
@@ -38,9 +40,25 @@
                     <input type="submit" value="Register">
                 </form><br>
             </div>
-            <div class="register-box box">
+            <div class="box box-content">
                 <h2>Existing Customer?</h2>
                 <a href="login.php"><button type="button">Click here to login!</button></a>
+            </div> -->
+
+            <div class="box box-content box-blank">
+                <h2>Welcome!</h2>
+                <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/083.png">
+            </div>
+            <div class="box box-content">
+                <h2>Register</h2>
+                <form action="customer.php">
+                    <input type="text" id="uName" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="password" id="repeatPassword" placeholder="Confirm Password" required>
+                    <input type="submit" value="Register" class="btn btn-blue">
+                </form><br>
+                <p class="stretch">or</p>
+                <p>Already a member? <a href="login.php">Login</a></p>
             </div>
         </div>
     </main>

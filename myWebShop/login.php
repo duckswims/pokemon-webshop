@@ -11,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/forms.css">
     <script src="script/form-validation.js"></script>
 </head>
 
@@ -22,21 +24,20 @@
 
     <main>
         <div class="container">
-            <div class="login-box box">
+            <div class="box box-content box-blank">
+                <h2>Welcome back!</h2>
+                <img src="https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/083.png">
+            </div>
+            <div class="box box-content">
                 <h2>Login</h2>
                 <form action="customer.php">
-                    <label for="uName">Username</label>
-                    <input type="text" id="uName" required>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required>
-                    <input type="submit" value="Login">
+                    <input type="text" id="uName" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <input type="submit" value="Login" class="btn btn-blue">
                 </form><br>
+                <p class="stretch">or</p>
+                <p>Not a member? <a href="registration.php">Sign Up</a></p>
             </div>
-            <div class="register-box box">
-                <h2>New Customer?</h2>
-                <a href="registration.php"><button type="button">Click here to register!</button></a>
-            </div>
-            <!-- <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png" alt="Pikachu" class="register-image"> -->
         </div>
     </main>
 

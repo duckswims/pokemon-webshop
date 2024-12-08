@@ -26,7 +26,7 @@
     <!-- Main -->
     <main>
         <div class="container">
-            <div class="login-box box">
+            <div class="box  box-content">
                 <h2>Price Calculator</h2><br>
                 <label for="priceWOTax">Price without Tax (€)</label>
                 <input type="number" id="priceWOTax" required><br>
@@ -37,7 +37,7 @@
                 <button id="calculate-button">Calculate</button><br>
 
             </div>
-            <div class="login-box box">
+            <div class="box box-content">
                 <h2>Currency</h2><br>
                 <label for="from-currency">from EUR</label>
                 <input type="number" id="from-currency" required><br>
