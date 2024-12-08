@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburgerBtn = document.querySelector('.hamburger-btn');
     const navLinks = document.querySelector('.nav-links');
     const mediaQuery = window.matchMedia('(max-width: 756px)');
+    const navContainer = document.querySelector('.nav-container'); // Assuming your nav links are inside a container
 
     // Function to toggle the display of the nav links based on screen size
     const toggleNavLinks = () => {
@@ -64,9 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleNavLinks();
 
     // Toggle the navigation links visibility when hamburger button is clicked
-    hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.addEventListener('click', (e) => {
+        // Prevent clicking on the hamburger button from triggering the event listener to close the menu
+        e.stopPropagation();
         if (mediaQuery.matches) {
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        }
+    });
+
+    // Close the navigation menu if clicked outside
+    document.addEventListener('click', (e) => {
+        if (mediaQuery.matches && !navContainer.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+            navLinks.style.display = 'none';
         }
     });
 
@@ -75,4 +85,3 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleNavLinks();
     });
 });
-

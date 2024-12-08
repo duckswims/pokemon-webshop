@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/forms.css">
     <script src="script/form-validation.js"></script>
+    <script src="script/user-creation.js"></script>
 
 </head>
 

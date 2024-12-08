@@ -25,8 +25,6 @@
         <div class="right">
             <div class="nav-links">
                 <a href="about.php" target="_parent">About Us</a>
-                <a href="login.php" target="_parent">Login</a>
-                <a href="registration.php" target="_parent">Register</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
             </div>
             <a href="shoppingCart.php" target="_parent">
