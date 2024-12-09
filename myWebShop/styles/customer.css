@@ -1,0 +1,46 @@
+fieldset {
+    margin: 20px 0;
+}
+
+fieldset legend {
+    padding: 0 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.box {
+    flex-direction: column !important;
+}
+
+table,
+th,
+td  {
+    border: none !important;
+}
+
+.td1 {
+    width: 10%
+}
+.td2 {
+    width: 30%
+}
+.td3 {
+    /* width: 20% */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+}
+
+.table-header {
+    font-weight: bold;
+}
+
+.edit {
+    display: none;
+}
+
+.message {
+    padding-top: 10px;
+}

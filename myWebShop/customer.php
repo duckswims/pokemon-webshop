@@ -19,6 +19,8 @@ if (!file_exists($jsonFile)) {
 
 // Retrieve user data from the JSON file
 $userData = json_decode(file_get_contents($jsonFile), true);
+$firstName = $userData['firstName'] ?? 'N/A';
+$lastName = $userData['lastName'] ?? 'N/A';
 
 // Initialize success and error messages
 $successMessage = '';
@@ -26,6 +28,31 @@ $errorMessage = '';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Change name
+    if (isset($_POST['firstName'], $_POST['lastName'])) {
+        $newFirstName = trim($_POST['firstName']);
+        $newLastName = trim($_POST['lastName']);
+
+        // Validate inputs
+        if (empty($newFirstName) || empty($newLastName)) {
+            $errorMessage = 'First and Last Name cannot be empty.';
+        } else {
+            // Update the JSON file with the new names
+            $userData['firstName'] = $newFirstName;
+            $userData['lastName'] = $newLastName;
+
+            // Save updated data to the JSON file
+            file_put_contents($jsonFile, json_encode($userData, JSON_PRETTY_PRINT));
+
+            // Dynamically update name in page
+            $firstName = $newFirstName;
+            $lastName = $newLastName;
+
+            $successMessage = 'Name successfully updated!';
+        }
+    }
+
+    // Change username 
     if (isset($_POST['username']) && !empty($_POST['username'])) {
         // Check if JavaScript validation passed
         if ($_POST['validationPassed'] !== 'true') {
@@ -49,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Change password 
     if (isset($_POST['password']) && !empty($_POST['password'])) {
         // Check if JavaScript validation passed
         if ($_POST['validationPassed'] !== 'true') {
@@ -106,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/customer.css">
     <script src="script/form-validation.js" defer></script>
 </head>
 
@@ -117,52 +146,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main>
         <h1>Profile</h1>
-        <div class="box profile-box">
-            <fieldset>
-                <legend>Personal Information</legend>
-                <table>
-                    <!-- Username Change -->
-                    <form id="usernameForm" method="POST">
-                        <tr>
-                            <td><label for="uName">Username</label></td>
-                            <td>
-                                <input type="text" name="username" id="uName"
-                                    placeholder="<?php echo htmlspecialchars($username); ?>" required>
-                                <input type="hidden" name="validationPassed" id="usernameValidationPassed"
-                                    value="false">
-                            </td>
-                            <td><input type="submit" value="Change"></td>
-                        </tr>
-                    </form>
-
-                    <!-- Password Change -->
-                    <form id="passwordForm" method="POST">
-                        <tr>
-                            <td><label for="password">Password</label></td>
-                            <td>
-                                <input type="password" name="password" id="password" placeholder="********" required>
-                                <input type="hidden" name="validationPassed" id="passwordValidationPassed"
-                                    value="false">
-                            </td>
-                            <td><input type="submit" value="Change"></td>
-                        </tr>
-                    </form>
-
-                    <!-- Profile Details -->
+        <!-- <div class="box"> -->
+        <fieldset class="box">
+            <legend>User Information</legend>
+            <table>
+                <!-- Name -->
+                <form id="nameForm" method="POST">
                     <tr>
-                        <td>First Name:</td>
-                        <td>Ash</td>
+                        <td class="table-header td1">Name</td>
+                        <td class="nameOriginal td2">
+                            <?php echo htmlspecialchars($firstName) . " " . htmlspecialchars($lastName); ?>
+                        </td>
+                        <td class="nameOriginal td3">
+                            <button type="button" id="changeNameButton">Change</button>
+                        </td>
+                        <td class="nameEdit edit td2" id="nameInputs">
+                            <input type="text" name="firstName" id="firstNameInput"
+                                placeholder="<?php echo htmlspecialchars($firstName); ?>" required>
+                            <input type="text" name="lastName" id="lastNameInput"
+                                placeholder="<?php echo htmlspecialchars($lastName); ?>" required>
+                        </td>
+                        <td class="nameEdit edit td3">
+                            <input type="submit" class="btn-blue" value="Save">
+                        </td>
                     </tr>
+                </form>
+                <!-- Username -->
+                <form id="usernameForm" method="POST">
                     <tr>
-                        <td>Last Name:</td>
-                        <td>Ketchum</td>
+                        <td class="table-header td1">Username</td>
+                        <td class="usernameOriginal td2">
+                            <?php echo htmlspecialchars($username); ?>
+                        </td>
+                        <td class="usernameOriginal td3">
+                            <button type="button" id="changeUsernameButton">Change</button>
+                        </td>
+                        <td class="usernameEdit edit td2">
+                            <input type="text" name="username" id="uName"
+                                placeholder="<?php echo htmlspecialchars($username); ?>" required>
+                            <input type="hidden" name="validationPassed" id="usernameValidationPassed" value="false">
+                        </td>
+                        <td class="usernameEdit edit td3">
+                            <input type="submit" class="btn-blue" value="Save">
+                        </td>
                     </tr>
+                </form>
+                <!-- Password -->
+                <form id="passwordForm" method="POST">
                     <tr>
-                        <td>Address:</td>
-                        <td>Esplanade 10, 85049 Ingolstadt</td>
+                        <td class="table-header td1">Password</td>
+                        <td class="passwordOriginal td2">
+                            <?php echo str_repeat("*", 10); ?>
+                        </td>
+                        <td class="passwordOriginal td3">
+                            <button type="button" id="changePasswordButton">Change</button>
+                        </td>
+                        <td class="passwordEdit edit td2">
+                            <input type="password" name="password" id="password" placeholder="********" required>
+                            <input type="hidden" name="validationPassed" id="passwordValidationPassed" value="false">
+                        </td>
+                        <td class="passwordEdit edit td3">
+                            <input type="submit" class="btn-blue" value="Save">
+                        </td>
                     </tr>
-                </table>
+                </form>
+            </table>
 
+            <div class="message">
                 <?php if (!empty($errorMessage)): ?>
                 <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
                 <?php endif; ?>
@@ -170,11 +220,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($successMessage)): ?>
                 <p style="color: green;"><?php echo htmlspecialchars($successMessage); ?></p>
                 <?php endif; ?>
-            </fieldset><br>
-        </div>
+            </div>
+        </fieldset>
+
+        <!-- Address -->
+        <fieldset class='box'>
+            <legend>Address</legend>
+            <div class="container">
+                <div class="box">
+                    <strong>Billing Address</strong>
+                </div>
+                <div class="box">
+                    <strong>Shipping Address</strong>
+                </div>
+            </div>
+        </fieldset>
         <br>
-        <!-- Form for deleting the account -->
-        <form action="delete-account.php" method="POST">
+
+        <!-- Delete Account -->
+        <form action="delete.php" method="POST">
             <button type="submit" name="deleteAccount" class="btn-red">Delete Account</button>
         </form>
     </main>
