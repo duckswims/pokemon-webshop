@@ -3,7 +3,7 @@ import os
 import random
 
 # Filepath to the JSON file
-json_file = os.path.join("myWebShop", "json", "product_new.json")
+json_file = os.path.join("myWebShop", "json", "product.json")
 
 def load_json(file_path):
     """Load the JSON file or create a new one if it doesn't exist."""
@@ -34,32 +34,34 @@ def add_product(json_data):
     """Prompt the user to input product details and add it to the product list."""
     done = "x"
 
-    pid = input(f"{'Product ID (pid)':20s}: ").replace("#", "")
-    name = input(f"{'Product Name':20s}: ")
-    img_src = input(f"{'Image Source':20s}: ")
-    desc = input(f"{'Product Description':20s}: ")
-    
+    pid = input(f"{'Product ID (pid)':20s}: ").replace("#", "").strip()
+    name = input(f"{'Product Name':20s}: ").strip()
+    img_src = input(f"{'Image Source':20s}: ").strip()
+    desc = input(f"{'Product Description':20s}: ").strip()
+
     # Input price
-    price = random.randint(1,100)
-    
+    price = random.randint(1, 100)
+
     # Input type list (iterative input)
     types = []
     print(f"Enter Product Types (enter '{done}' to stop):")
     while True:
-        product_type = input(" - ").capitalize()
+        product_type = input(" - ").strip()  # Strip white spaces
         if product_type.lower() == done:
             break
-        types.append(product_type)
+        if product_type:  # Only add non-empty input
+            types.append(product_type.capitalize())  # Capitalize the type
     types.sort()
-    
+
     # Input weakness list (iterative input)
     weaknesses = []
     print(f"Enter Product Weaknesses (enter '{done}' to stop):")
     while True:
-        weakness = input(" - ").capitalize()
+        weakness = input(" - ").strip()  # Strip white spaces
         if weakness.lower() == done:
             break
-        weaknesses.append(weakness)
+        if weakness:  # Only add non-empty input
+            weaknesses.append(weakness.capitalize())  # Capitalize the weakness
     weaknesses.sort()
     
     new_product = {
