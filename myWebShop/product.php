@@ -61,6 +61,8 @@ if ($pid1 && $pid2) {
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_details.css">
+    <script src="script/type-animations.js"></script>
+
 </head>
 
 <body>
@@ -94,7 +96,7 @@ if ($pid1 && $pid2) {
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product1['type'] as $type): ?>
-                        <button class="<?= $type; ?>" disabled><?= $type; ?></button>
+                        <button class="<?= $type; ?>"><?= $type; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
@@ -132,7 +134,7 @@ if ($pid1 && $pid2) {
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product2['weakness'] as $weakness): ?>
-                        <button class="<?= htmlspecialchars($weakness); ?>"><?= $weakness; ?></button>
+                        <button class="<?= htmlspecialchars($weakness); ?>" disabled><?= $weakness; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>
