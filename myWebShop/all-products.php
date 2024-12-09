@@ -26,6 +26,7 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="styles/product_display.css">
     <script src="script/collection-list.js"></script>
     <script src="script/cart-update.js"></script>
+    <script src="script/search-filter.js"></script>
 </head>
 
 <body>
@@ -41,8 +42,12 @@ if (isset($_SESSION['username'])) {
             type and category.
         </p>
         <br>
+        <div class="search-bar">
+            <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
+        </div>
+        <br>
 
-        <div class="product-display">
+        <div class="product-display" id="product-display">
             <?php
             // Load the JSON file
             $jsonString = file_get_contents('json/product.json');
@@ -52,7 +57,7 @@ if (isset($_SESSION['username'])) {
             if (isset($data['product'])) {
                 foreach ($data['product'] as $product) {
                     echo '
-                    <div class="box product-box">
+                    <div class="box product-box" data-pid="' . htmlspecialchars($product['pid']) . '" data-name="' . htmlspecialchars(strtolower($product['name'])) . '">
                         <div class="left">
                             <div class="box-content box-blank">
                                 <img src="' . htmlspecialchars($product['img_src']) . '" width="100px">
@@ -81,7 +86,7 @@ if (isset($_SESSION['username'])) {
             ?>
         </div>
 
-        <section class="collection-list">
+        <section class="collection-list box">
             <h2>Your Collection List</h2>
             <ul id="collection-items">
                 <!-- Dynamically added collection items will appear here -->
