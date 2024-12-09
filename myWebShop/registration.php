@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Store the username in the session
     $_SESSION['username'] = $uName;
+    $_SESSION['firstname'] = $firstName;
 
     // Redirect to a success page or login page after successful registration
     header("Location: customer.php");

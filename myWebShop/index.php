@@ -5,6 +5,7 @@ session_start();
 // Check if the user is logged in by checking if the username is set in the session
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username']; // Retrieve the username from the session
+    $firstName = $_SESSION['firstName'];
 } else {
     $username = null; // User is not logged in
 }
@@ -41,7 +42,7 @@ if (isset($_SESSION['username'])) {
                 <?php
                 // Check if the username exists in the session
                 if (isset($username)) {
-                    echo "Welcome back, " . htmlspecialchars($username) . "!";
+                    echo "Welcome back, " . htmlspecialchars($firstName) . "!";
                 } else {
                     echo "Welcome to Our Pokémon Store!";
                 }
