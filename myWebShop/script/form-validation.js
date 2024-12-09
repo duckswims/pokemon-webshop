@@ -121,7 +121,6 @@ function resetField(field) {
 
 // Button changes for customer.php
 document.addEventListener("DOMContentLoaded", () => {
-
     // Toggle Name Button
     document.getElementById('changeNameButton').addEventListener('click', function () {
         let originalElements = document.querySelectorAll('.nameOriginal');
@@ -163,5 +162,44 @@ document.addEventListener("DOMContentLoaded", () => {
         editElements.forEach(function(element) {
             element.style.display = 'table-cell';
         });
+    });
+});
+
+
+
+// Handles address for customer.php
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("billingAddressButton").addEventListener("click", function() {
+        let button = document.getElementById("billingAddressButton");
+        let form = document.getElementById("billingAddressForm");
+        let disp = document.getElementById("billingAddressDisplay");
+    
+        // Toggle the visibility of the form
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; // Show the form
+            disp.style.display = "none";  // Hide the billing address display
+            button.style.display = "none"; // Hide the "Add Address" button
+        } else {
+            form.style.display = "none"; // Hide the form
+            disp.style.display = "block"; // Show the billing address display again
+            button.style.display = "block"; // Show the "Add Address" button again
+        }
+    });
+
+    document.getElementById("shippingAddressButton").addEventListener("click", function() {
+        let button = document.getElementById("shippingAddressButton");
+        let form = document.getElementById("shippingAddressForm");
+        let disp = document.getElementById("shippingAddressDisplay");
+    
+        // Toggle the visibility of the form
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; // Show the form
+            disp.style.display = "none";  // Hide the shipping address display
+            button.style.display = "none"; // Hide the "Add Address" button
+        } else {
+            form.style.display = "none"; // Hide the form
+            disp.style.display = "block"; // Show the shipping address display again
+            button.style.display = "block"; // Show the "Add Address" button again
+        }
     });
 });
