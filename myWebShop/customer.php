@@ -10,6 +10,7 @@ if (!isset($_SESSION['username'])) {
 
 // Retrieve the username from the session
 $username = $_SESSION['username'];
+$firstNameLive = $_SESSION['firstName'];
 $jsonFile = "users/$username/info.json";
 
 // Check if the JSON file exists for the logged-in user
@@ -44,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Update the JSON file with the new names
             $userData['firstName'] = $newFirstName;
             $userData['lastName'] = $newLastName;
+            $firstNameLive = $newFirstName;
 
             // Save updated data to the JSON file
             file_put_contents($jsonFile, json_encode($userData, JSON_PRETTY_PRINT));
@@ -254,6 +256,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($successMessage)): ?>
                 <p style="color: green;"><?php echo htmlspecialchars($successMessage); ?></p>
                 <?php endif; ?>
+
+                <?php echo htmlspecialchars($firstNameLive); ?>
             </div>
         </fieldset>
 
@@ -462,7 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         <!-- Delete Account -->
-        <form action="delete.php" method="POST">
+        <form action="" method="POST">
             <button type="submit" name="deleteAccount" class="btn-red">Delete Account</button>
         </form>
     </main>

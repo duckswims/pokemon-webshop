@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Store the username in the session
     $_SESSION['username'] = $uName;
+    $_SESSION['firstName'] = $firstName;
 
     // Redirect to a success page or login page after successful registration
     header("Location: customer.php");
@@ -88,7 +89,7 @@ $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/poked
             </div>
             <div class="box box-content">
                 <h2>Register</h2>
-                <form action="registration.php" method="POST">
+                <form action="" method="POST">
                     <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
                     <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
                     <input type="text" id="uName" name="uName" placeholder="Username" required>

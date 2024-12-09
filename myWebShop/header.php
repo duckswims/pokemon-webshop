@@ -4,7 +4,8 @@ session_start();
 
 // Check if the user is logged in by checking if the username is set in the session
 if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username']; // Retrieve the username from the session
+    $username = $_SESSION['username'];
+    $firstNameLive = $_SESSION['firstName'];
 } else {
     $username = null; // User is not logged in
 }
@@ -50,7 +51,7 @@ if (isset($_SESSION['username'])) {
             <div class="user-dropdown">
                 <?php if ($username): ?>
                 <!-- User is logged in, show greeting and logout button -->
-                <strong>Hello, <?php echo htmlspecialchars($username); ?>!</strong>
+                <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
                 <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
                 <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
                 <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>

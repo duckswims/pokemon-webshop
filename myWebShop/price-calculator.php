@@ -4,7 +4,8 @@ session_start();
 
 // Check if the user is logged in by checking if the username is set in the session
 if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username']; // Retrieve the username from the session
+    $username = $_SESSION['username'];
+    $firstNameLive = $_SESSION['firstName'];
 } else {
     $username = null; // User is not logged in
 }
