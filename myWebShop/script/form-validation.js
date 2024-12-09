@@ -49,10 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         usernameSubmitButton.addEventListener("click", (e) => {
             resetField(usernameField);
             if (!validateUsername(usernameField.value)) {
-                highlightField(usernameField, false);
-                e.preventDefault();
-            } else {
-                highlightField(usernameField, true);
+                alert("Username should be at least 5 characters, and contain at least 1 capital letter and 1 lower case letter.");
+                isValid = false;
             }
         });
 
@@ -60,32 +58,94 @@ document.addEventListener("DOMContentLoaded", () => {
         passwordSubmitButton.addEventListener("click", (e) => {
             resetField(passwordField);
             if (!validatePassword(passwordField.value)) {
-                highlightField(passwordField, false);
-                e.preventDefault();
-            } else {
-                highlightField(passwordField, true);
+                alert("Password should have at least 10 characters.");
             }
         });
     }
 
-    // Helper functions
-    function validateUsername(username) {
-        const minLength = 5;
-        const hasUpperCase = /[A-Z]/.test(username);
-        const hasLowerCase = /[a-z]/.test(username);
-        return username.length >= minLength && hasUpperCase && hasLowerCase;
-    }
+    // // Helper functions
+    // function validateUsername(username) {
+    //     const minLength = 5;
+    //     const hasUpperCase = /[A-Z]/.test(username);
+    //     const hasLowerCase = /[a-z]/.test(username);
+    //     return username.length >= minLength && hasUpperCase && hasLowerCase;
+    // }
 
-    function validatePassword(password) {
-        const minLength = 10;
-        return password.length >= minLength;
-    }
+    // function validatePassword(password) {
+    //     const minLength = 10;
+    //     return password.length >= minLength;
+    // }
 
-    function highlightField(field, isValid) {
-        field.style.borderColor = isValid ? "green" : "red";
-    }
+    // function highlightField(field, isValid) {
+    //     field.style.borderColor = isValid ? "green" : "red";
+    // }
 
-    function resetField(field) {
-        field.style.borderColor = "";
-    }
+    // function resetField(field) {
+    //     field.style.borderColor = "";
+    // }
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const usernameForm = document.getElementById("usernameForm");
+    const passwordForm = document.getElementById("passwordForm");
+
+    usernameForm.addEventListener("submit", (e) => {
+        const usernameField = document.getElementById("uName");
+        const validationPassedField = document.getElementById("usernameValidationPassed");
+        validationPassedField.value = "false"; // Reset value
+
+        if (!validateUsername(usernameField.value)) {
+            alert("Username should be at least 5 characters long, and contain both uppercase and lowercase letters.");
+            e.preventDefault();
+        } else {
+            validationPassedField.value = "true"; // Indicate validation passed
+        }
+    });
+
+    passwordForm.addEventListener("submit", (e) => {
+        const passwordField = document.getElementById("password");
+        const validationPassedField = document.getElementById("passwordValidationPassed");
+        validationPassedField.value = "false"; // Reset value
+
+        if (!validatePassword(passwordField.value)) {
+            alert("Password must be at least 10 characters long.");
+            e.preventDefault();
+        } else {
+            validationPassedField.value = "true"; // Indicate validation passed
+        }
+    });
+
+    // function validateUsername(username) {
+    //     const minLength = 5;
+    //     const hasUpperCase = /[A-Z]/.test(username);
+    //     const hasLowerCase = /[a-z]/.test(username);
+    //     return username.length >= minLength && hasUpperCase && hasLowerCase;
+    // }
+
+    // function validatePassword(password) {
+    //     return password.length >= 10;
+    // }
+});
+
+
+// Helper functions
+function validateUsername(username) {
+    const minLength = 5;
+    const hasUpperCase = /[A-Z]/.test(username);
+    const hasLowerCase = /[a-z]/.test(username);
+    return username.length >= minLength && hasUpperCase && hasLowerCase;
+}
+
+function validatePassword(password) {
+    const minLength = 10;
+    return password.length >= minLength;
+}
+
+function highlightField(field, isValid) {
+    field.style.borderColor = isValid ? "green" : "red";
+}
+
+function resetField(field) {
+    field.style.borderColor = "";
+}

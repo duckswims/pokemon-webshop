@@ -26,33 +26,46 @@ $errorMessage = '';
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle username change
-    if (isset($_POST['changeUsername'])) {
-        $newUsername = $_POST['newUsername'];
-
-        // Check if the new username already exists
-        $newPath = "users/$newUsername";
-        if (file_exists($newPath)) {
-            $errorMessage = 'Username already exists. Please choose another.';
+    if (isset($_POST['username']) && !empty($_POST['username'])) {
+        // Check if JavaScript validation passed
+        if ($_POST['validationPassed'] !== 'true') {
+            $errorMessage = 'JavaScript validation failed. Please correct errors before submitting.';
         } else {
-            // Rename the user's directory and update the JSON file
-            rename("users/$username", $newPath);
-            $userData['username'] = $newUsername;
-            file_put_contents("$newPath/info.json", json_encode($userData, JSON_PRETTY_PRINT));
-            $_SESSION['username'] = $newUsername; // Update session with new username
-            $username = $newUsername; // Update local username variable
-            $successMessage = 'Username successfully changed.';
+            $newUsername = $_POST['username'];
+
+            // Check if the new username already exists
+            $newPath = "users/$newUsername";
+            if (file_exists($newPath)) {
+                $errorMessage = 'Username already exists. Please choose another.';
+            } else {
+                // Rename the user's directory and update the JSON file
+                rename("users/$username", $newPath);
+                $userData['username'] = $newUsername;
+                file_put_contents("$newPath/info.json", json_encode($userData, JSON_PRETTY_PRINT));
+                $_SESSION['username'] = $newUsername; // Update session with new username
+                $username = $newUsername; // Update local username variable
+                $successMessage = 'Username successfully changed.';
+            }
         }
     }
 
-    // Handle password change
-    if (isset($_POST['changePassword'])) {
-        $newPassword = $_POST['newPassword'];
+    if (isset($_POST['password']) && !empty($_POST['password'])) {
+        // Check if JavaScript validation passed
+        if ($_POST['validationPassed'] !== 'true') {
+            $errorMessage = 'JavaScript validation failed. Please correct errors before submitting.';
+        } else {
+            $newPassword = $_POST['password'];
 
-        // Update the password in the JSON file
-        $userData['password'] = $newPassword;
-        file_put_contents("users/$username/info.json", json_encode($userData, JSON_PRETTY_PRINT));
-        $successMessage = 'Password successfully changed.';
+            // Ensure server-side validation as a backup
+            if (strlen($newPassword) < 10) {
+                $errorMessage = "Password must be at least 10 characters long.";
+            } else {
+                // Update the user's password
+                $userData['password'] = password_hash($newPassword, PASSWORD_BCRYPT); // Hash the password for security
+                file_put_contents($jsonFile, json_encode($userData, JSON_PRETTY_PRINT));
+                $successMessage = "Password successfully updated!";
+            }
+        }
     }
 
     // Handle account deletion
@@ -85,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Store</title>
+    <title>Customer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
@@ -93,43 +106,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
-    <script src="script/form-validation.js"></script>
+    <script src="script/form-validation.js" defer></script>
 </head>
 
 <body>
     <!-- Header -->
     <header>
-        <?php include ("header.php"); ?>
+        <?php include("header.php"); ?>
     </header>
 
     <main>
         <h1>Profile</h1>
-        <div class="box">
+        <div class="box profile-box">
             <fieldset>
                 <legend>Personal Information</legend>
-                <!-- Form for changing the username -->
-                <form action="" method="POST">
-                    <table>
+                <table>
+                    <!-- Username Change -->
+                    <form id="usernameForm" method="POST">
                         <tr>
-                            <td><label for="newUsername">Username</label></td>
-                            <td><input type="text" name="newUsername" id="newUsername"
-                                    value="<?php echo htmlspecialchars($username); ?>" required></td>
-                            <td><button type="submit" name="changeUsername">Change</button></td>
+                            <td><label for="uName">Username</label></td>
+                            <td>
+                                <input type="text" name="username" id="uName"
+                                    placeholder="<?php echo htmlspecialchars($username); ?>" required>
+                                <input type="hidden" name="validationPassed" id="usernameValidationPassed"
+                                    value="false">
+                            </td>
+                            <td><input type="submit" value="Change"></td>
                         </tr>
-                    </table>
-                </form>
+                    </form>
 
-                <!-- Form for changing the password -->
-                <form action="" method="POST">
-                    <table>
+                    <!-- Password Change -->
+                    <form id="passwordForm" method="POST">
                         <tr>
-                            <td><label for="newPassword">Password</label></td>
-                            <td><input type="password" name="newPassword" id="newPassword" placeholder="New Password"
-                                    required></td>
-                            <td><button type="submit" name="changePassword">Change</button></td>
+                            <td><label for="password">Password</label></td>
+                            <td>
+                                <input type="password" name="password" id="password" placeholder="********" required>
+                                <input type="hidden" name="validationPassed" id="passwordValidationPassed"
+                                    value="false">
+                            </td>
+                            <td><input type="submit" value="Change"></td>
                         </tr>
-                    </table>
-                </form>
+                    </form>
+
+                    <!-- Profile Details -->
+                    <tr>
+                        <td>First Name:</td>
+                        <td>Ash</td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td>
+                        <td>Ketchum</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>Esplanade 10, 85049 Ingolstadt</td>
+                    </tr>
+                </table>
 
                 <?php if (!empty($errorMessage)): ?>
                 <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
@@ -142,14 +174,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <br>
         <!-- Form for deleting the account -->
-        <form action="" method="POST">
+        <form action="delete-account.php" method="POST">
             <button type="submit" name="deleteAccount" class="btn-red">Delete Account</button>
         </form>
     </main>
 
     <!-- Footer -->
     <footer>
-        <?php include ("footer.php"); ?>
+        <?php include("footer.php"); ?>
     </footer>
 </body>
 

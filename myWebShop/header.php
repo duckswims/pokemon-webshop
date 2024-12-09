@@ -51,7 +51,7 @@ if (isset($_SESSION['username'])) {
                 <?php if ($username): ?>
                 <!-- User is logged in, show greeting and logout button -->
                 <strong>Hello, <?php echo htmlspecialchars($username); ?>!</strong>
-                <a href="customer.php" target="_parent"><button class="btn-blue">Information</button></a>
+                <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
                 <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
                 <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
                 <?php else: ?>
