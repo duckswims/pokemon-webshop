@@ -4,24 +4,24 @@ session_start();
 
 $errorMessage = ''; // Initialize an error message variable
 
-// == Cart Counter Function ===========
-function updateCartCount($shoppingData) {
-    // Initialize counter to 0
-    $counter = 0;
+// // == Cart Counter Function ===========
+// function updateCartCount($shoppingData) {
+//     // Initialize counter to 0
+//     $counter = 0;
     
-    // Check if 'cart' exists and is an array
-    if (isset($shoppingData['cart']) && is_array($shoppingData['cart'])) {
-        // Loop through the cart items and sum their quantities
-        foreach ($shoppingData['cart'] as $item) {
-            if (isset($item['quantity'])) {
-                $counter += $item['quantity'];
-            }
-        }
-    }
+//     // Check if 'cart' exists and is an array
+//     if (isset($shoppingData['cart']) && is_array($shoppingData['cart'])) {
+//         // Loop through the cart items and sum their quantities
+//         foreach ($shoppingData['cart'] as $item) {
+//             if (isset($item['quantity'])) {
+//                 $counter += $item['quantity'];
+//             }
+//         }
+//     }
     
-    // Update the session with the total quantity
-    $_SESSION['counter'] = $counter;
-}
+//     // Update the session with the total quantity
+//     $_SESSION['counter'] = $counter;
+// }
 
 
 // Check if the form is submitted
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Read the JSON file
         $userData = json_decode(file_get_contents($jsonFile), true);
         $shoppingData = json_decode(file_get_contents($shoppingFile), true);
+        $defaultShoppingFile = "users/shoppingCart.json";
 
         // Check if the password matches
         if ($userData['password'] === $password) {
@@ -45,8 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
             $_SESSION['admin'] = $userData['admin'] ?? null;
-            updateCartCount($shoppingData);
 
+            // Clear default shopping cart
+            file_put_contents($defaultShoppingFile, json_encode([], JSON_PRETTY_PRINT));
+            
             // Redirect to the customer page
             header("Location: customer.php");
             exit;
