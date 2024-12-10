@@ -5,6 +5,8 @@ session_start();
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
     $uName = $_POST['uName'];
     $password = $_POST['password'];
     $repeatPassword = $_POST['repeatPassword'];
@@ -21,7 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Create info.json with username and password
-    $info = array('username' => $uName, 'password' => $password);
+    $info = array(
+        'firstName' => $firstName, 
+        'lastName' => $lastName,
+        'username' => $uName, 
+        'password' => $password,
+    );
     file_put_contents($dirPath . '/info.json', json_encode($info, JSON_PRETTY_PRINT));
 
     // Create empty shoppingCart.json
@@ -32,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Store the username in the session
     $_SESSION['username'] = $uName;
+    $_SESSION['firstName'] = $firstName;
 
     // Redirect to a success page or login page after successful registration
     header("Location: customer.php");
@@ -81,7 +89,9 @@ $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/poked
             </div>
             <div class="box box-content">
                 <h2>Register</h2>
-                <form action="registration.php" method="POST">
+                <form action="" method="POST">
+                    <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                    <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
                     <input type="text" id="uName" name="uName" placeholder="Username" required>
                     <input type="password" id="password" name="password" placeholder="Password" required>
                     <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Confirm Password"

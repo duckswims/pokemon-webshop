@@ -1,0 +1,28 @@
+{
+    "firstName": "Bob",
+    "lastName": "Mustermann",
+    "username": "BobMM",
+    "password": "MaxMustermann",
+    "address": {
+        "billingAddress": {
+            "firstName": "Dad",
+            "lastName": "Mustermann",
+            "street": "Musterstra\u00dfe",
+            "houseNumber": "1",
+            "additional": "",
+            "city": "Ingolstadt",
+            "postalCode": "85049",
+            "country": "Germany"
+        },
+        "shippingAddress": {
+            "firstName": "Mum",
+            "lastName": "Musterfrau",
+            "street": "Musterstra\u00dfe",
+            "houseNumber": "1",
+            "additional": "2. Etage",
+            "city": "Ingolstadt",
+            "postalCode": "85049",
+            "country": "Germany"
+        }
+    }
+}

@@ -4,7 +4,9 @@ session_start();
 
 // Check if the user is logged in by checking if the username is set in the session
 if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username']; // Retrieve the username from the session
+    $username = $_SESSION['username'];
+    $firstNameLive = $_SESSION['firstName'];
+    $admin = $_SESSION['admin'];
 } else {
     $username = null; // User is not logged in
 }
@@ -52,7 +54,9 @@ if ($pid1 && $pid2) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Store</title>
+    <title>
+        #<?= $product1['pid']; ?> <?= $product1['name']; ?>
+    </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
@@ -61,6 +65,8 @@ if ($pid1 && $pid2) {
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_details.css">
+    <script src="script/type-animations.js"></script>
+
 </head>
 
 <body>
@@ -94,7 +100,7 @@ if ($pid1 && $pid2) {
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product1['type'] as $type): ?>
-                        <button class="<?= $type; ?>" disabled><?= $type; ?></button>
+                        <button class="<?= $type; ?>"><?= $type; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
@@ -132,7 +138,7 @@ if ($pid1 && $pid2) {
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product2['weakness'] as $weakness): ?>
-                        <button class="<?= htmlspecialchars($weakness); ?>"><?= $weakness; ?></button>
+                        <button class="<?= htmlspecialchars($weakness); ?>" disabled><?= $weakness; ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>

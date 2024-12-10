@@ -62,27 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
-    // // Helper functions
-    // function validateUsername(username) {
-    //     const minLength = 5;
-    //     const hasUpperCase = /[A-Z]/.test(username);
-    //     const hasLowerCase = /[a-z]/.test(username);
-    //     return username.length >= minLength && hasUpperCase && hasLowerCase;
-    // }
-
-    // function validatePassword(password) {
-    //     const minLength = 10;
-    //     return password.length >= minLength;
-    // }
-
-    // function highlightField(field, isValid) {
-    //     field.style.borderColor = isValid ? "green" : "red";
-    // }
-
-    // function resetField(field) {
-    //     field.style.borderColor = "";
-    // }
 });
 
 
@@ -115,17 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
             validationPassedField.value = "true"; // Indicate validation passed
         }
     });
-
-    // function validateUsername(username) {
-    //     const minLength = 5;
-    //     const hasUpperCase = /[A-Z]/.test(username);
-    //     const hasLowerCase = /[a-z]/.test(username);
-    //     return username.length >= minLength && hasUpperCase && hasLowerCase;
-    // }
-
-    // function validatePassword(password) {
-    //     return password.length >= 10;
-    // }
 });
 
 
@@ -149,3 +117,89 @@ function highlightField(field, isValid) {
 function resetField(field) {
     field.style.borderColor = "";
 }
+
+
+// Button changes for customer.php
+document.addEventListener("DOMContentLoaded", () => {
+    // Toggle Name Button
+    document.getElementById('changeNameButton').addEventListener('click', function () {
+        let originalElements = document.querySelectorAll('.nameOriginal');
+        let editElements = document.querySelectorAll('.nameEdit');
+        let nameInputs = document.getElementById("#nameInputs");
+        
+        originalElements.forEach(function(element) {
+            element.style.display = 'none';
+        });
+        
+        editElements.forEach(function(element) {
+            element.style.display = 'table-cell';
+        });
+    });
+
+    // Toggle Username Button
+    document.getElementById('changeUsernameButton').addEventListener('click', function () {
+        let originalElements = document.querySelectorAll('.usernameOriginal');
+        let editElements = document.querySelectorAll('.usernameEdit');
+        
+        originalElements.forEach(function(element) {
+            element.style.display = 'none';
+        });
+        
+        editElements.forEach(function(element) {
+            element.style.display = 'table-cell';
+        });
+    });
+
+    // Toggle Password Button
+    document.getElementById('changePasswordButton').addEventListener('click', function () {
+        let originalElements = document.querySelectorAll('.passwordOriginal');
+        let editElements = document.querySelectorAll('.passwordEdit');
+        
+        originalElements.forEach(function(element) {
+            element.style.display = 'none';
+        });
+        
+        editElements.forEach(function(element) {
+            element.style.display = 'table-cell';
+        });
+    });
+});
+
+
+
+// Handles address for customer.php
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("billingAddressButton").addEventListener("click", function() {
+        let button = document.getElementById("billingAddressButton");
+        let form = document.getElementById("billingAddressForm");
+        let disp = document.getElementById("billingAddressDisplay");
+    
+        // Toggle the visibility of the form
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; // Show the form
+            disp.style.display = "none";  // Hide the billing address display
+            button.style.display = "none"; // Hide the "Add Address" button
+        } else {
+            form.style.display = "none"; // Hide the form
+            disp.style.display = "block"; // Show the billing address display again
+            button.style.display = "block"; // Show the "Add Address" button again
+        }
+    });
+
+    document.getElementById("shippingAddressButton").addEventListener("click", function() {
+        let button = document.getElementById("shippingAddressButton");
+        let form = document.getElementById("shippingAddressForm");
+        let disp = document.getElementById("shippingAddressDisplay");
+    
+        // Toggle the visibility of the form
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; // Show the form
+            disp.style.display = "none";  // Hide the shipping address display
+            button.style.display = "none"; // Hide the "Add Address" button
+        } else {
+            form.style.display = "none"; // Hide the form
+            disp.style.display = "block"; // Show the shipping address display again
+            button.style.display = "block"; // Show the "Add Address" button again
+        }
+    });
+});
