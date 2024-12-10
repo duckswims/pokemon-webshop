@@ -7,6 +7,7 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $firstNameLive = $_SESSION['firstName'];
     $admin = $_SESSION['admin'];
+    $shoppingCartLive = $_SESSION['shoppingCart'];
 } else {
     $username = null; // User is not logged in
 }

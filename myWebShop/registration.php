@@ -41,6 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['username'] = $uName;
     $_SESSION['firstName'] = $firstName;
 
+    // Store shopping cart in session
+    $shoppingFile = "users/$username/shoppingCart.json";
+    $shoppingData = json_decode(file_get_contents($shoppingFile), true);
+    $_SESSION['shoppingCart'] = $shoppingData['products'] ?? null;
+
     // Redirect to a success page or login page after successful registration
     header("Location: customer.php");
     exit;

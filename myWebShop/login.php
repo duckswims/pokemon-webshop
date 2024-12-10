@@ -11,11 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Define the path to the JSON file
     $jsonFile = "users/$username/info.json";
+    $shoppingFile = "users/$username/shoppingCart.json";
 
     // Check if the user exists
     if (file_exists($jsonFile)) {
         // Read the JSON file
         $userData = json_decode(file_get_contents($jsonFile), true);
+        $shoppingData = json_decode(file_get_contents($shoppingFile), true);
 
         // Check if the password matches
         if ($userData['password'] === $password) {
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
             $_SESSION['admin'] = $userData['admin'] ?? null;
+            $_SESSION['shoppingCart'] = $shoppingData['products'] ?? null;
 
             // Redirect to the customer page
             header("Location: customer.php");

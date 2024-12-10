@@ -69,3 +69,38 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize with the collection section hidden
     collectionSection.style.display = "none";
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Add event listener to all "Add to cart" buttons
+    document.querySelectorAll(".add-cart").forEach(button => {
+        button.addEventListener("click", (event) => {
+            const productBox = event.target.closest(".product-box");
+            const pid = productBox.getAttribute("data-pid");
+            const quantity = productBox.querySelector(".qty-input").value;
+
+            // Prepare data to send
+            const cartData = { pid: pid, quantity: parseInt(quantity) };
+
+            // Send data to PHP
+            fetch("all-products.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(cartData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Item added to cart successfully!");
+                } else {
+                    alert("Failed to add item to cart: " + data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        });
+    });
+});

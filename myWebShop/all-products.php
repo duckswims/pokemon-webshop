@@ -7,10 +7,73 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $firstNameLive = $_SESSION['firstName'];
     $admin = $_SESSION['admin'];
+    $shoppingCartLive = $_SESSION['shoppingCart'];
 } else {
     $username = null; // User is not logged in
 }
+
+// Adding cart ====================================
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Read the incoming JSON data
+    $requestPayload = file_get_contents("php://input");
+    $data = json_decode($requestPayload, true);
+
+    if (isset($data['pid']) && isset($data['quantity'])) {
+        $pid = htmlspecialchars($data['pid']);
+        $quantity = intval($data['quantity']);
+
+        // Determine the file path for the shopping cart
+        if ($username) {
+            $shoppingPath = 'users/' . $username . '/shoppingCart.json';
+        } else {
+            $shoppingPath = 'users/shoppingCart.json';
+        }
+
+        // Ensure the directory exists
+        $directory = dirname($shoppingPath);
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true); // Create the directory if it doesn't exist
+        }
+
+        // Load existing cart data
+        if (file_exists($shoppingPath)) {
+            $fileData = json_decode(file_get_contents($shoppingPath), true);
+            $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
+        } else {
+            $cart = [];
+            $fileData = ['cart' => $cart]; // Initialize the JSON structure
+        }
+
+        // Update cart with the new item
+        $found = false;
+        foreach ($cart as &$item) {
+            if ($item['pid'] === $pid) {
+                $item['quantity'] += $quantity; // Update quantity if item already exists
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $cart[] = ['pid' => $pid, 'quantity' => $quantity];
+        }
+
+        // Update the JSON structure
+        $fileData['cart'] = $cart;
+
+        // Save back to JSON file
+        if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Failed to write to file']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Invalid input']);
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
