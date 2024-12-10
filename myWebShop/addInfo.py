@@ -3,7 +3,7 @@ import os
 import random
 
 # Filepath to the JSON file
-json_file = os.path.join("myWebShop", "json", "product.json")
+json_file = os.path.join("json", "product.json")
 
 def load_json(file_path):
     """Load the JSON file or create a new one if it doesn't exist."""
