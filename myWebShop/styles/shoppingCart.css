@@ -1,0 +1,47 @@
+.product-container {
+    flex-direction: column !important;
+    gap: 10px !important;
+    min-width: 600px !important;
+}
+
+.price-container {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 40% !important;
+}
+
+.box {
+    /* display: flex; */
+    gap: 10px;
+    align-items: center;
+    padding: 10px !important;
+}
+
+.container .left {
+    display: flex;
+    flex-grow: 1;
+    gap: 10px !important;
+}
+
+.container .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px !important;
+}
+
+.box strong {
+    font-size: 1.1em;
+}
+
+.box input[type='number'] {
+    width: 40px;
+    text-align: right;
+}
+
+
+
+.pImg {
+    height: 50px;
+    object-fit: cover;
+}

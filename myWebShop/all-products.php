@@ -52,6 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Update the JSON structure and session["shoppingCart"]
         $fileData['cart'] = $cart;
 
+
+        // Sort the cart by pid in ascending order
+        usort($fileData['cart'], function($a, $b) {
+            return $a['pid'] <=> $b['pid'];
+        });
+
         // Save back to JSON file
         if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
             // Update the session cart count directly
@@ -60,15 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $cartCount += $item['qty'];
             }
             $_SESSION['counter'] = $cartCount;
-
-            // You can return the updated count as a response to trigger the UI update
-            echo json_encode(['success' => true, 'cartCount' => $cartCount]);
-        } else {
-            echo json_encode(['success' => false, 'error' => 'Failed to write to file']);
-        }
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Invalid input']);
-    }
+        } 
+    } 
 }
 
 ?>
