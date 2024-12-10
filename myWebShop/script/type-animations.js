@@ -5,21 +5,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const typeEmojis = {
         Grass: "🌿",
         Fire: "🔥",
-        Water: "🌊",
+        Water: "💧",
         Bug: "🪲",
         Electric: "⚡",
         Rock: "🪨",
-        Poison: "☠️",
+        Poison: "💀",
         Flying: "🕊️",
         Psychic: "🔮",
-        Fairy: "🍬",
+        Fairy: "🧚🏻‍♀️",
         Ghost: "👻",
         Steel: "⚙️",
         Ice: "❄️",
         Dragon: "🐉",
-        Dark: "🌘",
-        Ground: "🌍",
-        Fighting: "🥋",
+        Dark: "🌚",
+        Ground: "🌱",
+        Fighting: "🥊",
         Normal: "😐"
     };
 
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const footerHeight = 0;
         const availableHeight = window.innerHeight - headerHeight - footerHeight;
 
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 40; i++) {
             const emoji = document.createElement("div");
             emoji.textContent = typeEmojis[type];
             emoji.classList.add("emoji");
