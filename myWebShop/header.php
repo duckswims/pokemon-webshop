@@ -40,7 +40,7 @@ if (isset($_SESSION['username'])) {
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
                 <?php if ($admin): ?>
-                <a href="admin.php" target="_parent">Administrator</a>
+                    <a href="admin.php" target="_parent">Administrator</a>
                 <?php endif; ?>
             </div>
             <a href="shoppingCart.php" target="_parent">
@@ -54,15 +54,15 @@ if (isset($_SESSION['username'])) {
             </button>
             <div class="user-dropdown">
                 <?php if ($username): ?>
-                <!-- User is logged in, show greeting and logout button -->
-                <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
-                <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
-                <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
-                <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
+                    <!-- User is logged in, show greeting and logout button -->
+                    <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
+                    <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
+                    <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
+                    <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
                 <?php else: ?>
-                <!-- User is not logged in, show login and register buttons -->
-                <a href="login.php" target="_parent"><button class="btn-blue">Login</button></a>
-                <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
+                    <!-- User is not logged in, show login and register buttons -->
+                    <a href="login.php" target="_parent"><button class="btn-blue">Login</button></a>
+                    <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
                 <?php endif; ?>
             </div>
             <button class="mode-button">
