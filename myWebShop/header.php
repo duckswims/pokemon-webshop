@@ -4,8 +4,9 @@ session_start();
 
 // Check if the user is logged in by checking if the username is set in the session
 if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username']; // Retrieve the username from the session
-    $firstName = $_SESSION['firstName'];
+    $username = $_SESSION['username'];
+    $firstNameLive = $_SESSION['firstName'];
+    $admin = $_SESSION['admin'];
 } else {
     $username = null; // User is not logged in
 }
@@ -38,6 +39,10 @@ if (isset($_SESSION['username'])) {
             <div class="nav-links">
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
+                <?php if ($admin): ?>
+
+                <a href="administrator.php" target="_parent">Administrator</a>
+                <?php endif; ?>
             </div>
             <a href="shoppingCart.php" target="_parent">
                 <div id="cart-container">

@@ -10,6 +10,10 @@ if (isset($_SESSION['username'])) {
 } else {
     $username = null; // User is not logged in
 }
+
+// Destroy all session variables
+session_unset();
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,31 +37,8 @@ if (isset($_SESSION['username'])) {
         <?php include ("header.php"); ?>
     </header>
 
-    <!-- Main -->
     <main>
-        <h1>Your Order History (Template)</h1>
-        <fieldset>
-            <legend>Recent Orders</legend>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pokemon</th>
-                        <th>Date</th>
-                        <th>Order No.</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td>Pikachu</td>
-                    <td>dd/mm/yyyy</td>
-                    <td>000123</td>
-                </tr>
-                <tr>
-                    <td>Bulbasaur</td>
-                    <td>dd/mm/yyyy</td>
-                    <td>000124</td>
-                </tr>
-            </table>
-        </fieldset>
+        <h1>Administrator</h1>
     </main>
 
     <!-- Footer -->

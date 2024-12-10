@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables for the logged-in user
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
+            $_SESSION['admin'] = $userData['admin'] ?? 'N/A';
 
             // Redirect to the customer page
             header("Location: customer.php");

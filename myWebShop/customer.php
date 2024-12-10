@@ -10,6 +10,8 @@ if (!isset($_SESSION['username'])) {
 
 // Retrieve the username from the session
 $username = $_SESSION['username'];
+$firstNameLive = $_SESSION['firstName'];
+$admin = $_SESSION['admin'];
 $jsonFile = "users/$username/info.json";
 
 // Check if the JSON file exists for the logged-in user
