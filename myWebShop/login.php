@@ -4,6 +4,26 @@ session_start();
 
 $errorMessage = ''; // Initialize an error message variable
 
+// == Cart Counter Function ===========
+function updateCartCount($shoppingData) {
+    // Initialize counter to 0
+    $counter = 0;
+    
+    // Check if 'cart' exists and is an array
+    if (isset($shoppingData['cart']) && is_array($shoppingData['cart'])) {
+        // Loop through the cart items and sum their quantities
+        foreach ($shoppingData['cart'] as $item) {
+            if (isset($item['quantity'])) {
+                $counter += $item['quantity'];
+            }
+        }
+    }
+    
+    // Update the session with the total quantity
+    $_SESSION['counter'] = $counter;
+}
+
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['uName'];
@@ -25,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
             $_SESSION['admin'] = $userData['admin'] ?? null;
-            $_SESSION['shoppingCart'] = $shoppingData['products'] ?? null;
+            updateCartCount($shoppingData);
 
             // Redirect to the customer page
             header("Location: customer.php");
@@ -36,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $errorMessage = 'User does not exist.';
     }
-    
 }
 ?>
 <?php

@@ -10,6 +10,28 @@ if (isset($_SESSION['username'])) {
 } else {
     $username = null; // User is not logged in
 }
+
+
+// == Cart Number ==============
+
+// Determine the file path for the shopping cart
+$shoppingPath = 'users/shoppingCart.json';  // Default
+if ($username) {
+    $shoppingPath = 'users/' . $username . '/shoppingCart.json';
+}
+
+// Load the cart data if the file exists
+$fileData = json_decode(file_get_contents($shoppingPath), true);
+$cart = $fileData['cart'];
+
+// Count number of items in cart
+$cartCount = 0;
+foreach ($cart as $item) {
+    $cartCount += $item['qty'];
+}
+
+// Cast to session
+$_SESSION['counter'] = $cartCount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +46,9 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/header.css">
+    <script src="script/style-modification.js"></script>
+    <script src="script/user-button.js"></script>
+    <script src="script/cart-update.js"></script>
 </head>
 
 <body>
@@ -40,13 +65,13 @@ if (isset($_SESSION['username'])) {
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
                 <?php if ($admin): ?>
-                    <a href="admin.php" target="_parent">Administrator</a>
+                <a href="admin.php" target="_parent">Administrator</a>
                 <?php endif; ?>
             </div>
             <a href="shoppingCart.php" target="_parent">
                 <div id="cart-container">
                     <img id="cart-icon" src="img/cart.png" alt="Shopping Cart" width="30px">
-                    <span id="cart-count" style="display: none;">0</span>
+                    <span id="cart-count" style="display: none;"><?php echo $_SESSION['counter']; ?></span>
                 </div>
             </a>
             <button class="user-button">
@@ -54,15 +79,15 @@ if (isset($_SESSION['username'])) {
             </button>
             <div class="user-dropdown">
                 <?php if ($username): ?>
-                    <!-- User is logged in, show greeting and logout button -->
-                    <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
-                    <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
-                    <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
-                    <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
+                <!-- User is logged in, show greeting and logout button -->
+                <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
+                <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
+                <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
+                <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
                 <?php else: ?>
-                    <!-- User is not logged in, show login and register buttons -->
-                    <a href="login.php" target="_parent"><button class="btn-blue">Login</button></a>
-                    <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
+                <!-- User is not logged in, show login and register buttons -->
+                <a href="login.php" target="_parent"><button class="btn-blue">Login</button></a>
+                <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
                 <?php endif; ?>
             </div>
             <button class="mode-button">
@@ -73,9 +98,6 @@ if (isset($_SESSION['username'])) {
             </button>
         </div>
     </header>
-
-    <script src="script/style-modification.js"></script>
-    <script src="script/user-button.js"></script>
 </body>
 
 </html>

@@ -7,13 +7,13 @@ if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $firstNameLive = $_SESSION['firstName'];
     $admin = $_SESSION['admin'];
-    $shoppingCartLive = $_SESSION['shoppingCart'];
+    $cartCount = $_SESSION['counter'];
 } else {
     $username = null; // User is not logged in
 }
 
-// Adding cart ====================================
-
+// == Adding cart ====================================
+// Adding item to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Read the incoming JSON data
     $requestPayload = file_get_contents("php://input");
@@ -49,22 +49,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $found = false;
         foreach ($cart as &$item) {
             if ($item['pid'] === $pid) {
-                $item['quantity'] += $quantity; // Update quantity if item already exists
+                $item['qty'] += $quantity; // Update quantity if item already exists
                 $found = true;
                 break;
             }
         }
 
         if (!$found) {
-            $cart[] = ['pid' => $pid, 'quantity' => $quantity];
+            $cart[] = ['pid' => $pid, 'qty' => $quantity];
         }
 
-        // Update the JSON structure
+        // Update the JSON structure and session["shoppingCart"]
         $fileData['cart'] = $cart;
 
         // Save back to JSON file
         if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
-            echo json_encode(['success' => true]);
+            // Update the session cart count directly
+            $cartCount = 0;
+            foreach ($cart as $item) {
+                $cartCount += $item['qty'];
+            }
+            $_SESSION['counter'] = $cartCount;
+
+            // You can return the updated count as a response to trigger the UI update
+            echo json_encode(['success' => true, 'cartCount' => $cartCount]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Failed to write to file']);
         }
@@ -72,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['success' => false, 'error' => 'Invalid input']);
     }
 }
+
 ?>
 
 <!DOCTYPE html>
