@@ -32,7 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents($dirPath . '/info.json', json_encode($info, JSON_PRETTY_PRINT));
 
     // Create empty shoppingCart.json
-    file_put_contents($dirPath . '/shoppingCart.json', json_encode([], JSON_PRETTY_PRINT));
+    $defaultShoppingFile = "users/shoppingCart.json";
+    $defaultContent = file_get_contents($defaultShoppingFile);
+    file_put_contents($dirPath . '/shoppingCart.json', $defaultContent);        // put default shoppingCart into user shoppingCart
+    file_put_contents($defaultShoppingFile, json_encode([], JSON_PRETTY_PRINT)); // clear default shoppingCart
 
     // Create empty orderHistory.json
     file_put_contents($dirPath . '/orderHistory.json', json_encode([], JSON_PRETTY_PRINT));
