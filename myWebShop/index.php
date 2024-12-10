@@ -1,16 +1,6 @@
 <?php
 // Start the session to access session variables
 session_start();
-
-// Check if the user is logged in by checking if the username is set in the session
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-    $firstNameLive = $_SESSION['firstName'];
-    $admin = $_SESSION['admin'];
-    $shoppingCartLive = $_SESSION['shoppingCart'];
-} else {
-    $username = null; // User is not logged in
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +33,7 @@ if (isset($_SESSION['username'])) {
             <h1>
                 <?php
                 // Check if the username exists in the session
-                if (isset($username)) {
+                if ($_SESSION['username']) {
                     echo "Welcome back, " . htmlspecialchars($firstNameLive) . "!";
                 } else {
                     echo "Welcome to Our Pokémon Store!";

@@ -2,15 +2,6 @@
 // Start the session to access session variables
 session_start();
 
-// Check if the user is logged in by checking if the username is set in the session
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-    $firstNameLive = $_SESSION['firstName'];
-    $admin = $_SESSION['admin'];
-} else {
-    $username = null; // User is not logged in
-}
-
 // Destroy all session variables
 session_unset();
 session_destroy();

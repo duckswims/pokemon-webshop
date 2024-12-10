@@ -2,16 +2,6 @@
 // Start the session to access session variables
 session_start();
 
-// Check if the user is logged in by checking if the username is set in the session
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-    $firstNameLive = $_SESSION['firstName'];
-    $admin = $_SESSION['admin'];
-} else {
-    $username = null; // User is not logged in
-}
-
-
 // == Cart Number ==============
 
 // Determine the file path for the shopping cart
@@ -64,7 +54,7 @@ $_SESSION['counter'] = $cartCount;
             <div class="nav-links">
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
-                <?php if ($admin): ?>
+                <?php if ($_SESSION['admin']): ?>
                 <a href="admin.php" target="_parent">Administrator</a>
                 <?php endif; ?>
             </div>
@@ -78,9 +68,9 @@ $_SESSION['counter'] = $cartCount;
                 <img src="img/user.png" class="nav-img user-img">
             </button>
             <div class="user-dropdown">
-                <?php if ($username): ?>
+                <?php if ($_SESSION['username']): ?>
                 <!-- User is logged in, show greeting and logout button -->
-                <strong>Hello, <?php echo htmlspecialchars($firstNameLive); ?>!</strong>
+                <strong>Hello, <?php echo htmlspecialchars($_SESSION['firstName']); ?>!</strong>
                 <a href="customer.php" target="_parent"><button class="btn-blue">Profile</button></a>
                 <a href="orderHistory.php" target="_parent"><button class="btn-blue">Order History</button></a>
                 <a href="logout.php" target="_parent"><button class="btn-blue">Logout</button></a>
