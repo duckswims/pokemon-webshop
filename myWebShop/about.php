@@ -6,6 +6,7 @@ session_start();
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $firstNameLive = $_SESSION['firstName'];
+    $admin = $_SESSION['admin'];
 } else {
     $username = null; // User is not logged in
 }

@@ -11,6 +11,7 @@ if (!isset($_SESSION['username'])) {
 // Retrieve the username from the session
 $username = $_SESSION['username'];
 $firstNameLive = $_SESSION['firstName'];
+$admin = $_SESSION['admin'];
 $jsonFile = "users/$username/info.json";
 
 // Check if the JSON file exists for the logged-in user
@@ -256,8 +257,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($successMessage)): ?>
                 <p style="color: green;"><?php echo htmlspecialchars($successMessage); ?></p>
                 <?php endif; ?>
-
-                <?php echo htmlspecialchars($firstNameLive); ?>
             </div>
         </fieldset>
 
