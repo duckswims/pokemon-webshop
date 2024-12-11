@@ -34,7 +34,7 @@ session_start();
                 <?php
                 // Check if the username exists in the session
                 if ($_SESSION['username']) {
-                    echo "Welcome back, " . htmlspecialchars($firstNameLive) . "!";
+                    echo "Welcome back, " . htmlspecialchars($_SESSION["firstName"]) . "!";
                 } else {
                     echo "Welcome to Our Pokémon Store!";
                 }
