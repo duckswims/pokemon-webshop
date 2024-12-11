@@ -2,91 +2,88 @@
 // Start the session to access session variables
 session_start();
 
-// == Products ==
+// == Define File Paths and Load Products ==
 
-// Define the product file
+// Define paths
 $productFile = 'json/product.json';
-$products = json_decode(file_get_contents($productFile), true)["product"];
-
-// Create a mapping of pid to product details (name and price)
-$productMap = [];
-foreach ($products as $product) {
-    $productMap[$product['pid']] = $product;
-}
-
-
-
-// == Shopping Cart ==
-
-// Define the default shopping cart path
 $defaultShoppingFile = 'users/shoppingCart.json';
 
-// Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    // Path to the logged-in user's shopping cart
-    $shoppingFile = 'users/' . $_SESSION['username'] . '/shoppingCart.json';
-} else {
-    // Use the default shopping cart file
-    $shoppingFile = $defaultShoppingFile;
-}
+// Load product data and create a product map
+$products = json_decode(file_get_contents($productFile), true)["product"];
+$productMap = array_column($products, null, 'pid');
 
-// Read the shopping cart data from the JSON file
-if (file_exists($shoppingFile)) {
-    $fileData = json_decode(file_get_contents($shoppingFile), true);
-    $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
-} else {
-    $cart = [];
-}
+// == Shopping Cart Handling ==
 
+// Determine the shopping cart path
+$shoppingFile = isset($_SESSION['username']) 
+    ? 'users/' . $_SESSION['username'] . '/shoppingCart.json' 
+    : $defaultShoppingFile;
 
-// Handle the AJAX request
-$input = json_decode(file_get_contents('php://input'), true);
+// Read the shopping cart data
+$cart = file_exists($shoppingFile) ? json_decode(file_get_contents($shoppingFile), true)['cart'] : [];
 
-if (isset($input['action'])) {
-    $action = $input['action'];
+// == Price Calculation ==
 
-    if ($action === 'update' && isset($input['pid'], $input['qty'])) {
-        $pid = $input['pid'];
-        $qty = (int)$input['qty'];
+// Initialize total price and other variables
+$totalPrice = 0;
+$discount = 5;
+$shipping = 4.99;
 
-        foreach ($cart as &$item) {
-            if ($item['pid'] == $pid) {
-                $item['qty'] = $qty;
-                break;
-            }
-        }
-
-        file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
-
-        // Calculate the updated total price
-        $totalPrice = 0;
-        foreach ($cart as $item) {
-            $product = $productMap[$item['pid']];
-            $totalPrice += $product['price'] * $item['qty'];
-        }
-
-        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-    } elseif ($action === 'remove' && isset($input['pid'])) {
-        $pid = $input['pid'];
-        $cart = array_filter($cart, function ($item) use ($pid) {
-            return $item['pid'] !== $pid;
-        });
-
-        file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
-
-        $totalPrice = 0;
-        foreach ($cart as $item) {
-            $product = $productMap[$item['pid']];
-            $totalPrice += $product['price'] * $item['qty'];
-        }
-
-        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Invalid action or parameters.']);
+// Calculate total price based on cart items
+foreach ($cart as $item) {
+    $product = $productMap[$item['pid']] ?? null;
+    if ($product) {
+        $totalPrice += $product['price'] * $item['qty'];
     }
+}
+
+// Calculate tax and other costs
+$tax = round($totalPrice * 0.19, 2);
+$totalPriceWOtax = round($totalPrice - $tax, 2);
+$totalPrice = round($totalPrice, 2);
+$finalPrice = $totalPrice - $discount + $shipping;
+
+// == Handle AJAX Request for Payment ==
+
+$input = json_decode(file_get_contents('php://input'), true);
+if ($input['action'] === 'proceed_to_payment') {
+    if (!isset($_SESSION['username'])) {
+        echo json_encode(['success' => false, 'error' => 'User not logged in.']);
+        exit;
+    }
+
+    // User-specific file paths
+    $username = $_SESSION['username'];
+    $userCartFile = "users/$username/shoppingCart.json";
+    $orderHistoryFile = "users/$username/orderHistory.json";
+
+    // Check if shopping cart exists
+    if (!file_exists($userCartFile)) {
+        echo json_encode(['success' => false, 'error' => 'Shopping cart not found.']);
+        exit;
+    }
+
+    // Read and update cart data
+    $cartData = json_decode(file_get_contents($userCartFile), true);
+    $cartData['status'] = 'processing';
+    $cartData['discount'] = $discount;
+    $cartData['finalPrice'] = $finalPrice;
+    $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // 10 alphanumeric characters
+    $cartData['datetime'] = date('Y-m-d H:i:s');
+    
+    // Append order to order history
+    $orderHistory = file_exists($orderHistoryFile) 
+        ? json_decode(file_get_contents($orderHistoryFile), true) 
+        : [];
+    $orderHistory[] = $cartData;
+    file_put_contents($orderHistoryFile, json_encode($orderHistory, JSON_PRETTY_PRINT));
+
+    // Clear shopping cart
+    file_put_contents($userCartFile, json_encode(['cart' => []], JSON_PRETTY_PRINT));
+
+    echo json_encode(['success' => true, 'message' => 'Order placed successfully!']);
     exit;
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,29 +153,6 @@ if (isset($input['action'])) {
             <div class="container summary-container">
                 <div class="container price-container">
                     Order Summary
-                    <?php
-                    // Initialize variables
-                    $totalPrice = 0;
-
-                    // Calculation of total price
-                    foreach ($cart as $item) {
-                        $product = $productMap[$pid];
-                        $price = $product['price'];
-                        $qty = $item['qty'];
-
-                        $totalPrice += $price * $qty;
-                    }
-
-                    // Calculate tax (19% of totalPrice)
-                    $tax = round($totalPrice * 0.19, 2);
-                    $totalPriceWOtax = round($totalPrice - $tax, 2);
-                    $totalPrice = round($totalPrice, 2);
-                    $discount = 5;
-                    $shipping = 4.99;
-                    $finalPrice = $totalPrice - $discount + $shipping;
-                    ?>
-
-
                     <div class="container">
                         <div class="left">
                             <strong>Total Price (without tax)</strong>
@@ -231,7 +205,7 @@ if (isset($input['action'])) {
                             <span><?php echo number_format($finalPrice, 2); ?>€</span>
                         </div>
                     </div>
-                    <button class="btn-blue">Proceed to Payment</button>
+                    <button class="btn-blue payment">Proceed to Payment</button>
                 </div>
                 <div class="container discount-container">
                     Enter Discount Code
