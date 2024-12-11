@@ -22,29 +22,7 @@ $shoppingFile = isset($_SESSION['username'])
 // Read the shopping cart data
 $cart = file_exists($shoppingFile) ? json_decode(file_get_contents($shoppingFile), true)['cart'] : [];
 
-// == Price Calculation ==
-
-// Initialize total price and other variables
-$totalPrice = 0;
-$discount = 5;
-$shipping = 4.99;
-
-// Calculate total price based on cart items
-foreach ($cart as $item) {
-    $product = $productMap[$item['pid']] ?? null;
-    if ($product) {
-        $totalPrice += $product['price'] * $item['qty'];
-    }
-}
-
-// Calculate tax and other costs
-$tax = round($totalPrice * 0.19, 2);
-$totalPriceWOtax = round($totalPrice - $tax, 2);
-$totalPrice = round($totalPrice, 2);
-$finalPrice = $totalPrice - $discount + $shipping;
-
 // == Handle AJAX Request for Payment ==
-
 $input = json_decode(file_get_contents('php://input'), true);
 if ($input['action'] === 'proceed_to_payment') {
     if (!isset($_SESSION['username'])) {
@@ -153,6 +131,27 @@ if ($input['action'] === 'proceed_to_payment') {
             <div class="container summary-container">
                 <div class="container price-container">
                     Order Summary
+                    <?php
+                    // Initialize variables
+                    $totalPrice = 0;
+
+                    // Calculation of total price
+                    foreach ($cart as $item) {
+                        $product = $productMap[$pid];
+                        $price = $product['price'];
+                        $qty = $item['qty'];
+
+                        $totalPrice += $price * $qty;
+                    }
+
+                    // Calculate tax (19% of totalPrice)
+                    $tax = round($totalPrice * 0.19, 2);
+                    $totalPriceWOtax = round($totalPrice - $tax, 2);
+                    $totalPrice = round($totalPrice, 2);
+                    $discount = 5;
+                    $shipping = 4.99;
+                    $finalPrice = $totalPrice - $discount + $shipping;
+                    ?>
                     <div class="container">
                         <div class="left">
                             <strong>Total Price (without tax)</strong>
