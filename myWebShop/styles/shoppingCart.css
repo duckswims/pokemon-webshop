@@ -1,12 +1,9 @@
-.container {
-    gap: 10px !important;
-}
-
 .product-container,
 .summary-container,
 .price-container,
 .discount-container {
     flex-direction: column !important;
+    gap: 10px !important;
 }
 
 
@@ -16,6 +13,7 @@
 
 .product-container {
     min-width: 600px !important;
+    /* width: 60% !important; */
     height: auto !important;
     flex: 0 1 auto;
     align-self: flex-start;
