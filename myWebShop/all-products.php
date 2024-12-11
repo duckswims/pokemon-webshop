@@ -1,74 +1,77 @@
 <?php
+// Start the session to manage user data
 session_start();
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 $shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
 
-// Handle adding item to the cart
+// Retrieve the username from the session, if available
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+
+// == Adding item to the cart ====================================
+// Check if the request method is POST (i.e., adding an item to the cart)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Read the incoming JSON data from the request body
     $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['pid'], $data['quantity'])) {
-        $pid = htmlspecialchars($data['pid']);
-        $quantity = intval($data['quantity']);
+    // Ensure the necessary data (pid and quantity) are provided
+    if (!isset($data['pid'], $data['quantity'])) {
+        // Return an error response if the data is invalid
+        echo json_encode(['success' => false, 'error' => 'Invalid data provided']);
+        exit;
+    }
 
-        // Ensure the directory exists
-        $directory = dirname($shoppingPath);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true); // Create the directory if it doesn't exist
-        }
+    // Sanitize and retrieve the product ID (pid) and quantity
+    $pid = htmlspecialchars($data['pid']);
+    $quantity = intval($data['quantity']);
 
-        // Load existing cart data or initialize if not present
-        $cart = [];
-        if (file_exists($shoppingPath)) {
-            $fileData = json_decode(file_get_contents($shoppingPath), true);
-            $cart = $fileData['cart'] ?? [];
-        }
+    // Determine the file path for the shopping cart based on whether the user is logged in
+    $shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
 
-        // Update cart with the new item
-        $found = false;
+    // Ensure the directory for the cart file exists
+    $directory = dirname($shoppingPath);
+    if (!is_dir($directory)) {
+        // Create the directory if it doesn't exist
+        mkdir($directory, 0777, true);
+    }
 
-        foreach ($cart as &$item) {
-            if ($item['pid'] === $pid) {
-                $item['qty'] += $quantity;
-                $found = true;
-                break;
-            }
-        }
+    // Initialize the cart as an empty array if the cart file doesn't exist
+    $cart = [];
+    if (file_exists($shoppingPath)) {
+        // Load the existing cart data from the JSON file
+        $fileData = json_decode(file_get_contents($shoppingPath), true);
+        // Retrieve the cart items from the file or initialize an empty array if not set
+        $cart = $fileData['cart'] ?? [];
+    }
 
-        if (!$found) {
-            $cart[] = ['pid' => $pid, 'qty' => $quantity];
-        }
-
-        // Save updated cart to JSON
-        $fileData = ['cart' => $cart];
-        usort($fileData['cart'], fn($a, $b) => $a['pid'] <=> $b['pid']);
-
-        if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
-            // Update session cart count
-            $_SESSION['counter'] = array_sum(array_column($cart, 'qty'));
+    // Check if the product already exists in the cart
+    $found = false;
+    foreach ($cart as &$item) {
+        if ($item['pid'] === $pid) {
+            // If the product is already in the cart, update its quantity
+            $item['qty'] += $quantity;
+            $found = true;
+            break;
         }
     }
-}
-// Handle POST requests for adding items to the cart
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents("php://input"), true);
-    if (isset($input['pid'], $input['quantity'])) {
-        $pid = htmlspecialchars($input['pid']);
-        $quantity = intval($input['quantity']);
-        $found = false;
-        foreach ($cart as &$item) {
-            if ($item['pid'] === $pid) {
-                $item['qty'] += $quantity;
-                $found = true;
-                break;
-            }
-        }
+
+    // If the product is not found in the cart, add it as a new item
+    if (!$found) {
+        $cart[] = ['pid' => $pid, 'qty' => $quantity];
     }
+
+    // Update the cart in the file with the modified cart data
+    $fileData['cart'] = $cart;
+    file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT));
+
+    // Calculate the total number of items in the cart and update the session
+    $cartCount = array_sum(array_column($cart, 'qty'));
+    $_SESSION['counter'] = $cartCount;
+
+    // Respond with a success message and the updated cart count
+    echo json_encode(['success' => true, 'cartCount' => $cartCount]);
     exit;
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,12 +141,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
         </div>
 
-        <section class="collection-list box">
-            <h2>Your Collection List</h2>
-            <ul id="collection-items">
-                <!-- Dynamically added collection items will appear here -->
-            </ul>
-        </section>
     </main>
 
     <!-- Footer -->
