@@ -49,7 +49,6 @@ if (isset($input['action'])) {
         $pid = $input['pid'];
         $qty = (int)$input['qty'];
 
-        // Update the quantity in the cart
         foreach ($cart as &$item) {
             if ($item['pid'] == $pid) {
                 $item['qty'] = $qty;
@@ -57,20 +56,37 @@ if (isset($input['action'])) {
             }
         }
 
-        // Save the updated cart back to the JSON file
         file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
+
+        // Calculate the updated total price
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $product = $productMap[$item['pid']];
+            $totalPrice += $product['price'] * $item['qty'];
+        }
+
+        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
     } elseif ($action === 'remove' && isset($input['pid'])) {
         $pid = $input['pid'];
-
-        // Remove the item from the cart
         $cart = array_filter($cart, function ($item) use ($pid) {
             return $item['pid'] !== $pid;
         });
 
-        // Save the updated cart back to the JSON file
         file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
+
+        $totalPrice = 0;
+        foreach ($cart as $item) {
+            $product = $productMap[$item['pid']];
+            $totalPrice += $product['price'] * $item['qty'];
+        }
+
+        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Invalid action or parameters.']);
     }
+    exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -211,8 +227,8 @@ if (isset($input['action'])) {
                         <div class="left">
                             <strong>Total</strong>
                         </div>
-                        <div class="right">
-                            <?php echo number_format($finalPrice, 2); ?>€
+                        <div class="right subtotal">
+                            <span><?php echo number_format($finalPrice, 2); ?>€</span>
                         </div>
                     </div>
                     <button class="btn-blue">Proceed to Payment</button>

@@ -19,6 +19,7 @@ function updateCartQty(pid, qty) {
     });
 }
 
+
 function removeFromCart(pid) {
     fetch('shoppingCart.php', {
         method: 'POST',
@@ -31,8 +32,8 @@ function removeFromCart(pid) {
     .then(data => {
         if (data.success) {
             console.log('Item removed successfully.');
-            // Optionally, remove the item from the UI
-            const itemBox = document.getElementById(`delete-${pid}`).closest('.box');
+            // Remove the product box
+            const itemBox = document.getElementById(`product-${pid}`);
             if (itemBox) itemBox.remove();
         } else {
             console.error('Failed to remove item:', data.error);

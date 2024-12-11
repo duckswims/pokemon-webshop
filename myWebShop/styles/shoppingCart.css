@@ -16,11 +16,16 @@
 
 .product-container {
     min-width: 600px !important;
+    height: auto !important;
+    flex: 0 1 auto;
+    align-self: flex-start;
 }
 
 .summary-container {
     width: 40% !important;
     gap: 20px !important;
+    flex: 0 1 auto;
+    align-self: flex-start;
 }
 
 .box {
