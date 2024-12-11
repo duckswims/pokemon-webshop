@@ -1,63 +1,28 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//     const cartIcon = document.getElementById("cart-icon");
-//     const cartCount = document.getElementById("cart-count");
-
-//     function updateCartIcon() {
-//         const itemCount = Object.values(window.collectionList).reduce((sum, item) => sum + item.quantity, 0);
-//         if (itemCount > 0) {
-//             cartCount.textContent = itemCount;
-//             cartCount.style.display = "inline";
-//         } else {
-//             cartCount.style.display = "none";
-//         }
-//     }
-
-//     // Expose updateCartIcon globally
-//     window.updateCartIcon = updateCartIcon;
-
-//     document.querySelectorAll(".add-cart").forEach(button => {
-//         button.addEventListener("click", () => {
-//             updateCartIcon();
-//         });
-//     });
-
-//     updateCartIcon();
-// });
-
 document.addEventListener("DOMContentLoaded", () => {
     const cartCountSpan = document.getElementById("cart-count");
-    let cartCount = parseInt(cartCountSpan.textContent);
 
-    if (cartCount > 0) {
-        cartCountSpan.style.display = "inline";
-        cartCountSpan.textContent = cartCount;
+    // Function to update cart count dynamically
+    function updateCartCount(newCartCount) {
+        cartCountSpan.textContent = newCartCount;
+        cartCountSpan.style.display = newCartCount > 0 ? "inline" : "none";
     }
-});
 
-function updateCartCount(newCartCount) {
-    const cartCountSpan = document.getElementById("cart-count");
-    cartCountSpan.textContent = newCartCount;
-    cartCountSpan.style.display = newCartCount > 0 ? "inline" : "none";
-}
-
-function handleAddToCartResponse(response) {
-    if (response.success) {
-        updateCartCount(response.cartCount);
+    // Fetch and update cart count on page load
+    function fetchCartCount() {
+        fetch("shoppingCart.php?action=getCartCount")
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && typeof data.cartCount !== "undefined") {
+                    updateCartCount(data.cartCount);
+                }
+            })
+            .catch(error => console.error("Error fetching cart count:", error));
     }
-}
 
-document.querySelector('.add-to-cart').addEventListener('click', function () {
-    const pid = this.dataset.pid;
-    const quantity = 1;
+    // Initialize the cart count
+    fetchCartCount();
 
-    fetch('all-products.php', {
-        method: 'POST',
-        body: JSON.stringify({ pid: pid, quantity: quantity }),
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => handleAddToCartResponse(data));
+    // Expose the function globally (if needed)
+    window.fetchCartCount = fetchCartCount;
+    // window.updateCartCount = updateCartCount;
 });
-

@@ -1,45 +1,37 @@
 <?php
-// Start the session to access session variables
 session_start();
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 
-// == Adding cart ====================================
-// Adding item to the cart
+// Determine the file path for the shopping cart
+$shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
+
+// Ensure the directory exists for user-specific carts
+$directory = dirname($shoppingPath);
+if (!is_dir($directory)) {
+    mkdir($directory, 0777, true);
+}
+
+// Load or initialize the cart
+if (file_exists($shoppingPath)) {
+    $fileData = json_decode(file_get_contents($shoppingPath), true);
+    $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
+} else {
+    $cart = [];
+    $fileData = ['cart' => $cart];
+}
+
+// Handle POST requests for adding items to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Read the incoming JSON data
-    $requestPayload = file_get_contents("php://input");
-    $data = json_decode($requestPayload, true);
+    $input = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['pid']) && isset($data['quantity'])) {
-        $pid = htmlspecialchars($data['pid']);
-        $quantity = intval($data['quantity']);
-
-        // Determine the file path for the shopping cart
-        if ($username) {
-            $shoppingPath = 'users/' . $username . '/shoppingCart.json';
-        } else {
-            $shoppingPath = 'users/shoppingCart.json';
-        }
-
-        // Ensure the directory exists
-        $directory = dirname($shoppingPath);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true); // Create the directory if it doesn't exist
-        }
-
-        // Load existing cart data
-        if (file_exists($shoppingPath)) {
-            $fileData = json_decode(file_get_contents($shoppingPath), true);
-            $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
-        } else {
-            $cart = [];
-            $fileData = ['cart' => $cart]; // Initialize the JSON structure
-        }
-
-        // Update cart with the new item
+    if (isset($input['pid'], $input['quantity'])) {
+        $pid = htmlspecialchars($input['pid']);
+        $quantity = intval($input['quantity']);
         $found = false;
+
         foreach ($cart as &$item) {
             if ($item['pid'] === $pid) {
-                $item['qty'] += $quantity; // Update quantity if item already exists
+                $item['qty'] += $quantity;
                 $found = true;
                 break;
             }
@@ -49,28 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $cart[] = ['pid' => $pid, 'qty' => $quantity];
         }
 
-        // Update the JSON structure and session["shoppingCart"]
         $fileData['cart'] = $cart;
+        file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT));
 
+        $cartCount = array_sum(array_column($cart, 'qty'));
+        $_SESSION['counter'] = $cartCount;
 
-        // Sort the cart by pid in ascending order
-        usort($fileData['cart'], function($a, $b) {
-            return $a['pid'] <=> $b['pid'];
-        });
-
-        // Save back to JSON file
-        if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
-            // Update the session cart count directly
-            $cartCount = 0;
-            foreach ($cart as $item) {
-                $cartCount += $item['qty'];
-            }
-            $_SESSION['counter'] = $cartCount;
-        } 
-    } 
+        echo json_encode(['success' => true, 'cartCount' => $cartCount]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Invalid data provided']);
+    }
+    exit;
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
                             <div class="add-div">
                                 <input type="number" class="qty-input" id="quantity" value="1" min="1">
-                                <button class="btn-blue add-cart">Add to cart</button>
+                                <button class="btn-blue add-cart" data-pid="' . htmlspecialchars($product['pid']) . '">Add to cart</button>
                             </div>
                         </div>
                     </div>

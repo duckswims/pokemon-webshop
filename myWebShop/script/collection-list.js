@@ -72,6 +72,13 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Function to update the cart count
+    function updateCartCount(newCartCount) {
+        const cartCountSpan = document.getElementById("cart-count");
+        cartCountSpan.textContent = newCartCount;
+        cartCountSpan.style.display = newCartCount > 0 ? "inline" : "none";
+    }
+    
     // Add event listener to all "Add to cart" buttons
     document.querySelectorAll(".add-cart").forEach(button => {
         button.addEventListener("click", (event) => {
@@ -93,7 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert("Item added to cart successfully!");
+                    updateCartCount(data.cartCount);
+                    // Update cart count dynamically
+                    if (typeof data.cartCount !== "undefined") {
+                        updateCartCount(data.cartCount);
+                    }
                 } else {
                     alert("Failed to add item to cart: " + data.error);
                 }
@@ -104,3 +115,4 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+

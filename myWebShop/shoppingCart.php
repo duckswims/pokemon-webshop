@@ -3,8 +3,6 @@
 session_start();
 
 // == Products ==
-
-// Define the product file
 $productFile = 'json/product.json';
 $products = json_decode(file_get_contents($productFile), true)["product"];
 
@@ -14,32 +12,28 @@ foreach ($products as $product) {
     $productMap[$product['pid']] = $product;
 }
 
-
-
 // == Shopping Cart ==
-
-// Define the default shopping cart path
 $defaultShoppingFile = 'users/shoppingCart.json';
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$shoppingFile = $username ? "users/$username/shoppingCart.json" : $defaultShoppingFile;
 
-// Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    // Path to the logged-in user's shopping cart
-    $shoppingFile = 'users/' . $_SESSION['username'] . '/shoppingCart.json';
+// Ensure the cart file exists or create an empty one
+if (!file_exists($shoppingFile)) {
+    $cart = [];
+    file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
 } else {
-    // Use the default shopping cart file
-    $shoppingFile = $defaultShoppingFile;
-}
-
-// Read the shopping cart data from the JSON file
-if (file_exists($shoppingFile)) {
     $fileData = json_decode(file_get_contents($shoppingFile), true);
     $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
-} else {
-    $cart = [];
 }
 
+// Handle GET request for cart count
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getCartCount') {
+    $cartCount = array_sum(array_column($cart, 'qty'));
+    echo json_encode(['success' => true, 'cartCount' => $cartCount]);
+    exit;
+}
 
-// Handle the AJAX request
+// Handle the AJAX request for cart operations
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (isset($input['action'])) {
@@ -86,8 +80,11 @@ if (isset($input['action'])) {
     }
     exit;
 }
-
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,7 +112,7 @@ if (isset($input['action'])) {
     <!-- Main -->
     <main>
         <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :(</h1>
+        <h1>Empty shopping cart :( </h1>
         <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
             alt="Pikachu" width="300px">
         <?php else: ?>

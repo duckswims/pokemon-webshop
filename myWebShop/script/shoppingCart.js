@@ -9,6 +9,7 @@ function updateCartQty(pid, qty) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            window.fetchCartCount();
             console.log('Cart updated successfully.');
         } else {
             console.error('Failed to update cart:', data.error);
@@ -31,10 +32,10 @@ function removeFromCart(pid) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            console.log('Item removed successfully.');
-            // Remove the product box
             const itemBox = document.getElementById(`product-${pid}`);
             if (itemBox) itemBox.remove();
+            window.fetchCartCount(); // Dynamically update the cart icon
+            console.log('Item removed successfully.');
         } else {
             console.error('Failed to remove item:', data.error);
         }
