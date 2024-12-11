@@ -22,3 +22,13 @@
     background-color: #B3EBF2 !important;
     color: black;
 }
+
+.btn-white {
+    background-color: white !important;
+    color: black;
+}
+
+.btn-delete {
+    height: 20px;
+    cursor: pointer;
+}

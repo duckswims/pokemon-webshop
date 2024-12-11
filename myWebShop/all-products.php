@@ -2,25 +2,16 @@
 // Start the session to access session variables
 session_start();
 
-$username = $_SESSION["username"];
+$username = $_SESSION["username"] ?? null;
+$shoppingPath = $username ? 'users/' . $username . '/shoppingCart.json' : 'users/shoppingCart.json';
 
-// == Adding cart ====================================
-// Adding item to the cart
+// Handle adding item to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Read the incoming JSON data
-    $requestPayload = file_get_contents("php://input");
-    $data = json_decode($requestPayload, true);
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    if (isset($data['pid']) && isset($data['quantity'])) {
+    if (isset($data['pid'], $data['quantity'])) {
         $pid = htmlspecialchars($data['pid']);
         $quantity = intval($data['quantity']);
-
-        // Determine the file path for the shopping cart
-        if ($username) {
-            $shoppingPath = 'users/' . $username . '/shoppingCart.json';
-        } else {
-            $shoppingPath = 'users/shoppingCart.json';
-        }
 
         // Ensure the directory exists
         $directory = dirname($shoppingPath);
@@ -28,13 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mkdir($directory, 0777, true); // Create the directory if it doesn't exist
         }
 
-        // Load existing cart data
+        // Load existing cart data or initialize if not present
+        $cart = [];
         if (file_exists($shoppingPath)) {
             $fileData = json_decode(file_get_contents($shoppingPath), true);
-            $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
-        } else {
-            $cart = [];
-            $fileData = ['cart' => $cart]; // Initialize the JSON structure
+            $cart = $fileData['cart'] ?? [];
         }
 
         // Update cart with the new item
@@ -51,27 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $cart[] = ['pid' => $pid, 'qty' => $quantity];
         }
 
-        // Update the JSON structure and session["shoppingCart"]
-        $fileData['cart'] = $cart;
+        // Save updated cart to JSON
+        $fileData = ['cart' => $cart];
+        usort($fileData['cart'], fn($a, $b) => $a['pid'] <=> $b['pid']);
 
-
-        // Sort the cart by pid in ascending order
-        usort($fileData['cart'], function($a, $b) {
-            return $a['pid'] <=> $b['pid'];
-        });
-
-        // Save back to JSON file
         if (file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT))) {
-            // Update the session cart count directly
-            $cartCount = 0;
-            foreach ($cart as $item) {
-                $cartCount += $item['qty'];
-            }
-            $_SESSION['counter'] = $cartCount;
-        } 
-    } 
+            // Update session cart count
+            $_SESSION['counter'] = array_sum(array_column($cart, 'qty'));
+        }
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -97,28 +75,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <!-- Header -->
     <header>
-        <?php include ("header.php"); ?>
+        <?php include("header.php"); ?>
     </header>
 
     <main>
         <h1>Pokémon List</h1>
-        <p>
-            This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by
-            type and category.
-        </p>
-        <br>
+        <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type
+            and category.</p>
+
         <div class="search-bar">
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
         </div>
-        <br>
 
         <div class="product-display" id="product-display">
             <?php
-            // Load the JSON file
-            $jsonString = file_get_contents('json/product.json');
-            $data = json_decode($jsonString, true);
+            // Load product data from JSON
+            $data = json_decode(file_get_contents('json/product.json'), true);
 
-            // Check if the JSON contains the 'product' key
             if (isset($data['product'])) {
                 foreach ($data['product'] as $product) {
                     echo '
@@ -132,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
                         <div class="right">
-                            <h3 class="title">' . ' #' . htmlspecialchars($product['pid']) . " " . htmlspecialchars($product['name']) . '</h3>
+                            <h3 class="title">#' . htmlspecialchars($product['pid']) . ' ' . htmlspecialchars($product['name']) . '</h3>
                             <p class="desc">' . htmlspecialchars($product['desc']) . '</p>
                             <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
                             <div class="add-div">
@@ -140,13 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <button class="btn-blue add-cart">Add to cart</button>
                             </div>
                         </div>
-                    </div>
-                    ';
+                    </div>';
                 }
             } else {
-                echo '
-                <h2 style="color: red;">Error 404: Product information not found :( </h2>
-                ';
+                echo '<h2 style="color: red;">Error 404: Product information not found :(</h2>';
             }
             ?>
         </div>
@@ -161,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Footer -->
     <footer>
-        <?php include ("footer.php"); ?>
+        <?php include("footer.php"); ?>
     </footer>
 </body>
 
