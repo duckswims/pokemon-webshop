@@ -3,7 +3,7 @@
 session_start();
 
 // File Paths
-$username = $_SESSION['username'] ?? null;
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 $productFile = 'json/product.json';
 $defaultShoppingFile = 'users/shoppingCart.json';
 $shoppingFile = $username ? "users/$username/shoppingCart.json" : $defaultShoppingFile;
@@ -34,6 +34,13 @@ $tax = round($totalPrice * 0.19, 2);
 $totalPriceWOtax = round($totalPrice - $tax, 2);
 $totalPrice = round($totalPrice, 2);
 $finalPrice = $totalPrice - $discount + $shipping;
+
+// Handle GET request for cart count
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'getCartCount') {
+    $cartCount = array_sum(array_column($cart, 'qty'));
+    echo json_encode(['success' => true, 'cartCount' => $cartCount]);
+    exit;
+}
 
 // Handle AJAX Requests
 $input = json_decode(file_get_contents('php://input'), true);
@@ -145,7 +152,7 @@ function calculateTotalPrice($cart, $productMap) {
     <!-- Main -->
     <main>
         <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :(</h1>
+        <h1>Empty shopping cart :( </h1>
         <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
             alt="Pikachu" width="300px">
         <?php else: ?>

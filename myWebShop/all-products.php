@@ -1,9 +1,7 @@
 <?php
-// Start the session to access session variables
 session_start();
-
-$username = $_SESSION["username"] ?? null;
-$shoppingPath = $username ? 'users/' . $username . '/shoppingCart.json' : 'users/shoppingCart.json';
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
 
 // Handle adding item to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,9 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Update cart with the new item
         $found = false;
+
         foreach ($cart as &$item) {
             if ($item['pid'] === $pid) {
-                $item['qty'] += $quantity; // Update quantity if item already exists
+                $item['qty'] += $quantity;
                 $found = true;
                 break;
             }
@@ -50,7 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+// Handle POST requests for adding items to the cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $input = json_decode(file_get_contents("php://input"), true);
+    if (isset($input['pid'], $input['quantity'])) {
+        $pid = htmlspecialchars($input['pid']);
+        $quantity = intval($input['quantity']);
+        $found = false;
+        foreach ($cart as &$item) {
+            if ($item['pid'] === $pid) {
+                $item['qty'] += $quantity;
+                $found = true;
+                break;
+            }
+        }
+    }
+    exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
                             <div class="add-div">
                                 <input type="number" class="qty-input" id="quantity" value="1" min="1">
-                                <button class="btn-blue add-cart">Add to cart</button>
+                                <button class="btn-blue add-cart" data-pid="' . htmlspecialchars($product['pid']) . '">Add to cart</button>
                             </div>
                         </div>
                     </div>';
