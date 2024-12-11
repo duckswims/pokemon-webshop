@@ -137,9 +137,9 @@ if (isset($input['action'])) {
                 ?>
             </div>
 
-            <div class="container price-container">
-                Summary<br>
-                <div>
+            <div class="container summary-container">
+                <div class="container price-container">
+                    Order Summary
                     <?php
                     // Initialize variables
                     $totalPrice = 0;
@@ -155,18 +155,17 @@ if (isset($input['action'])) {
 
                     // Calculate tax (19% of totalPrice)
                     $tax = round($totalPrice * 0.19, 2);
-
-                    // Calculate totalPrice without tax
                     $totalPriceWOtax = round($totalPrice - $tax, 2);
-
-                    // Round totalPrice to 2 decimal points
                     $totalPrice = round($totalPrice, 2);
+                    $discount = 5;
+                    $shipping = 4.99;
+                    $finalPrice = $totalPrice - $discount + $shipping;
                     ?>
 
 
                     <div class="container">
                         <div class="left">
-                            <strong>Total Price (without tax):</strong>
+                            <strong>Total Price (without tax)</strong>
                         </div>
                         <div class="right">
                             <?php echo number_format($totalPriceWOtax, 2); ?>€
@@ -174,7 +173,7 @@ if (isset($input['action'])) {
                     </div>
                     <div class="container">
                         <div class="left">
-                            <strong>Tax (19%):</strong>
+                            <strong>Tax (19%)</strong>
                         </div>
                         <div class="right">
                             <?php echo number_format($tax, 2); ?>€
@@ -183,14 +182,46 @@ if (isset($input['action'])) {
                     <hr>
                     <div class="container">
                         <div class="left">
-                            <strong>Total Price:</strong>
+                            <strong>Subtotal</strong>
                         </div>
                         <div class="right">
                             <?php echo number_format($totalPrice, 2); ?>€
                         </div>
                     </div>
+                    <?php if ($discount != 0): ?>
+                    <div class="container">
+                        <div class="left">
+                            <strong>Discount</strong>
+                        </div>
+                        <div class="right">
+                            <?php echo "- " . number_format($discount, 2); ?>€
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    <div class="container">
+                        <div class="left">
+                            <strong>Shipping</strong>
+                        </div>
+                        <div class="right">
+                            <?php echo number_format($shipping, 2); ?>€
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="container">
+                        <div class="left">
+                            <strong>Total</strong>
+                        </div>
+                        <div class="right">
+                            <?php echo number_format($finalPrice, 2); ?>€
+                        </div>
+                    </div>
+                    <button class="btn-blue">Proceed to Payment</button>
                 </div>
-                <button class="btn-blue">Proceed to Payment</button>
+                <div class="container discount-container">
+                    Enter Discount Code
+                    <input type="text">
+                    <button>Redeem</button>
+                </div>
             </div>
         </div>
         <?php endif; ?>

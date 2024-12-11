@@ -1,13 +1,26 @@
-.product-container {
-    flex-direction: column !important;
+.container {
     gap: 10px !important;
+}
+
+.product-container,
+.summary-container,
+.price-container,
+.discount-container {
+    flex-direction: column !important;
+}
+
+
+.summary-container hr {
+    width: 100%;
+}
+
+.product-container {
     min-width: 600px !important;
 }
 
-.price-container {
-    flex-direction: column !important;
-    gap: 10px !important;
+.summary-container {
     width: 40% !important;
+    gap: 20px !important;
 }
 
 .box {
