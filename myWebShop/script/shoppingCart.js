@@ -76,37 +76,3 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const proceedButton = document.querySelector(".payment");
-
-    if (proceedButton) {
-        proceedButton.addEventListener("click", () => {
-            fetch("shoppingCart.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    action: "proceed_to_payment",
-                }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert(data.message); // Notify success
-                        // Redirect to a confirmation page or clear the cart view
-                        window.location.href = "orderHistory.php";
-                    } else {
-                        alert(data.error); // Notify error
-                    }
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Something went wrong. Please try again.");
-                });
-        });
-    }
-});

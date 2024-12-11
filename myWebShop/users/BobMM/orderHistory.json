@@ -3,66 +3,48 @@
         "cart": [
             {
                 "pid": "0001",
-                "qty": 2
+                "qty": 1
+            },
+            {
+                "pid": "0003",
+                "qty": 3
+            },
+            {
+                "pid": "0004",
+                "qty": 3
             }
         ],
         "status": "processing",
+        "shipping": null,
         "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-7ae9cae865",
-        "datetime": "2024-12-11 20:48:07"
-    },
-    {
-        "cart": [],
-        "status": "processing",
-        "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-745a0b6319",
-        "datetime": "2024-12-11 20:48:07"
-    },
-    {
-        "cart": [],
-        "status": "processing",
-        "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-c7589f42de",
-        "datetime": "2024-12-11 21:04:33"
-    },
-    {
-        "cart": [],
-        "status": "processing",
-        "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-0790c74336",
-        "datetime": "2024-12-11 21:04:33"
+        "totalPrice": 446,
+        "orderID": "BobMM-4bce6d2c5a",
+        "datetime": "2024-12-11 21:26:29"
     },
     {
         "cart": [
             {
-                "pid": "0003",
-                "qty": 12
-            },
-            {
-                "pid": "0007",
+                "pid": "0001",
                 "qty": 1
             },
             {
-                "pid": "0008",
+                "pid": "0002",
+                "qty": 1
+            },
+            {
+                "pid": "0003",
+                "qty": 1
+            },
+            {
+                "pid": "0004",
                 "qty": 1
             }
         ],
         "status": "processing",
-        "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-ae70284f6e",
-        "datetime": "2024-12-11 21:23:59"
-    },
-    {
-        "cart": [],
-        "status": "processing",
-        "discount": 0,
-        "finalPrice": null,
-        "orderID": "BobMM-5efa058734",
-        "datetime": "2024-12-11 21:23:59"
+        "shipping": 4.9900000000000002131628207280300557613372802734375,
+        "discount": 1,
+        "totalPrice": 292,
+        "orderID": "BobMM-3f04c43ad4",
+        "datetime": "2024-12-11 21:29:46"
     }
 ]

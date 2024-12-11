@@ -16,9 +16,6 @@ $products = json_decode(file_get_contents($productFile), true)['product'];
 $productMap = array_column($products, null, 'pid');
 
 
-// == Price Save in JSON ==
-$totalPrice = 0;
-
 
 
 // == Shopping Cart ==
@@ -39,12 +36,26 @@ if (file_exists($shoppingFile)) {
     $cart = [];
 }
 
-// Calculate total price
+
+// == Price Save in JSON ==
+global $totalPrice, $discount, $shipping;
+
+// Initialize the variables
+$totalPrice = 0;
+$discount = 1;
+$shipping = 4.99;
+
+// Calculate totals
 foreach ($cart as $item) {
     $product = $productMap[$item['pid']];
     $totalPrice += $product['price'] * $item['qty'];
 }
-$discount = 0;
+
+// Perform calculations
+$tax = round($totalPrice * 0.19, 2);
+$totalPriceWOtax = round($totalPrice - $tax, 2);
+$totalPrice = round($totalPrice, 2);
+$finalPrice = $totalPrice - $discount + $shipping;
 
 // Handle the AJAX request
 $input = json_decode(file_get_contents('php://input'), true);
@@ -108,8 +119,9 @@ if (isset($input['action'])) {
         // Read and update cart data
         $cartData = json_decode(file_get_contents($userCartFile), true);
         $cartData['status'] = 'processing';
+        $cartData['shipping'] = $shipping;
         $cartData['discount'] = $discount;
-        $cartData['finalPrice'] = $finalPrice;
+        $cartData['totalPrice'] = $totalPrice;
         $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // 10 alphanumeric characters
         $cartData['datetime'] = date('Y-m-d H:i:s');
         
@@ -198,18 +210,18 @@ if (isset($input['action'])) {
                 <div class="container price-container">
                     Order Summary
                     <?php
-                    $totalPrice = 0;
-                    foreach ($cart as $item) {
-                        $product = $productMap[$item['pid']];
-                        $totalPrice += $product['price'] * $item['qty'];
-                    }
+                    // $totalPrice = 0;
+                    // foreach ($cart as $item) {
+                    //     $product = $productMap[$item['pid']];
+                    //     $totalPrice += $product['price'] * $item['qty'];
+                    // }
 
-                    $tax = round($totalPrice * 0.19, 2);
-                    $totalPriceWOtax = round($totalPrice - $tax, 2);
-                    $totalPrice = round($totalPrice, 2);
-                    $discount = 5;
-                    $shipping = 4.99;
-                    $finalPrice = $totalPrice - $discount + $shipping;
+                    // $tax = round($totalPrice * 0.19, 2);
+                    // $totalPriceWOtax = round($totalPrice - $tax, 2);
+                    // $totalPrice = round($totalPrice, 2);
+                    // $discount = 0;
+                    // $shipping = 4.99;
+                    // $finalPrice = $totalPrice - $discount + $shipping;
                     ?>
 
                     <div class="container">
