@@ -3,8 +3,6 @@
 session_start();
 
 // == Products ==
-
-// Define the product file
 $productFile = 'json/product.json';
 $products = json_decode(file_get_contents($productFile), true)["product"];
 
@@ -14,19 +12,23 @@ foreach ($products as $product) {
     $productMap[$product['pid']] = $product;
 }
 
+// == Price Save in JSON ==
+$totalPrice = 0;
 
+// Calculate total price
+foreach ($cart as $item) {
+    $product = $productMap[$item['pid']];
+    $totalPrice += $product['price'] * $item['qty'];
+}
+$discount = 0;
 
 // == Shopping Cart ==
-
-// Define the default shopping cart path
 $defaultShoppingFile = 'users/shoppingCart.json';
 
 // Check if the user is logged in
 if (isset($_SESSION['username'])) {
-    // Path to the logged-in user's shopping cart
     $shoppingFile = 'users/' . $_SESSION['username'] . '/shoppingCart.json';
 } else {
-    // Use the default shopping cart file
     $shoppingFile = $defaultShoppingFile;
 }
 
@@ -37,7 +39,6 @@ if (file_exists($shoppingFile)) {
 } else {
     $cart = [];
 }
-
 
 // Handle the AJAX request
 $input = json_decode(file_get_contents('php://input'), true);
@@ -86,7 +87,6 @@ if (isset($input['action'])) {
     }
     exit;
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,7 +109,7 @@ if (isset($input['action'])) {
 <body>
     <!-- Header -->
     <header>
-        <?php include ("header.php"); ?>
+        <?php include("header.php"); ?>
     </header>
 
     <!-- Main -->
@@ -123,9 +123,7 @@ if (isset($input['action'])) {
         <div class="container">
             <div class="container product-container">
                 <?php 
-                // Loop through each item in the cart
                 foreach ($cart as $item) {
-                    // Get the product details using pid
                     $pid = $item['pid'];
                     if (isset($productMap[$pid])) {
                         $product = $productMap[$pid];
@@ -134,20 +132,18 @@ if (isset($input['action'])) {
                         $price = $product['price'];
                         $qty = $item['qty'];
 
-                        // Display the product details inside a box
-                        echo "<div class='box' id='product-" . htmlspecialchars($pid) . "'>"; // Custom ID with pid
+                        echo "<div class='box' id='product-" . htmlspecialchars($pid) . "'>";
                         echo "<img src='" . htmlspecialchars($img) . "' class='pImg' alt='" . htmlspecialchars($name) . "'>";
                         echo "<div class='left'>";
                         echo "<span class='pid'>#" . htmlspecialchars($pid) . "</span>";
                         echo "<span class='pName'>" . htmlspecialchars($name) . "</span>";
-                        echo "</div>"; // End left section
-
+                        echo "</div>";
                         echo "<div class='right'>";
                         echo "<span class='price'>" . number_format(htmlspecialchars($price), 2) . "€ </span>";
                         echo "<input type='number' value='" . htmlspecialchars($qty) . "' name='qty[" . htmlspecialchars($pid) . "]' id='qty-" . htmlspecialchars($pid) . "' min='1' onchange='updateCartQty(\"" . htmlspecialchars($pid) . "\", this.value)' />";
                         echo "<button class='btn-red delete' id='delete-" . htmlspecialchars($pid) . "' onclick='removeFromCart(\"" . htmlspecialchars($pid) . "\")'>Remove</button>";
-                        echo "</div>"; // End right section
-                        echo "</div>"; // End box
+                        echo "</div>";
+                        echo "</div>";
                     }
                 }
                 ?>
@@ -157,19 +153,12 @@ if (isset($input['action'])) {
                 <div class="container price-container">
                     Order Summary
                     <?php
-                    // Initialize variables
                     $totalPrice = 0;
-
-                    // Calculation of total price
                     foreach ($cart as $item) {
-                        $product = $productMap[$pid];
-                        $price = $product['price'];
-                        $qty = $item['qty'];
-
-                        $totalPrice += $price * $qty;
+                        $product = $productMap[$item['pid']];
+                        $totalPrice += $product['price'] * $item['qty'];
                     }
 
-                    // Calculate tax (19% of totalPrice)
                     $tax = round($totalPrice * 0.19, 2);
                     $totalPriceWOtax = round($totalPrice - $tax, 2);
                     $totalPrice = round($totalPrice, 2);
@@ -178,65 +167,41 @@ if (isset($input['action'])) {
                     $finalPrice = $totalPrice - $discount + $shipping;
                     ?>
 
-
                     <div class="container">
-                        <div class="left">
-                            <strong>Total Price (without tax)</strong>
-                        </div>
-                        <div class="right">
-                            <?php echo number_format($totalPriceWOtax, 2); ?>€
-                        </div>
+                        <div class="left"><strong>Total Price (without tax)</strong></div>
+                        <div class="right"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
                     </div>
                     <div class="container">
-                        <div class="left">
-                            <strong>Tax (19%)</strong>
-                        </div>
-                        <div class="right">
-                            <?php echo number_format($tax, 2); ?>€
-                        </div>
+                        <div class="left"><strong>Tax (19%)</strong></div>
+                        <div class="right"><?php echo number_format($tax, 2); ?>€</div>
                     </div>
                     <hr>
                     <div class="container">
-                        <div class="left">
-                            <strong>Subtotal</strong>
-                        </div>
-                        <div class="right">
-                            <?php echo number_format($totalPrice, 2); ?>€
-                        </div>
+                        <div class="left"><strong>Subtotal</strong></div>
+                        <div class="right"><?php echo number_format($totalPrice, 2); ?>€</div>
                     </div>
                     <?php if ($discount != 0): ?>
                     <div class="container">
-                        <div class="left">
-                            <strong>Discount</strong>
-                        </div>
-                        <div class="right">
-                            <?php echo "- " . number_format($discount, 2); ?>€
-                        </div>
+                        <div class="left"><strong>Discount</strong></div>
+                        <div class="right"><?php echo "- " . number_format($discount, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
                     <div class="container">
-                        <div class="left">
-                            <strong>Shipping</strong>
-                        </div>
-                        <div class="right">
-                            <?php echo number_format($shipping, 2); ?>€
-                        </div>
+                        <div class="left"><strong>Shipping</strong></div>
+                        <div class="right"><?php echo number_format($shipping, 2); ?>€</div>
                     </div>
                     <hr>
                     <div class="container">
-                        <div class="left">
-                            <strong>Total</strong>
-                        </div>
-                        <div class="right subtotal">
-                            <span><?php echo number_format($finalPrice, 2); ?>€</span>
-                        </div>
+                        <div class="left"><strong>Total</strong></div>
+                        <div class="right subtotal"><span><?php echo number_format($finalPrice, 2); ?>€</span></div>
                     </div>
-                    <button class="btn-blue">Proceed to Payment</button>
+                    <button class="btn-blue payment">Proceed to Payment</button>
                 </div>
+
                 <div class="container discount-container">
                     Enter Discount Code
                     <input type="text">
-                    <button>Redeem</button>
+                    <button>Redeem Voucher</button>
                 </div>
             </div>
         </div>
@@ -245,7 +210,7 @@ if (isset($input['action'])) {
 
     <!-- Footer -->
     <footer>
-        <?php include ("footer.php"); ?>
+        <?php include("footer.php"); ?>
     </footer>
 </body>
 
