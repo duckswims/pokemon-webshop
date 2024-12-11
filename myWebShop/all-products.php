@@ -2,6 +2,8 @@
 // Start the session to access session variables
 session_start();
 
+$username = $_SESSION["username"];
+
 // == Adding cart ====================================
 // Adding item to the cart
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

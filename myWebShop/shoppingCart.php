@@ -2,33 +2,31 @@
 // Start the session to access session variables
 session_start();
 
-// == Products ==
+// File Paths
+$username = $_SESSION['username'];
 $productFile = 'json/product.json';
-$products = json_decode(file_get_contents($productFile), true)["product"];
+$defaultShoppingFile = 'users/shoppingCart.json';
+// $username = $_SESSION['username'] ?? null;
+// $shoppingFile = $username ? "users/$username/shoppingCart.json" : $defaultShoppingFile;
+// $orderHistoryFile = $username ? "users/$username/orderHistory.json" : null;
 
-// Create a mapping of pid to product details (name and price)
-$productMap = [];
-foreach ($products as $product) {
-    $productMap[$product['pid']] = $product;
-}
+
+// Load Products
+$products = json_decode(file_get_contents($productFile), true)['product'];
+$productMap = array_column($products, null, 'pid');
+
 
 // == Price Save in JSON ==
 $totalPrice = 0;
 
-// Calculate total price
-foreach ($cart as $item) {
-    $product = $productMap[$item['pid']];
-    $totalPrice += $product['price'] * $item['qty'];
-}
-$discount = 0;
+
 
 // == Shopping Cart ==
-$defaultShoppingFile = 'users/shoppingCart.json';
 
 // Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    $shoppingFile = 'users/' . $_SESSION['username'] . '/shoppingCart.json';
-    $orderHistoryFile = "users/" . $_SESSION['username'] . "/orderHistory.json";
+if (isset($username)) {
+    $shoppingFile = 'users/' . $username . '/shoppingCart.json';
+    $orderHistoryFile = "users/" . $username . "/orderHistory.json";
 } else { 
     $shoppingFile = $defaultShoppingFile;
 }
@@ -40,6 +38,13 @@ if (file_exists($shoppingFile)) {
 } else {
     $cart = [];
 }
+
+// Calculate total price
+foreach ($cart as $item) {
+    $product = $productMap[$item['pid']];
+    $totalPrice += $product['price'] * $item['qty'];
+}
+$discount = 0;
 
 // Handle the AJAX request
 $input = json_decode(file_get_contents('php://input'), true);
@@ -55,7 +60,7 @@ if (isset($input['action'])) {
             if ($item['pid'] == $pid) {
                 $item['qty'] = $qty;
                 break;
-            }
+            } 
         }
 
         file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
@@ -153,6 +158,7 @@ if (isset($input['action'])) {
 
     <!-- Main -->
     <main>
+        <a href="all-products.php">To Products Display</a>
         <?php if (empty($cart)): ?>
         <h1>Empty shopping cart :(</h1>
         <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
