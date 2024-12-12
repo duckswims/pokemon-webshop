@@ -1,91 +1,148 @@
 <?php
-// Start the session to access session variables
+// Start the session to manage user data
 session_start();
 
-// == Products ==
+// Define file paths for products, shopping cart, and order history
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
 $productFile = 'json/product.json';
-$products = json_decode(file_get_contents($productFile), true)["product"];
+$shoppingFile = isset($username) ? "users/$username/shoppingCart.json" : 'users/shoppingCart.json';
+$orderHistoryFile = isset($username) ? "users/$username/orderHistory.json" : null;
 
-// Create a mapping of pid to product details (name and price)
-$productMap = [];
-foreach ($products as $product) {
-    $productMap[$product['pid']] = $product;
-}
-
-// == Price Save in JSON ==
-$totalPrice = 0;
-
-// Calculate total price
-foreach ($cart as $item) {
-    $product = $productMap[$item['pid']];
-    $totalPrice += $product['price'] * $item['qty'];
-}
-$discount = 0;
+// Load products from the product JSON file and create a product map for easy lookup
+$products = json_decode(file_get_contents($productFile), true)['product'];
+$productMap = array_column($products, null, 'pid');
 
 // == Shopping Cart ==
-$defaultShoppingFile = 'users/shoppingCart.json';
-
-// Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    $shoppingFile = 'users/' . $_SESSION['username'] . '/shoppingCart.json';
-} else {
-    $shoppingFile = $defaultShoppingFile;
-}
-
-// Read the shopping cart data from the JSON file
+// Read shopping cart data from the shopping cart file (if it exists)
+$cart = [];
 if (file_exists($shoppingFile)) {
     $fileData = json_decode(file_get_contents($shoppingFile), true);
-    $cart = isset($fileData['cart']) ? $fileData['cart'] : [];
-} else {
-    $cart = [];
+    $cart = $fileData['cart'] ?? [];
 }
 
-// Handle the AJAX request
+// Handle GET request to retrieve the current cart count
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') {
+    // Calculate the total number of items in the cart
+    $cartCount = array_sum(array_column($cart, 'qty'));
+    echo json_encode(['success' => true, 'cartCount' => $cartCount]);
+    exit;
+}
+
+// == Price Calculation ==
+// Calculate the total price of items in the cart (before and after tax)
+$totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
+    $product = $productMap[$item['pid']] ?? null;
+    return $product ? $total + $product['price'] * $item['qty'] : $total;
+}, 0);
+
+// Calculate tax (19% in this case) and the final price after applying discount and shipping cost
+$tax = round($totalPrice * 0.19, 2);
+$totalPriceWOtax = round($totalPrice - $tax, 2);
+$finalPrice = round($totalPrice - 1 + 4.99, 2);  // Applying discount and shipping
+
+// Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
-
 if (isset($input['action'])) {
-    $action = $input['action'];
+    switch ($input['action']) {
+        // Update the quantity of a product in the cart
+        case 'update':
+            if (isset($input['pid'], $input['qty'])) {
+                $pid = $input['pid'];
+                $qty = (int)$input['qty'];
 
-    if ($action === 'update' && isset($input['pid'], $input['qty'])) {
-        $pid = $input['pid'];
-        $qty = (int)$input['qty'];
+                // Update the cart item with the new quantity
+                foreach ($cart as &$item) {
+                    if ($item['pid'] == $pid) {
+                        $item['qty'] = $qty;
+                        break;
+                    }
+                }
 
-        foreach ($cart as &$item) {
-            if ($item['pid'] == $pid) {
-                $item['qty'] = $qty;
-                break;
+                // Save the updated cart to the shopping cart file
+                file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
+
+                // Recalculate the total price after the update
+                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
+                    $product = $productMap[$item['pid']] ?? null;
+                    return $product ? $total + $product['price'] * $item['qty'] : $total;
+                }, 0);
+
+                // Return the updated total price as a response
+                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
             }
-        }
+            break;
 
-        file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
+        // Remove an item from the cart
+        case 'remove':
+            if (isset($input['pid'])) {
+                $pid = $input['pid'];
 
-        // Calculate the updated total price
-        $totalPrice = 0;
-        foreach ($cart as $item) {
-            $product = $productMap[$item['pid']];
-            $totalPrice += $product['price'] * $item['qty'];
-        }
+                // Remove the item with the given product ID from the cart
+                $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
+                file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
 
-        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-    } elseif ($action === 'remove' && isset($input['pid'])) {
-        $pid = $input['pid'];
-        $cart = array_filter($cart, function ($item) use ($pid) {
-            return $item['pid'] !== $pid;
-        });
+                // Recalculate the total price after removal
+                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
+                    $product = $productMap[$item['pid']] ?? null;
+                    return $product ? $total + $product['price'] * $item['qty'] : $total;
+                }, 0);
 
-        file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
+                // Return the updated total price as a response
+                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
+            }
+            break;
 
-        $totalPrice = 0;
-        foreach ($cart as $item) {
-            $product = $productMap[$item['pid']];
-            $totalPrice += $product['price'] * $item['qty'];
-        }
+        // Proceed to the payment process and place an order
+        case 'proceed_to_payment':
+            // Check if the user is logged in
+            if (!$username) {
+                echo json_encode(['success' => false, 'error' => 'User not logged in.']);
+                exit;
+            }
 
-        echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'Invalid action or parameters.']);
+            // Check if the shopping cart exists
+            if (!file_exists($shoppingFile)) {
+                echo json_encode(['success' => false, 'error' => 'Shopping cart not found.']);
+                exit;
+            }
+
+            // Update cart and order history data
+            $cartData = json_decode(file_get_contents($shoppingFile), true);
+            $cartData['status'] = 'processing';
+            $cartData['shipping'] = 4.99;
+            $cartData['discount'] = 1;
+            $cartData['totalPrice'] = $totalPrice;
+            $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
+            $cartData['datetime'] = date('Y-m-d H:i:s'); // Record the current date and time of the order
+
+            // Append the current order to the user's order history
+            $orderHistory = file_exists($orderHistoryFile) ? json_decode(file_get_contents($orderHistoryFile), true) : [];
+            $orderHistory[] = $cartData;
+            file_put_contents($orderHistoryFile, json_encode($orderHistory, JSON_PRETTY_PRINT));
+
+            // Clear the shopping cart after order placement
+            file_put_contents($shoppingFile, json_encode(['cart' => []], JSON_PRETTY_PRINT));
+
+            // Return a success message with the order details
+            echo json_encode(['success' => true, 'message' => 'Order placed successfully!']);
+            break;
+
+        // Handle invalid action
+        default:
+            echo json_encode(['success' => false, 'error' => 'Invalid action or parameters.']);
+            break;
     }
     exit;
+}
+
+// Helper Function to Calculate Total Price
+function calculateTotalPrice($cart, $productMap) {
+    $totalPrice = 0;
+    foreach ($cart as $item) {
+        $product = $productMap[$item['pid']];
+        $totalPrice += $product['price'] * $item['qty'];
+    }
+    return $totalPrice;
 }
 ?>
 <!DOCTYPE html>
@@ -115,9 +172,10 @@ if (isset($input['action'])) {
     <!-- Main -->
     <main>
         <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :(</h1>
+        <h1>Empty shopping cart :( </h1>
         <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
-            alt="Pikachu" width="300px">
+            alt="Pikachu" width="300px"><br>
+        <a href="all-products.php"><button>Back to Products</button></a>
         <?php else: ?>
         <h1>Your Shopping Cart</h1>
         <div class="container">
@@ -141,32 +199,18 @@ if (isset($input['action'])) {
                         echo "<div class='right'>";
                         echo "<span class='price'>" . number_format(htmlspecialchars($price), 2) . "€ </span>";
                         echo "<input type='number' value='" . htmlspecialchars($qty) . "' name='qty[" . htmlspecialchars($pid) . "]' id='qty-" . htmlspecialchars($pid) . "' min='1' onchange='updateCartQty(\"" . htmlspecialchars($pid) . "\", this.value)' />";
-                        echo "<button class='btn-red delete' id='delete-" . htmlspecialchars($pid) . "' onclick='removeFromCart(\"" . htmlspecialchars($pid) . "\")'>Remove</button>";
+                        echo "<img class='btn-delete' id='delete-" . htmlspecialchars($pid) . "' src='img/delete.png' alt='Delete' onclick='removeFromCart(\"" . htmlspecialchars($pid) . "\")' />";
                         echo "</div>";
                         echo "</div>";
                     }
                 }
                 ?>
+                <a href="all-products.php"><button>Back to Products</button></a>
             </div>
 
             <div class="container summary-container">
                 <div class="container price-container">
                     Order Summary
-                    <?php
-                    $totalPrice = 0;
-                    foreach ($cart as $item) {
-                        $product = $productMap[$item['pid']];
-                        $totalPrice += $product['price'] * $item['qty'];
-                    }
-
-                    $tax = round($totalPrice * 0.19, 2);
-                    $totalPriceWOtax = round($totalPrice - $tax, 2);
-                    $totalPrice = round($totalPrice, 2);
-                    $discount = 5;
-                    $shipping = 4.99;
-                    $finalPrice = $totalPrice - $discount + $shipping;
-                    ?>
-
                     <div class="container">
                         <div class="left"><strong>Total Price (without tax)</strong></div>
                         <div class="right"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
@@ -195,7 +239,7 @@ if (isset($input['action'])) {
                         <div class="left"><strong>Total</strong></div>
                         <div class="right subtotal"><span><?php echo number_format($finalPrice, 2); ?>€</span></div>
                     </div>
-                    <button class="btn-blue payment">Proceed to Payment</button>
+                    <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
                 </div>
 
                 <div class="container discount-container">

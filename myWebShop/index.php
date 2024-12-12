@@ -32,12 +32,12 @@ session_start();
         <div class="info-board">
             <h1>
                 <?php
-                // Check if the username exists in the session
-                if ($_SESSION['username']) {
-                    echo "Welcome back, " . htmlspecialchars($_SESSION["firstName"]) . "!";
+                if (isset($_SESSION['username']) && $_SESSION['username']) {
+                    echo "Welcome back, " . htmlspecialchars($_SESSION['firstName']) . "!";
                 } else {
                     echo "Welcome to Our Pokémon Store!";
                 }
+                
                 ?>
             </h1>
             <p>We offer a wide variety of Pokémon-themed products to suit your needs.</p>
