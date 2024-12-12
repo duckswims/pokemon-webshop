@@ -1,0 +1,13 @@
+/* Style the search label and input to appear on the same line and vertically centered */
+#search-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px; /* Add some space between label and input */
+}
+
+
+#search {
+    width: 200px; /* Adjust the width of the input */
+    padding: 5px;
+}

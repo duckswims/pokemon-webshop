@@ -24,5 +24,7 @@
             "postalCode": "85049",
             "country": "Germany"
         }
-    }
+    },
+    "admin": false,
+    "blocked": false
 }

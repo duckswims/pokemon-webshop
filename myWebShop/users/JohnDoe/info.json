@@ -1,0 +1,8 @@
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "username": "JohnDoe",
+    "password": "JohnDoe123",
+    "admin": false,
+    "blocked": true
+}

@@ -1,0 +1,55 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+    /* Ensure background color fills the screen */
+}
+
+#blocked-page {
+    font-family: 'Rubik', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    flex-direction: column;
+}
+
+#blocked-page .container {
+    max-width: 600px;
+}
+
+#blocked-page h1 {
+    font-size: 1.8rem;
+    /* Slightly smaller heading size */
+    margin: 0px;
+    /* Reduce spacing below the heading */
+}
+
+#blocked-page p {
+    font-size: 1rem;
+    margin: 0;
+    /* Remove default margins */
+    line-height: 1.5;
+    /* Adjust line spacing for readability */
+}
+
+#blocked-page .countdown {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#blocked-page .btn-red {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#blocked-page .button:hover {
+    background-color: #ff2a00;
+    /* Darker color when hovered */
+}
