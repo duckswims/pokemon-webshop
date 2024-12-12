@@ -8,7 +8,7 @@ $admin = isset($_SESSION['admin']) ? $_SESSION['admin'] : false;
 // If the user is not logged in or not an admin, redirect to error.php
 if (!$admin) {
     // Redirect to error page with a query parameter for the error message
-    header("Location: error.php?error=You must be logged in as an admin to access this page.");
+    header("Location: error.php?error=" . urlencode("You must be logged in as an admin to access this page."));
     exit();
 }
 ?>
@@ -54,7 +54,7 @@ if (!$admin) {
             // Check if orderHistory.json exists and read it
             if (file_exists($orderHistoryFile)) {
                 $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
-                
+
                 // Add each order to the list of all orders
                 foreach ($orderHistory as $order) {
                     // Add user info to each order
@@ -92,11 +92,16 @@ if (!$admin) {
                         <td>" . htmlspecialchars($order['datetime']) . "</td>
                         <td>" . htmlspecialchars($order['totalPrice']) . "</td>
                         <td>" . htmlspecialchars($order['status']) . "</td>
-                        <td><button class='btn-red' onclick='viewOrderDetails(\"" . htmlspecialchars($order['orderID']) . "\")'>View Details</button></td>
-                    </tr>";
+                        <td>
+                            <a href=\"order.php?orderID=" . urlencode($order['orderID']) . "\">
+                                <button class='btn-red'>View Details</button>
+                            </a>
+                        </td>
+                      </tr>";
             }
 
-            echo "</tbody></table>";
+            echo "</tbody>
+                  </table>";
         } else {
             echo "<p>No orders found.</p>";
         }
@@ -108,13 +113,6 @@ if (!$admin) {
         <?php include("footer.php"); ?>
     </footer>
 
-    <script>
-    // JavaScript function to view the order details
-    function viewOrderDetails(orderID) {
-        alert('Details for order ' + orderID);
-        // Here you can implement a feature to show detailed information about the order, such as a modal or new page.
-    }
-    </script>
 </body>
 
 </html>
