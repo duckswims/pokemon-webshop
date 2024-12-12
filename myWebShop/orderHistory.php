@@ -48,7 +48,7 @@ foreach ($productData["product"] as $product) {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/orderHistory.css">
+    <link rel="stylesheet" href="styles/order-display.css">
     <link rel="stylesheet" href="styles/order-status.css">
     <script src="script/orderHistory.js"></script>
 </head>
