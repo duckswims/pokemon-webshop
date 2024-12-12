@@ -59,8 +59,10 @@ if (json_last_error() !== JSON_ERROR_NONE) {
                 <p>Status: <?php echo htmlspecialchars($order["status"]); ?></p>
                 <p>Order ID: <?php echo htmlspecialchars($order["orderID"]); ?></p>
                 <p>Date: <?php echo htmlspecialchars($order["datetime"]); ?></p>
-                <p>Total Price: <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> USD</p>
-                <button>View Order</button>
+                <p>Total Price: <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> €</p>
+                <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
+                    <button>View Order</button>
+                </a>
             </div>
             <?php endforeach; ?>
         </div>
