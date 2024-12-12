@@ -33,7 +33,28 @@ $productImages = [];
 foreach ($productData["product"] as $product) {
     $productImages[$product["pid"]] = $product["img_src"];
 }
+
+// Function to update order status
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($_POST["status"])) {
+    $orderID = $_POST["orderID"];
+    $newStatus = $_POST["status"];
+    
+    // Update the order status
+    foreach ($orderHistory as &$order) {
+        if ($order["orderID"] === $orderID) {
+            $order["status"] = $newStatus;
+        }
+    }
+    
+    // Save the updated order history back to the file
+    file_put_contents($orderHistoryPath, json_encode($orderHistory, JSON_PRETTY_PRINT));
+    
+    // Refresh the page to display the updated status
+    header("Location: orderHistory.php");
+    exit;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,6 +72,7 @@ foreach ($productData["product"] as $product) {
     <link rel="stylesheet" href="styles/order-display.css">
     <link rel="stylesheet" href="styles/order-status.css">
     <script src="script/orderHistory.js"></script>
+    <script src="script/cancel-order.js"></script>
 </head>
 
 <body>
@@ -100,9 +122,19 @@ foreach ($productData["product"] as $product) {
                 </div>
 
 
-                <div style="display: flex; justify-content: center;">
+                <div style="display: flex; justify-content: center; gap: 10px;">
+                    <!-- Cancel Order Button (if status is "processing") -->
+                    <?php if (strtolower($order["status"]) === "processing"): ?>
+                    <form action="orderHistory.php" method="POST">
+                        <input type="hidden" name="orderID"
+                            value="<?php echo htmlspecialchars($order["orderID"]); ?>" />
+                        <input type="hidden" name="status" value="cancelled" />
+                        <button type="submit" class="btn-red">Cancel Order</button>
+                    </form>
+                    <?php endif; ?>
+                    <!-- View Order -->
                     <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
-                        <button>View Order</button>
+                        <button class="btn-blue">View Order</button>
                     </a>
                 </div>
             </div>
