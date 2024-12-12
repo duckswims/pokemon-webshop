@@ -18,6 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $shoppingData = file_exists($shoppingFile) ? json_decode(file_get_contents($shoppingFile), true) : [];
 
         if ($userData['password'] === $password) {
+            // Check if the user is blocked
+            if (isset($userData['blocked']) && $userData['blocked'] === true) {
+                // Redirect to blocked.php if the user is blocked
+                header("Location: blocked.php");
+                exit;
+            }
+
             // Set session variables for the logged-in user
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
