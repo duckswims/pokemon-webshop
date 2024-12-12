@@ -5,42 +5,46 @@ session_start();
 // Check if the user is logged in and is an admin
 $admin = isset($_SESSION['admin']) ? $_SESSION['admin'] : false;
 
-// If the user is not logged in or not an admin, redirect to error.php
+// If the user is not logged in or not an admin, display an error
 if (!$admin) {
-    // Redirect to error page with a query parameter for the error message
-    header("Location: error.php?error=You must be logged in as an admin to access this page.");
+    echo "You must be logged in as an admin to access this page.";
     exit();
 }
 
-// Handle the POST request to update the admin status
+// Handle the POST request to update the admin status or block/unblock a user
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = isset($_POST['username']) ? $_POST['username'] : '';
     $adminStatus = isset($_POST['admin']) ? $_POST['admin'] : 'false';
+    $blockedStatus = isset($_POST['blocked']) ? $_POST['blocked'] : 'false';
 
-    // Validate the username and admin status
+    // Validate the username and action (either admin status update or block/unblock)
     if (!empty($username)) {
         $directory = "users"; // Replace with actual path
         $infoFilePath = $directory . '/' . $username . '/info.json';
 
-        // Check if info.json exists and update the admin status
+        // Check if info.json exists and update accordingly
         if (file_exists($infoFilePath)) {
             $info = json_decode(file_get_contents($infoFilePath), true);
-            // Update the admin status
-            $info['admin'] = ($adminStatus === 'true');
+            
+            // If updating admin status
+            if (isset($_POST['admin'])) {
+                $info['admin'] = ($adminStatus === 'true');
+            }
+            
+            // If blocking/unblocking a user
+            if (isset($_POST['blocked'])) {
+                $info['blocked'] = ($blockedStatus === 'true');
+            }
 
             // Save the updated information back to the file
             file_put_contents($infoFilePath, json_encode($info, JSON_PRETTY_PRINT));
-            echo 'Admin status updated successfully.';
         } else {
-            echo 'User not found.';
+            echo '<div>User not found.</div>';
         }
     }
-    exit();
 }
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,6 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
     <script src="script/admin-users.js"></script>
+    <style>
+    .input-cell {
+        align-items: center;
+        justify-content: center;
+    }
+    </style>
 </head>
 
 <body>
@@ -95,15 +105,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (file_exists($infoFilePath)) {
                     $info = json_decode(file_get_contents($infoFilePath), true);
                     
-                    // Extract first name, last name, and admin status
+                    // Extract first name, last name, admin status, and blocked status
                     $firstName = isset($info['firstName']) ? $info['firstName'] : 'N/A';
                     $lastName = isset($info['lastName']) ? $info['lastName'] : 'N/A';
                     $isAdmin = isset($info['admin']) && $info['admin'] === true;
+                    $isBlocked = isset($info['blocked']) ? $info['blocked'] : false;
                 } else {
                     // If no info.json is found, assume the user is not an admin
                     $firstName = 'N/A';
                     $lastName = 'N/A';
                     $isAdmin = false;
+                    $isBlocked = false;
                 }
 
                 // Check if the logged-in user is the same as the current username
@@ -112,15 +124,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<tr>
                     <td>" . htmlspecialchars($firstName) . " " . htmlspecialchars($lastName) . "</td>
                     <td>" . htmlspecialchars($username) . "</td>
-                    <td class='checkbox-cell'>
+                    <td class='checkbox-cell input-cell'>
                         <input 
                             type='checkbox' 
                             " . ($isAdmin ? 'checked' : '') . " 
                             " . ($isCurrentUser ? 'disabled' : '') . " 
                             onclick='toggleAdmin(\"" . htmlspecialchars($username) . "\", this)'>
                     </td>
-                    <td class='checkbox-cell'>
-                        Button
+                    <td class='table-cell input-cell'>
+                        <form method='POST'>
+                            <input type='hidden' name='username' value='" . htmlspecialchars($username) . "'>
+                            <input type='hidden' name='blocked' value='" . ($isBlocked ? 'false' : 'true') . "'>
+                            <button type='submit' class='btn-red'>" . ($isBlocked ? 'Unblock User' : 'Block User') . "</button>
+                        </form>
                     </td>
                 </tr>";
             }

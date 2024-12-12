@@ -25,5 +25,6 @@
             "country": "Germany"
         }
     },
-    "admin": false
+    "admin": false,
+    "blocked": false
 }

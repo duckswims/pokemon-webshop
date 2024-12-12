@@ -3,5 +3,6 @@
     "lastName": "Doe",
     "username": "JohnDoe",
     "password": "JohnDoe123",
-    "admin": false
+    "admin": false,
+    "blocked": true
 }
