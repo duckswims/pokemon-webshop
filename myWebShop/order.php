@@ -2,12 +2,17 @@
 // Start the session to access session variables
 session_start();
 
+// Initialize error message
+$errorMessage = "";
+
 // Check if user is logged in and has a username in session
 if (!isset($_SESSION["username"])) {
-    die("Access denied. Please log in.");
+    $errorMessage = "Access denied. Please log in.";
+    header("Location: error.php?error=" . urlencode($errorMessage));
+    exit;
 }
 
-// Get the username from the session
+// Get the username from the session if available
 $username = $_SESSION["username"];
 
 // Get the orderID from the query string
@@ -18,15 +23,17 @@ $orderHistoryPath = "users/$username/orderHistory.json";
 
 // Check if the order history file exists
 if (!file_exists($orderHistoryPath)) {
-    die("Error: Order history not found.");
+    $errorMessage = "Error: Order history not found.";
+    header("Location: error.php?error=" . urlencode($errorMessage));
+    exit;
 }
 
 // Read and decode the JSON file
 $orderHistory = json_decode(file_get_contents($orderHistoryPath), true);
-
-// Check if decoding was successful
 if ($orderHistory === null) {
-    die("Error: Unable to parse order history.");
+    $errorMessage = "Error: Unable to parse order history.";
+    header("Location: error.php?error=" . urlencode($errorMessage));
+    exit;
 }
 
 // Search for the order by orderID
@@ -36,6 +43,12 @@ foreach ($orderHistory as $o) {
         $order = $o;
         break;
     }
+}
+
+if (!$order) {
+    $errorMessage = "Order not found.";
+    header("Location: error.php?error=" . urlencode($errorMessage));
+    exit;
 }
 ?>
 
@@ -65,13 +78,6 @@ foreach ($orderHistory as $o) {
 
     <!-- Main -->
     <main>
-        <?php if ($order === null): ?>
-        <div class="error-container">
-            <h1>Error 404: Order not found :(</h1>
-            <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
-                alt="Pikachu" width="300px">
-        </div>
-        <?php else: ?>
         <div class="product">
             <h2>Order Details</h2>
             <p><strong>Order ID:</strong> <?php echo htmlspecialchars($order["orderID"]); ?></p>
@@ -89,7 +95,6 @@ foreach ($orderHistory as $o) {
                 <?php endforeach; ?>
             </ul>
         </div>
-        <?php endif; ?>
     </main>
 
     <!-- Footer -->
