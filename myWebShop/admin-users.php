@@ -11,6 +11,35 @@ if (!$admin) {
     header("Location: error.php?error=You must be logged in as an admin to access this page.");
     exit();
 }
+
+// Handle the POST request to update the admin status
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    $adminStatus = isset($_POST['admin']) ? $_POST['admin'] : 'false';
+
+    // Validate the username and admin status
+    if (!empty($username)) {
+        $directory = "users"; // Replace with actual path
+        $infoFilePath = $directory . '/' . $username . '/info.json';
+
+        // Check if info.json exists and update the admin status
+        if (file_exists($infoFilePath)) {
+            $info = json_decode(file_get_contents($infoFilePath), true);
+            // Update the admin status
+            $info['admin'] = ($adminStatus === 'true');
+
+            // Save the updated information back to the file
+            file_put_contents($infoFilePath, json_encode($info, JSON_PRETTY_PRINT));
+            echo 'Admin status updated successfully.';
+        } else {
+            echo 'User not found.';
+        }
+    }
+    exit();
+}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +55,7 @@ if (!$admin) {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
+    <script src="script/admin-users.js"></script>
 </head>
 
 <body>
@@ -35,7 +65,7 @@ if (!$admin) {
     </header>
 
     <main>
-        <h1>User Control</h1>
+        <h1>User List</h1>
 
         <?php
         // Get the list of usernames (directories) if admin
@@ -47,10 +77,10 @@ if (!$admin) {
         });
 
         if (count($usernames) > 0) {
-            echo "<h2>User List:</h2>";
             echo "<table border='1'>
                     <thead>
                         <tr>
+                            <th>Name</th>
                             <th>Username</th>
                             <th>Admin</th>
                             <th>Action</th>
@@ -65,18 +95,34 @@ if (!$admin) {
                 if (file_exists($infoFilePath)) {
                     $info = json_decode(file_get_contents($infoFilePath), true);
                     
-                    // Default admin status is false
+                    // Extract first name, last name, and admin status
+                    $firstName = isset($info['firstName']) ? $info['firstName'] : 'N/A';
+                    $lastName = isset($info['lastName']) ? $info['lastName'] : 'N/A';
                     $isAdmin = isset($info['admin']) && $info['admin'] === true;
                 } else {
                     // If no info.json is found, assume the user is not an admin
+                    $firstName = 'N/A';
+                    $lastName = 'N/A';
                     $isAdmin = false;
                 }
 
+                // Check if the logged-in user is the same as the current username
+                $isCurrentUser = ($_SESSION['username'] === $username);
+
                 echo "<tr>
-                        <td>" . htmlspecialchars($username) . "</td>
-                        <td><input type='checkbox' " . ($isAdmin ? 'checked' : '') . " disabled></td>
-                        <td><button class='btn-red' onclick='blockUser(\"" . htmlspecialchars($username) . "\")'>Block</button></td>
-                    </tr>";
+                    <td>" . htmlspecialchars($firstName) . " " . htmlspecialchars($lastName) . "</td>
+                    <td>" . htmlspecialchars($username) . "</td>
+                    <td class='checkbox-cell'>
+                        <input 
+                            type='checkbox' 
+                            " . ($isAdmin ? 'checked' : '') . " 
+                            " . ($isCurrentUser ? 'disabled' : '') . " 
+                            onclick='toggleAdmin(\"" . htmlspecialchars($username) . "\", this)'>
+                    </td>
+                    <td class='checkbox-cell'>
+                        Button
+                    </td>
+                </tr>";
             }
 
             echo "</tbody></table>";
@@ -91,15 +137,6 @@ if (!$admin) {
         <?php include("footer.php"); ?>
     </footer>
 
-    <script>
-    // Block user function (you can expand this to implement real functionality)
-    function blockUser(username) {
-        if (confirm("Are you sure you want to block " + username + "?")) {
-            // Add code here to block the user (e.g., make an AJAX call or redirect to block action)
-            alert(username + " has been blocked.");
-        }
-    }
-    </script>
 </body>
 
 </html>
