@@ -5,25 +5,45 @@ session_start();
 // Initialize error message
 $errorMessage = "";
 
-// Check if user is logged in and has a username in session
+// Check if the user is logged in
 if (!isset($_SESSION["username"])) {
     $errorMessage = "Access denied. Please log in.";
     header("Location: error.php?error=" . urlencode($errorMessage));
     exit;
 }
 
-// Get the username from the session if available
+// Get the username and admin status from the session
 $username = $_SESSION["username"];
+$isAdmin = isset($_SESSION["admin"]) && $_SESSION["admin"] === true;
 
 // Get the orderID from the query string
 $orderID = isset($_GET["orderID"]) ? htmlspecialchars($_GET["orderID"]) : null;
+if (!$orderID) {
+    $errorMessage = "Order ID is missing.";
+    header("Location: error.php?error=" . urlencode($errorMessage));
+    exit;
+}
+
+// Determine the username from the orderID if the user is an admin
+if ($isAdmin) {
+    // Find the last occurrence of '-' and separate the username
+    $lastDashPos = strrpos($orderID, '-');
+    if ($lastDashPos !== false) {
+        $username = substr($orderID, 0, $lastDashPos); // Extract everything before the last '-'
+    } else {
+        $errorMessage = "Invalid order ID format.";
+        header("Location: error.php?error=" . urlencode($errorMessage));
+        exit;
+    }
+}
+
 
 // Path to the user's order history JSON file
 $orderHistoryPath = "users/$username/orderHistory.json";
 
 // Check if the order history file exists
 if (!file_exists($orderHistoryPath)) {
-    $errorMessage = "Error: Order history not found.";
+    $errorMessage = "Error: Order history not found for user $username.";
     header("Location: error.php?error=" . urlencode($errorMessage));
     exit;
 }
