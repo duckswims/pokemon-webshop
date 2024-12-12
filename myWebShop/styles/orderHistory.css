@@ -1,20 +1,61 @@
-/* Ensure that product display is using Flexbox */
 .order-display {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap when necessary */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    gap: 20px; /* Space between items */
+    gap: 10px !important;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
-/* Styling for each product box */
-.order-display .box {
-    display: flex; /* Enable Flexbox layout */
+.order-display-box {
     flex-direction: column;
-    flex: 1 1; /* Each box takes 1/3 of the row minus the gap */
+    min-width: 400px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transitions for transform and box-shadow */
+}
+
+.order-display-box:hover {
+    transform: scale(1.01); /* Slightly scale the box when hovered */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a soft shadow to give the hover effect */
+}
+
+.order-display-box .left {
+    text-align: left; /* Align text to the left */
+    flex: 1; /* Take up as much space as needed */
+}
+
+.order-display-box .right {
+    text-align: right; /* Align text to the right */
+    flex: 1; /* Take up as much space as needed */
+}
+
+.order-product-items {
+    display: flex;
+    flex-wrap: wrap; /* Allow the items to wrap to the next line when necessary */
+    justify-content: flex-start; /* Align items to the start (left) */
+    gap: 5px ; /* Space between items */
+    margin-top: 10px;
+    align-items: flex-start;
+}
+
+.order-product-items img {
+    width: 40px; /* Adjust the size */
+    height: auto;
+    margin: 5px;
+    object-fit: cover;
+}
+
+
+.order-qty {
+    font-size: 10px; /* Small size for the quantity */
+    font-weight: bold; /* Bold the quantity for emphasis */
+    background-color: #f1f1f1; /* Light background color */
+    padding: 2px 5px; /* Small padding around the quantity */
+    border-radius: 5px; /* Optional: Rounded corners */
+    position: absolute; /* Position relative to the image container */
+    
+    display: inline-block;
+}
+
+.order-search {
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
-    cursor: pointer; /* Change cursor to indicate it's interactive */
-    min-width: 300px; /* Minimum width for each box */
-    max-width: 500px;
+    gap: 10px !important;
+    align-items: center;
+    padding: 10px 0;
 }
