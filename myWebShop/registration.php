@@ -1,68 +1,51 @@
 <?php
-// Start the session to track the user
 session_start();
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $uName = $_POST['uName'];
     $password = $_POST['password'];
-    $repeatPassword = $_POST['repeatPassword'];
+
+    $dirPath = "users/$uName";
 
     // Check if username already exists
-    $dirPath = 'users/' . $uName;
     if (file_exists($dirPath)) {
-        $errorMessage = 'Username already exists. Please choose another.';
+        die('Username already exists. Please choose another.');
     }
 
-    // Create a folder named after the username
-    if (!file_exists($dirPath)) {
-        mkdir($dirPath, 0777, true);
-    }
+    // Create user directory and files
+    mkdir($dirPath, 0777, true);
 
-    // Create info.json with username and password
-    $info = array(
-        'firstName' => $firstName, 
+    $info = [
+        'firstName' => $firstName,
         'lastName' => $lastName,
-        'username' => $uName, 
-        'password' => $password,
-    );
-    file_put_contents($dirPath . '/info.json', json_encode($info, JSON_PRETTY_PRINT));
+        'username' => $uName,
+        'password' => $password
+    ];
+    file_put_contents("$dirPath/info.json", json_encode($info, JSON_PRETTY_PRINT));
 
-    // Create empty shoppingCart.json
-    $defaultShoppingFile = "users/shoppingCart.json";
-    $defaultContent = file_get_contents($defaultShoppingFile);
-    file_put_contents($dirPath . '/shoppingCart.json', $defaultContent);        // put default shoppingCart into user shoppingCart
-    file_put_contents($defaultShoppingFile, json_encode([], JSON_PRETTY_PRINT)); // clear default shoppingCart
+    // Initialize user-specific files
+    $defaultShoppingFile = 'users/shoppingCart.json';
+    if (file_exists($defaultShoppingFile)) {
+        copy($defaultShoppingFile, "$dirPath/shoppingCart.json");
+        file_put_contents($defaultShoppingFile, json_encode([], JSON_PRETTY_PRINT)); // Clear default shoppingCart
+    }
 
-    // Create empty orderHistory.json
-    file_put_contents($dirPath . '/orderHistory.json', json_encode([], JSON_PRETTY_PRINT));
+    file_put_contents("$dirPath/orderHistory.json", json_encode([], JSON_PRETTY_PRINT));
 
-    // Store the username in the session
+    // Set session variables
     $_SESSION['username'] = $uName;
     $_SESSION['firstName'] = $firstName;
+    $_SESSION['shoppingCart'] = json_decode(file_get_contents("$dirPath/shoppingCart.json"), true)['products'] ?? [];
 
-    // Store shopping cart in session
-    $shoppingFile = "users/$username/shoppingCart.json";
-    $shoppingData = json_decode(file_get_contents($shoppingFile), true);
-    $_SESSION['shoppingCart'] = $shoppingData['products'] ?? null;
-
-    // Redirect to a success page or login page after successful registration
     header("Location: customer.php");
     exit;
 }
-?>
-<?php
-// Generate a random number between 1 and 1025
-$randomNumber = rand(1, 1025);
 
-// Format the number to always be 3 digits (e.g., 001, 010, 100, etc.)
-$formattedNumber = sprintf("%03d", $randomNumber);
-
-// Construct the image URL using the formatted number
-$imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/$formattedNumber.png";
+// Generate a random Pokémon image URL
+$randomNumber = sprintf("%03d", rand(1, 1025));
+$imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/$randomNumber.png";
 ?>
 <!DOCTYPE html>
 <html lang="en">
