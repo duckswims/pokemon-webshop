@@ -36,6 +36,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['orderID'], $_POST['st
     }
 }
 
+// Load product data for images
+$productDataPath = "json/product.json"; // Path to product.json
+$productData = json_decode(file_get_contents($productDataPath), true);
+
+// Check if the JSON is valid
+if (json_last_error() !== JSON_ERROR_NONE) {
+    echo "<p>Error reading product data.</p>";
+    exit;
+}
+
+// Create a lookup array for product images
+$productImages = [];
+foreach ($productData["product"] as $product) {
+    $productImages[$product["pid"]] = $product["img_src"];
+}
+
 // Get the list of all orders
 $directory = "users"; // Replace with actual path
 $usernames = array_filter(scandir($directory), function ($item) use ($directory) {
@@ -59,11 +75,22 @@ foreach ($usernames as $username) {
     }
 }
 
+// Check if a status filter is set
+$statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
+
+// Filter the orders based on the selected status
+if ($statusFilter) {
+    $allOrders = array_filter($allOrders, function ($order) use ($statusFilter) {
+        return strtolower($order['status']) === strtolower($statusFilter);
+    });
+}
+
 // Sort the orders by 'datetime' in descending order
 usort($allOrders, function ($a, $b) {
     return strtotime($b['datetime']) - strtotime($a['datetime']);
 });
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,6 +106,8 @@ usort($allOrders, function ($a, $b) {
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/admin-orders.css">
+    <link rel="stylesheet" href="styles/order-display.css">
+    <link rel="stylesheet" href="styles/order-status.css">
     <script src="script/admin-orders.js"></script>
 </head>
 
@@ -98,80 +127,94 @@ usort($allOrders, function ($a, $b) {
 
             <!-- Add a status filter dropdown -->
             <label for="status-filter">Filter by Status:</label>
-            <select id="status-filter" onchange="searchOrders()">
+            <select id="status-filter" onchange="window.location.href = '?status=' + this.value">
                 <option value="">All</option>
-                <option value="processing">Processing</option>
-                <option value="shipped">Shipped</option>
-                <option value="completed">Completed</option>
-                <option value="returned">Returned</option>
-                <option value="cancelled">Cancelled</option>
+                <option value="processing" <?php echo ($statusFilter === 'processing' ? 'selected' : ''); ?>>Processing
+                </option>
+                <option value="shipped" <?php echo ($statusFilter === 'shipped' ? 'selected' : ''); ?>>Shipped</option>
+                <option value="completed" <?php echo ($statusFilter === 'completed' ? 'selected' : ''); ?>>Completed
+                </option>
+                <option value="returned" <?php echo ($statusFilter === 'returned' ? 'selected' : ''); ?>>Returned
+                </option>
+                <option value="cancelled" <?php echo ($statusFilter === 'cancelled' ? 'selected' : ''); ?>>Cancelled
+                </option>
             </select>
         </div>
         <br>
 
-        <?php
-        if (count($allOrders) > 0) {
-            echo "<table border='1'>
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Order ID</th>
-                            <th>Date Ordered</th>
-                            <th>Total Price</th>
-                            <th>Status</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
+        <div class="order-display container" id="order-display">
+            <?php
+            if (count($allOrders) > 0) {
+                // Display each order in the updated display format
+                foreach ($allOrders as $order) {
+                    // Round the total price to 2 decimal places
+                    $totalPrice = number_format($order['totalPrice'], 2);
+                    ?>
+            <div class='box order-display-box'>
+                <div class='container'>
+                    <div class='left'>
+                        <strong>Order ID: <?php echo htmlspecialchars($order["orderID"]); ?></strong>
+                        <p>Date: <?php echo htmlspecialchars($order["datetime"]); ?></p>
+                    </div>
+                    <div class='right'>
+                        <!-- Status Form -->
+                        <form method="POST">
+                            <input type="hidden" name="username"
+                                value="<?php echo htmlspecialchars($order['username']); ?>">
+                            <input type="hidden" name="orderID"
+                                value="<?php echo htmlspecialchars($order['orderID']); ?>">
+                            <select name="status" onchange="this.form.submit()">
+                                <option value="processing"
+                                    <?php echo ($order['status'] === 'processing' ? 'selected' : ''); ?>>Processing
+                                </option>
+                                <option value="shipped"
+                                    <?php echo ($order['status'] === 'shipped' ? 'selected' : ''); ?>>Shipped</option>
+                                <option value="completed"
+                                    <?php echo ($order['status'] === 'completed' ? 'selected' : ''); ?>>Completed
+                                </option>
+                                <option value="returned"
+                                    <?php echo ($order['status'] === 'returned' ? 'selected' : ''); ?>>Returned</option>
+                                <option value="cancelled"
+                                    <?php echo ($order['status'] === 'cancelled' ? 'selected' : ''); ?>>Cancelled
+                                </option>
+                            </select>
+                        </form>
+                        <?php $finalPrice = $order["totalPrice"] - $order["discount"] + $order["shipping"]; ?>
+                        <p><?php echo htmlspecialchars(number_format($finalPrice, 2) . '€'); ?></p>
+                    </div>
+                </div>
 
-            // Display each order
-            foreach ($allOrders as $order) {
-                // Round the total price to 2 decimal places
-                $totalPrice = number_format($order['totalPrice'], 2);
+                <!-- Order Product Images -->
+                <div class='order-product-items'>
+                    <?php
+                            // Display product images and quantities
+                            foreach ($order["cart"] as $item) {
+                                if (isset($productImages[$item["pid"]])) {
+                                    ?>
+                    <div class='order-product-item'>
+                        <p class='order-qty'><?php echo htmlspecialchars($item["qty"]); ?></p>
+                        <img src='<?php echo htmlspecialchars($productImages[$item["pid"]]); ?>' alt='Product Image' />
+                    </div>
+                    <?php
+                                }
+                            }
+                            ?>
+                </div>
 
-                // Determine the row color based on the status
-                $rowColor = '';
-                if ($order['status'] === 'cancelled' || $order['status'] === 'returned') {
-                    $rowColor = 'style="background-color: red; color: white;"';
-                } elseif ($order['status'] === 'completed') {
-                    $rowColor = 'style="background-color: green; color: white;"';
-                } elseif ($order['status'] === 'shipped') {
-                    $rowColor = 'style="background-color: blue; color: white;"';
+                <div style='display: flex; justify-content: center;'>
+                    <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
+                        <button>View Order</button>
+                    </a>
+                </div>
+            </div>
+            <?php
                 }
-
-                echo "<tr $rowColor>
-                        <td>" . htmlspecialchars($order['username']) . "</td>
-                        <td>" . htmlspecialchars($order['orderID']) . "</td>
-                        <td>" . htmlspecialchars($order['datetime']) . "</td>
-                        <td style='text-align: right;'>" . $totalPrice . "€</td>
-                        <td>
-                            <form method='POST'>
-                                <input type='hidden' name='username' value='" . htmlspecialchars($order['username']) . "'>
-                                <input type='hidden' name='orderID' value='" . htmlspecialchars($order['orderID']) . "'>
-                                <select name='status' onchange='this.form.submit()'>
-                                    <option value='processing'" . ($order['status'] === 'processing' ? ' selected' : '') . ">Processing</option>
-                                    <option value='shipped'" . ($order['status'] === 'shipped' ? ' selected' : '') . ">Shipped</option>
-                                    <option value='completed'" . ($order['status'] === 'completed' ? ' selected' : '') . ">Completed</option>
-                                    <option value='returned'" . ($order['status'] === 'returned' ? ' selected' : '') . ">Returned</option>
-                                    <option value='cancelled'" . ($order['status'] === 'cancelled' ? ' selected' : '') . ">Cancelled</option>
-                                </select>
-                            </form>
-                        </td>
-                        <td>
-                            <a href=\"order.php?orderID=" . urlencode($order['orderID']) . "\">
-                                <button class=''>View Details</button>
-                            </a>
-                        </td>
-                    </tr>";
+            } else {
+                echo "<p>No orders found.</p>";
             }
+            ?>
+        </div>
 
-
-            echo "</tbody>
-                  </table>";
-        } else {
-            echo "<p>No orders found.</p>";
-        }
-        ?>
     </main>
 
     <!-- Footer -->
