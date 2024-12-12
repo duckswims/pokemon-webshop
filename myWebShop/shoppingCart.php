@@ -181,30 +181,36 @@ function calculateTotalPrice($cart, $productMap) {
         <div class="container">
             <div class="container product-container">
                 <?php 
-                foreach ($cart as $item) {
-                    $pid = $item['pid'];
-                    if (isset($productMap[$pid])) {
-                        $product = $productMap[$pid];
-                        $name = $product['name'];
-                        $img = $product['img_src'];
-                        $price = $product['price'];
-                        $qty = $item['qty'];
-
-                        echo "<div class='box' id='product-" . htmlspecialchars($pid) . "'>";
-                        echo "<img src='" . htmlspecialchars($img) . "' class='pImg' alt='" . htmlspecialchars($name) . "'>";
-                        echo "<div class='left'>";
-                        echo "<span class='pid'>#" . htmlspecialchars($pid) . "</span>";
-                        echo "<span class='pName'>" . htmlspecialchars($name) . "</span>";
-                        echo "</div>";
-                        echo "<div class='right'>";
-                        echo "<span class='price'>" . number_format(htmlspecialchars($price), 2) . "€ </span>";
-                        echo "<input type='number' value='" . htmlspecialchars($qty) . "' name='qty[" . htmlspecialchars($pid) . "]' id='qty-" . htmlspecialchars($pid) . "' min='1' onchange='updateCartQty(\"" . htmlspecialchars($pid) . "\", this.value)' />";
-                        echo "<img class='btn-delete' id='delete-" . htmlspecialchars($pid) . "' src='img/delete.png' alt='Delete' onclick='removeFromCart(\"" . htmlspecialchars($pid) . "\")' />";
-                        echo "</div>";
-                        echo "</div>";
+                    foreach ($cart as $item) {
+                        $pid = $item['pid'];
+                        if (isset($productMap[$pid])) {
+                            $product = $productMap[$pid];
+                            $name = $product['name'];
+                            $img = $product['img_src'];
+                            $price = $product['price'];
+                            $qty = $item['qty'];
+                    ?>
+                <div class="box" id="product-<?php echo htmlspecialchars($pid); ?>">
+                    <img src="<?php echo htmlspecialchars($img); ?>" class="pImg"
+                        alt="<?php echo htmlspecialchars($name); ?>">
+                    <div class="left">
+                        <span class="pid">#<?php echo htmlspecialchars($pid); ?></span>
+                        <span class="pName"><?php echo htmlspecialchars($name); ?></span>
+                    </div>
+                    <div class="right">
+                        <span class="price"><?php echo number_format(htmlspecialchars($price), 2); ?>€ </span>
+                        <input type="number" value="<?php echo htmlspecialchars($qty); ?>"
+                            name="qty[<?php echo htmlspecialchars($pid); ?>]"
+                            id="qty-<?php echo htmlspecialchars($pid); ?>" min="1"
+                            onchange="updateCartQty('<?php echo htmlspecialchars($pid); ?>', this.value)" />
+                        <img class="btn-delete" id="delete-<?php echo htmlspecialchars($pid); ?>" src="img/delete.png"
+                            alt="Delete" onclick="removeFromCart('<?php echo htmlspecialchars($pid); ?>')" />
+                    </div>
+                </div>
+                <?php 
+                        }
                     }
-                }
-                ?>
+                    ?>
                 <a href="all-products.php"><button>Back to Products</button></a>
             </div>
 
