@@ -1,0 +1,9 @@
+/* For completed status (green) */
+.status-completed {
+    color: green;
+}
+
+/* For cancelled or returned status (red) */
+.status-cancelled-returned {
+    color: red;
+}
