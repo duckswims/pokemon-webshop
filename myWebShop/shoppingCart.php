@@ -28,17 +28,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') 
     exit;
 }
 
-// == Price Calculation ==
-// Calculate the total price of items in the cart (before and after tax)
-$totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-    $product = $productMap[$item['pid']] ?? null;
-    return $product ? $total + $product['price'] * $item['qty'] : $total;
-}, 0);
 
-// Calculate tax (19% in this case) and the final price after applying discount and shipping cost
-$tax = round($totalPrice * 0.19, 2);
-$totalPriceWOtax = round($totalPrice - $tax, 2);
-$finalPrice = round($totalPrice - 1 + 4.99, 2);  // Applying discount and shipping
+// Helper Function to Calculate Price
+function calculatePrices($cart, $productMap) {
+    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $discount, $finalPrice;
+
+    $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
+        $product = $productMap[$item['pid']] ?? null;
+        return $product ? $total + $product['price'] * $item['qty'] : $total;
+    }, 0);
+
+    // Calculate tax (19%) and the final price after applying discount and shipping cost
+    $tax = round($totalPrice * 0.19, 2);
+    $totalPriceWOtax = round($totalPrice - $tax, 2);
+    $finalPrice = round($totalPrice - $discount + $shipping, 2);
+
+    return [
+        'totalPriceWOtax' => $totalPriceWOtax,
+        'tax' => $tax,
+        'totalPrice' => $totalPrice,
+        'shipping' => $shipping,
+        'discount' => $discount,
+        'finalPrice' => $finalPrice
+    ];
+}
+calculatePrices($cart, $productMap);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
@@ -46,50 +60,55 @@ if (isset($input['action'])) {
     switch ($input['action']) {
         // Update the quantity of a product in the cart
         case 'update':
-            if (isset($input['pid'], $input['qty'])) {
-                $pid = $input['pid'];
-                $qty = (int)$input['qty'];
-
-                // Update the cart item with the new quantity
-                foreach ($cart as &$item) {
-                    if ($item['pid'] == $pid) {
-                        $item['qty'] = $qty;
-                        break;
-                    }
+            // Update cart quantity
+            $pid = $input['pid'];
+            $qty = (int)$input['qty'];
+    
+            // Update the cart item with the new quantity
+            foreach ($cart as &$item) {
+                if ($item['pid'] == $pid) {
+                    $item['qty'] = $qty;
+                    break;
                 }
-
-                // Save the updated cart to the shopping cart file
-                file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
-
-                // Recalculate the total price after the update
-                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-                    $product = $productMap[$item['pid']] ?? null;
-                    return $product ? $total + $product['price'] * $item['qty'] : $total;
-                }, 0);
-
-                // Return the updated total price as a response
-                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
             }
+    
+            // Save updated cart to the file
+            file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
+    
+            // Recalculate the prices
+            $prices = calculatePrices($cart, $productMap);
+    
+            // Return updated price data
+            echo json_encode([
+                'success' => true,
+                'totalPriceWOtax' => $prices['totalPriceWOtax'],
+                'tax' => $prices['tax'],
+                'totalPrice' => $prices['totalPrice'],
+                'shipping' => $prices['shipping'],
+                'discount' => $prices['discount'],
+                'finalPrice' => $prices['finalPrice']
+            ]);
             break;
-
-        // Remove an item from the cart
+    
         case 'remove':
-            if (isset($input['pid'])) {
-                $pid = $input['pid'];
-
-                // Remove the item with the given product ID from the cart
-                $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
-                file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
-
-                // Recalculate the total price after removal
-                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-                    $product = $productMap[$item['pid']] ?? null;
-                    return $product ? $total + $product['price'] * $item['qty'] : $total;
-                }, 0);
-
-                // Return the updated total price as a response
-                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-            }
+            // Remove item from cart
+            $pid = $input['pid'];
+            $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
+            file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
+    
+            // Recalculate the prices
+            $prices = calculatePrices($cart, $productMap);
+    
+            // Return updated price data
+            echo json_encode([
+                'success' => true,
+                'totalPriceWOtax' => $prices['totalPriceWOtax'],
+                'tax' => $prices['tax'],
+                'totalPrice' => $prices['totalPrice'],
+                'shipping' => $prices['shipping'],
+                'discount' => $prices['discount'],
+                'finalPrice' => $prices['finalPrice']
+            ]);
             break;
 
         // Proceed to the payment process and place an order
@@ -135,15 +154,7 @@ if (isset($input['action'])) {
     exit;
 }
 
-// Helper Function to Calculate Total Price
-function calculateTotalPrice($cart, $productMap) {
-    $totalPrice = 0;
-    foreach ($cart as $item) {
-        $product = $productMap[$item['pid']];
-        $totalPrice += $product['price'] * $item['qty'];
-    }
-    return $totalPrice;
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,31 +230,32 @@ function calculateTotalPrice($cart, $productMap) {
                     Order Summary
                     <div class="container">
                         <div class="left"><strong>Total Price (without tax)</strong></div>
-                        <div class="right"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
+                        <div class="right" id="totalPriceWOtax"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
                     </div>
                     <div class="container">
                         <div class="left"><strong>Tax (19%)</strong></div>
-                        <div class="right"><?php echo number_format($tax, 2); ?>€</div>
+                        <div class="right" id="tax"><?php echo number_format($tax, 2); ?>€</div>
                     </div>
                     <hr>
                     <div class="container">
                         <div class="left"><strong>Subtotal</strong></div>
-                        <div class="right"><?php echo number_format($totalPrice, 2); ?>€</div>
+                        <div class="right" id="subtotal"><?php echo number_format($totalPrice, 2); ?>€</div>
                     </div>
                     <?php if ($discount != 0): ?>
                     <div class="container">
                         <div class="left"><strong>Discount</strong></div>
-                        <div class="right"><?php echo "- " . number_format($discount, 2); ?>€</div>
+                        <div class="right" id="discount"><?php echo "- " . number_format($discount, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
                     <div class="container">
                         <div class="left"><strong>Shipping</strong></div>
-                        <div class="right"><?php echo number_format($shipping, 2); ?>€</div>
+                        <div class="right" id="shipping"><?php echo number_format($shipping, 2); ?>€</div>
                     </div>
                     <hr>
                     <div class="container">
                         <div class="left"><strong>Total</strong></div>
-                        <div class="right subtotal"><span><?php echo number_format($finalPrice, 2); ?>€</span></div>
+                        <div class="right subtotal" id="finalPrice">
+                            <span><?php echo number_format($finalPrice, 2); ?>€</span></div>
                     </div>
                     <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
                 </div>
