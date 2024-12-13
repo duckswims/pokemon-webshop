@@ -13,28 +13,35 @@ if (!$admin) {
 }
 
 // Handle status update if form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['orderID'], $_POST['status'], $_POST['username'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['orderID'], $_POST['username'])) {
     $username = $_POST['username'];
     $orderID = $_POST['orderID'];
-    $newStatus = $_POST['status'];
-
     $orderHistoryFile = "users/$username/orderHistory.json";
 
     if (file_exists($orderHistoryFile)) {
         $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
 
-        // Update the status for the matching order ID
+        // Update the status or handle cancellation reason
         foreach ($orderHistory as &$order) {
             if ($order['orderID'] === $orderID) {
-                $order['status'] = $newStatus;
+                if (isset($_POST['ship_order'])) {
+                    $order['status'] = 'shipped';
+                }
+
+                if (isset($_POST['cancelledReason'])) {
+                    $order['status'] = 'cancelled';
+                    $order['cancelledReason'] = $_POST['cancelledReason']; // Store the cancellation reason
+                }
                 break;
             }
         }
-
+        
         // Save the updated order history back to the file
         file_put_contents($orderHistoryFile, json_encode($orderHistory, JSON_PRETTY_PRINT));
     }
 }
+
+
 
 // Load product data for images
 $productDataPath = "json/product.json"; // Path to product.json
@@ -90,7 +97,6 @@ usort($allOrders, function ($a, $b) {
     return strtotime($b['datetime']) - strtotime($a['datetime']);
 });
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -157,28 +163,10 @@ usort($allOrders, function ($a, $b) {
                         <p>Date: <?php echo htmlspecialchars($order["datetime"]); ?></p>
                     </div>
                     <div class='right'>
-                        <!-- Status Form -->
-                        <form method="POST">
-                            <input type="hidden" name="username"
-                                value="<?php echo htmlspecialchars($order['username']); ?>">
-                            <input type="hidden" name="orderID"
-                                value="<?php echo htmlspecialchars($order['orderID']); ?>">
-                            <select name="status" onchange="this.form.submit()">
-                                <option value="processing"
-                                    <?php echo ($order['status'] === 'processing' ? 'selected' : ''); ?>>Processing
-                                </option>
-                                <option value="shipped"
-                                    <?php echo ($order['status'] === 'shipped' ? 'selected' : ''); ?>>Shipped</option>
-                                <option value="completed"
-                                    <?php echo ($order['status'] === 'completed' ? 'selected' : ''); ?>>Completed
-                                </option>
-                                <option value="returned"
-                                    <?php echo ($order['status'] === 'returned' ? 'selected' : ''); ?>>Returned</option>
-                                <option value="cancelled"
-                                    <?php echo ($order['status'] === 'cancelled' ? 'selected' : ''); ?>>Cancelled
-                                </option>
-                            </select>
-                        </form>
+                        <strong
+                            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : ''); ?>">
+                            <?php echo htmlspecialchars(ucfirst($order["status"])); ?>
+                        </strong>
                         <?php $finalPrice = $order["totalPrice"] - $order["discount"] + $order["shipping"]; ?>
                         <p><?php echo htmlspecialchars(number_format($finalPrice, 2) . '€'); ?></p>
                     </div>
@@ -213,7 +201,28 @@ usort($allOrders, function ($a, $b) {
                 <?php endif; ?>
 
 
-                <div style='display: flex; justify-content: center;'>
+                <div style='display: flex; justify-content: center; gap: 10px;'>
+                    <?php if (strtolower($order["status"]) === "processing"): ?>
+                    <!-- Ship Order Form -->
+                    <form method="POST" onsubmit="return confirmShip();">
+                        <input type="hidden" name="username"
+                            value="<?php echo htmlspecialchars($order['username']); ?>">
+                        <input type="hidden" name="orderID" value="<?php echo htmlspecialchars($order['orderID']); ?>">
+                        <input type="hidden" id="shippedStatus" name="ship_order" value="shipped">
+                        <button type="submit" class="btn-blue">Ship Order</button>
+                    </form>
+
+
+                    <!-- Cancel Order Form -->
+                    <form method="POST" onsubmit="return confirmCancel();">
+                        <input type="hidden" name="username"
+                            value="<?php echo htmlspecialchars($order['username']); ?>">
+                        <input type="hidden" name="orderID" value="<?php echo htmlspecialchars($order['orderID']); ?>">
+                        <input type="hidden" id="cancelledReason" name="cancelledReason" value="">
+                        <button type="submit" name="cancel_order" class="btn-red">Cancel Order</button>
+                    </form>
+                    <?php endif; ?>
+
                     <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
                         <button>View Order</button>
                     </a>
