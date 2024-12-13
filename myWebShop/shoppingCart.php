@@ -174,15 +174,16 @@ if (isset($input['action'])) {
     <header><?php include("header.php"); ?></header>
 
     <main>
-        <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :( </h1>
-        <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
-            alt="Pikachu" width="300px"><br>
-        <a href="all-products.php"><button>Back to Products</button></a>
-        <?php else: ?>
         <h1>Your Shopping Cart</h1>
         <div class="container">
             <div class="container product-container">
+                <?php if (empty($cart)): ?>
+                <div class="container" style="flex-direction: column; align-items: center">
+                    <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
+                        alt="Pikachu" width="300px">
+                    <strong>So empty...</strong>
+                </div>
+                <?php else: ?>
                 <?php 
                     foreach ($cart as $item) {
                         $pid = $item['pid'];
@@ -214,6 +215,7 @@ if (isset($input['action'])) {
                         }
                     }
                     ?>
+                <?php endif; ?>
                 <a href="all-products.php"><button>Back to Products</button></a>
             </div>
 
@@ -261,8 +263,6 @@ if (isset($input['action'])) {
                     <button>Redeem Voucher</button>
                 </div>
             </div>
-        </div>
-        <?php endif; ?>
     </main>
 
     <!-- Footer -->
