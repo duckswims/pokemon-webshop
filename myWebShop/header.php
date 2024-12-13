@@ -82,7 +82,7 @@ $_SESSION['counter'] = $cartCount;
                 <?php endif; ?>
             </div>
             <button class="mode-button">
-                <img src="img/mode/light.png" class="nav-img mode-img">
+                <img src="img/mode/dark_moon.png" class="nav-img mode-img">
             </button>
             <button class="hamburger-btn hamburger-menu">
                 <img src="img/hamburger.png" alt="Menu" class="hamburger-icon">
@@ -90,5 +90,5 @@ $_SESSION['counter'] = $cartCount;
         </div>
     </header>
 </body>
-
+        
 </html>

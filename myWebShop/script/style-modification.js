@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const toggleButton = document.querySelector(".mode-button");  // Correct the class name here
     const toggleImage = toggleButton.querySelector(".mode-img");
+    const UserImg = document.querySelector(".user-img");
+    const CartImg = document.getElementById("cart-icon");
     const parentDoc = window.parent.document; // Access the parent document
     const parentBody = parentDoc.body;
     const childBody = document.body; // Current iframe's body
@@ -15,13 +17,17 @@ document.addEventListener("DOMContentLoaded", () => {
             childBody.classList.add("dark-mode");
             loginBox?.classList.add("dark-mode");  // Optional: Prevent errors if elements don't exist
             registerBox?.classList.add("dark-mode");
-            toggleImage.src = "/myWebShop/img/mode/dark.png";
+            toggleImage.src = "/myWebShop/img/mode/light_sun.png";
+            UserImg.src = "/myWebShop/img/user_dark_mode.png";
+            CartImg.src = "/myWebShop/img/cart_dark_mode.png";
         } else {
             parentBody.classList.remove("dark-mode");
             childBody.classList.remove("dark-mode");
             loginBox?.classList.remove("dark-mode");
             registerBox?.classList.remove("dark-mode");
-            toggleImage.src = "/myWebShop/img/mode/light.png";
+            toggleImage.src = "/myWebShop/img/mode/dark_moon.png";
+            UserImg.src = "/myWebShop/img/user.png";
+            CartImg.src = "/myWebShop/img/cart.png";
         }
     };
 

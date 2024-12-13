@@ -1,14 +1,14 @@
 /* Dark-Mode General Styles */
 body.dark-mode {
-    background-color: #838383; /* Unified background color */
-    color: #fff;
+    background-color: #1e1e1e; /* Unified background color */
+    color: #d9d9d9;
     transition: all 0.3s ease;
 }
 
 body.dark-mode table,
 body.dark-mode th,
 body.dark-mode td {
-    border: 1px solid white;
+    border: 1px solid #d9d9d9;
 }
 
 body.dark-mode thead {
@@ -17,22 +17,22 @@ body.dark-mode thead {
 
 /* Dark-Mode for Specific Elements */
 body.dark-mode header {
-    background-color: #333;
+    background-color: #383838;
 }
 
 body.dark-mode header .nav-links a,
 body.dark-mode label {
-    color: white;
+    color: #d9d9d9;
 }
 
 body.dark-mode .nav-button {
-    background-color: #333;
+    background-color: #383838;
 }
 
 /* Dark-Mode Box */
 .box.dark-mode {
-    background-color: #333;
-    color: #fff;
+    background-color: #383838;
+    color: #d9d9d9;
 }
 
 /* Ensure 'seller-details' retains its original text color in dark mode */
@@ -42,5 +42,5 @@ body.dark-mode .seller-details {
 
 /* Add specific styles for the background of 'Currency' on the Price Calculator page */
 body.dark-mode .box {
-    background-color: #838383;
+    background-color: #383838;
 }

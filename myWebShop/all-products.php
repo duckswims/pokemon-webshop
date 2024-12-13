@@ -101,11 +101,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main>
         <h1>Pokémon List</h1>
         <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type
-            and category.</p>
+            and category.</p><br>
 
         <div class="search-bar">
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
-        </div>
+        </div><br>
 
         <div class="product-display" id="product-display">
             <?php
