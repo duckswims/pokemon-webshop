@@ -40,6 +40,9 @@ function calculatePrices($cart, $productMap)
         return $product ? $total + $product['price'] * $item['qty'] : $total;
     }, 0);
 
+    // Set shipping cost based on total price
+    $shipping = ($totalPrice >= 1000) ? 0 : 9.99;
+
     // Calculate tax (19%) and the final price after applying discount and shipping cost
     $tax = round($totalPrice * 0.19, 2);
     $totalPriceWOtax = round($totalPrice - $tax, 2);
@@ -242,11 +245,14 @@ if (isset($input['action'])) {
                     </div>
                     <?php endif; ?>
                     <div class="container">
-                        <div class="left"><strong>Shipping</strong></div>
+                        <div class="left">
+                            <strong>Shipping</strong>
+                            <p id="shippingMessage" style="font-size: 0.8em; color: grey;">Free shipping after 1000€</p>
+                        </div>
                         <div class="right" id="shipping"><?php echo number_format($shipping, 2); ?>€</div>
                     </div>
                     <hr>
-                    <div class="container">
+                    <div class="container" style="align-items: center;">
                         <div class="left"><strong>Total</strong></div>
                         <div class="right subtotal" id="finalPrice"><?php echo number_format($finalPrice, 2); ?>€</div>
                     </div>

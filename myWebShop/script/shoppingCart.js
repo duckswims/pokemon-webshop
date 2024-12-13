@@ -10,6 +10,7 @@ function updateCartQty(pid, qty) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                console.log(data);
                 window.fetchCartCount(); // Update cart icon
                 updateCartPrices(data); // Dynamically update prices
                 console.log('Cart updated successfully.');
@@ -54,14 +55,19 @@ function updateCartPrices(data) {
     document.getElementById('totalPriceWOtax').textContent = `${data.totalPriceWOtax.toFixed(2)}€`;
     document.getElementById('tax').textContent = `${data.tax.toFixed(2)}€`;
     document.getElementById('subtotal').textContent = `${data.totalPrice.toFixed(2)}€`;
+    document.getElementById('shipping').textContent = `${data.shipping.toFixed(2)}€`;
     document.getElementById('finalPrice').textContent = `${data.finalPrice.toFixed(2)}€`;
 
     if (data.discount > 0) {
         document.getElementById('discount').textContent = `${data.discount.toFixed(2)}€`;
     }
 
-    if (data.shipping > 0) {
-        document.getElementById('shipping').textContent = `${data.shipping.toFixed(2)}€`;
+    // Dynamically display the "Free shipping after 1000€" message
+    const shippingMessage = document.getElementById('shippingMessage');
+    if (data.totalPrice < 1000) {
+        shippingMessage.style.display = 'block';
+    } else {
+        shippingMessage.style.display = 'none';
     }
 }
 
