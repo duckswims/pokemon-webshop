@@ -140,8 +140,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
                 <?php endif; ?>
 
                 <div style="display: flex; justify-content: center; gap: 10px;">
+                    <!-- View Order -->
+                    <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
+                        <button class="btn-blue">View Order</button>
+                    </a>
                     <!-- Cancel Order Button (if status is "processing") -->
-                    <?php if (strtolower($order["status"]) === "processing"): ?>
+                    <?php if (in_array(strtolower($order["status"]), ["processing", "confirmed"])): ?>
                     <form action="orderHistory.php" method="POST">
                         <input type="hidden" name="orderID"
                             value="<?php echo htmlspecialchars($order["orderID"]); ?>" />
@@ -149,10 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
                         <button type="submit" class="btn-red">Cancel Order</button>
                     </form>
                     <?php endif; ?>
-                    <!-- View Order -->
-                    <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
-                        <button class="btn-blue">View Order</button>
-                    </a>
                 </div>
             </div>
             <?php endforeach; ?>
