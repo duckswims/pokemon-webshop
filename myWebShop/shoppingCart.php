@@ -28,11 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') 
     exit;
 }
 
-
 // Helper Function to Calculate Price
-function calculatePrices($cart, $productMap) {
+function calculatePrices($cart, $productMap)
+{
     global $totalPriceWOtax, $tax, $totalPrice, $shipping, $discount, $finalPrice;
 
+    // Calculate total price before tax
     $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
         $product = $productMap[$item['pid']] ?? null;
         return $product ? $total + $product['price'] * $item['qty'] : $total;
@@ -52,18 +53,19 @@ function calculatePrices($cart, $productMap) {
         'finalPrice' => $finalPrice
     ];
 }
+
 calculatePrices($cart, $productMap);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
+
 if (isset($input['action'])) {
     switch ($input['action']) {
-        // Update the quantity of a product in the cart
         case 'update':
             // Update cart quantity
             $pid = $input['pid'];
             $qty = (int)$input['qty'];
-    
+
             // Update the cart item with the new quantity
             foreach ($cart as &$item) {
                 if ($item['pid'] == $pid) {
@@ -71,35 +73,12 @@ if (isset($input['action'])) {
                     break;
                 }
             }
-    
+
             // Save updated cart to the file
             file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
-    
-            // Recalculate the prices
+
+            // Recalculate the prices and return updated price data
             $prices = calculatePrices($cart, $productMap);
-    
-            // Return updated price data
-            echo json_encode([
-                'success' => true,
-                'totalPriceWOtax' => $prices['totalPriceWOtax'],
-                'tax' => $prices['tax'],
-                'totalPrice' => $prices['totalPrice'],
-                'shipping' => $prices['shipping'],
-                'discount' => $prices['discount'],
-                'finalPrice' => $prices['finalPrice']
-            ]);
-            break;
-    
-        case 'remove':
-            // Remove item from cart
-            $pid = $input['pid'];
-            $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
-            file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
-    
-            // Recalculate the prices
-            $prices = calculatePrices($cart, $productMap);
-    
-            // Return updated price data
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
@@ -111,7 +90,25 @@ if (isset($input['action'])) {
             ]);
             break;
 
-        // Proceed to the payment process and place an order
+        case 'remove':
+            // Remove item from cart
+            $pid = $input['pid'];
+            $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
+            file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
+
+            // Recalculate the prices and return updated price data
+            $prices = calculatePrices($cart, $productMap);
+            echo json_encode([
+                'success' => true,
+                'totalPriceWOtax' => $prices['totalPriceWOtax'],
+                'tax' => $prices['tax'],
+                'totalPrice' => $prices['totalPrice'],
+                'shipping' => $prices['shipping'],
+                'discount' => $prices['discount'],
+                'finalPrice' => $prices['finalPrice']
+            ]);
+            break;
+
         case 'proceed_to_payment':
             // Check if the user is logged in
             if (!$username) {
@@ -128,8 +125,8 @@ if (isset($input['action'])) {
             // Update cart and order history data
             $cartData = json_decode(file_get_contents($shoppingFile), true);
             $cartData['status'] = 'processing';
-            $cartData['shipping'] = 4.99;
-            $cartData['discount'] = 1;
+            $cartData['shipping'] = $shipping;
+            $cartData['discount'] = $discount;
             $cartData['totalPrice'] = $totalPrice;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
             $cartData['datetime'] = date('Y-m-d H:i:s'); // Record the current date and time of the order
@@ -153,8 +150,6 @@ if (isset($input['action'])) {
     }
     exit;
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -175,12 +170,8 @@ if (isset($input['action'])) {
 </head>
 
 <body>
-    <!-- Header -->
-    <header>
-        <?php include("header.php"); ?>
-    </header>
+    <header><?php include("header.php"); ?></header>
 
-    <!-- Main -->
     <main>
         <?php if (empty($cart)): ?>
         <h1>Empty shopping cart :( </h1>
@@ -254,8 +245,7 @@ if (isset($input['action'])) {
                     <hr>
                     <div class="container">
                         <div class="left"><strong>Total</strong></div>
-                        <div class="right subtotal" id="finalPrice">
-                            <span><?php echo number_format($finalPrice, 2); ?>€</span></div>
+                        <div class="right subtotal" id="finalPrice"><?php echo number_format($finalPrice, 2); ?>€</div>
                     </div>
                     <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
                 </div>
@@ -271,9 +261,7 @@ if (isset($input['action'])) {
     </main>
 
     <!-- Footer -->
-    <footer>
-        <?php include("footer.php"); ?>
-    </footer>
+    <footer><?php include("footer.php"); ?></footer>
 </body>
 
 </html>
