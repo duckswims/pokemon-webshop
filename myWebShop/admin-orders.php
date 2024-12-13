@@ -201,6 +201,18 @@ usort($allOrders, function ($a, $b) {
                             ?>
                 </div>
 
+
+                <!-- Display cancelled reason -->
+                <?php if (strtolower($order["status"]) === "cancelled" && isset($order["cancelledReason"])): ?>
+                <p class="cancelled-message" style="color: red;">
+                    <?php echo strpos($order["cancelledReason"], $username) === 0 
+                        ? "You have cancelled this order." 
+                        : htmlspecialchars($order["cancelledReason"]); 
+                    ?>
+                </p>
+                <?php endif; ?>
+
+
                 <div style='display: flex; justify-content: center;'>
                     <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
                         <button>View Order</button>
