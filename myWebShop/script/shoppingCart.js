@@ -65,6 +65,13 @@ function updateCartPrices(data) {
         document.getElementById('discount-container').style.display = 'none';
     }
 
+    if (data.couponDisc > 0) {
+        document.getElementById('couponDisc-container').style.display = 'flex';
+        document.getElementById('couponDisc').textContent = `- ${data.couponDisc.toFixed(2)}€`;
+    } else {
+        document.getElementById('couponDisc-container').style.display = 'none';
+    }
+
     // Dynamically display the "Free shipping after 1000€" message
     const shippingMessage = document.getElementById('shippingMessage');
     if (data.totalPrice < 1000) {
@@ -72,7 +79,43 @@ function updateCartPrices(data) {
     } else {
         shippingMessage.style.display = 'none';
     }
+
+    // Display the coupon code description dynamically
+    if (data.couponCode && data.couponCode !== '') {
+        document.querySelector('#discount-container .left p').textContent = `Coupon code: ${data.couponCode}`;
+    }
 }
+
+// Function to redeem a voucher (coupon code)
+function redeemVoucher() {
+    const couponCode = document.getElementById('coupon_code').value; // Get the coupon code input
+    const messageContainer = document.getElementById('message'); // Get the message container to show feedback
+
+    fetch('shoppingCart.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded', // Specify the content type
+        },
+        body: `coupon_code=${encodeURIComponent(couponCode)}`, // Send coupon code in the body
+    })
+    .then(response => response.json()) // Parse the JSON response
+    .then(data => {
+        console.log(data); // Log the data received from the server for debugging
+
+        if (data.status === 'success') {
+            messageContainer.style.color = 'green';
+        } else {
+            messageContainer.style.color = 'red';
+        }
+        messageContainer.textContent = data.message; // Display the server message
+        updateCartPrices(data); // Update the cart prices dynamically
+    })
+    .catch(error => {
+        messageContainer.style.color = 'red'; // If an error occurs, display error message in red
+        messageContainer.textContent = 'An error occurred. Please try again later.'; // Show the error message
+    });
+}
+
 
 // Add event listener for the "Proceed to Payment" button
 document.addEventListener('DOMContentLoaded', () => {
