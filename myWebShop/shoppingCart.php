@@ -29,10 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') 
     exit;
 }
 
+// Check if the user is logged in and has an order history
+if ($username && file_exists($orderHistoryFile)) {
+    $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
+    $orderCount = count($orderHistory);
+
+    // Apply discount based on order count
+    if (($orderCount + 1) % 20 === 0) {
+        $orderDiscount = 0.20;  // 20% discount
+        $orderDiscountMsg = "20% off (" . ($orderCount + 1) . " order)";
+    } elseif (($orderCount + 1) % 10 === 0) {
+        $orderDiscount = 0.10;  // 10% discount
+        $orderDiscountMsg = "10% off (" . ($orderCount + 1) . " order)";
+    } else {
+        $orderDiscount = 0;  // No discount
+    }
+} else {
+    $orderDiscount = 0;  // No discount if user is not logged in or has no order history
+}
+
+
+
+
 // Helper Function to Calculate Price
-function calculatePrices($cart, $productMap)
+function calculatePrices($cart, $productMap, $orderDiscount)
 {
-    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $discount, $finalPrice;
+    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $orderDisc, $couponDisc, $finalPrice;
 
     // Calculate total price before tax
     $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
@@ -46,19 +68,22 @@ function calculatePrices($cart, $productMap)
     // Calculate tax (19%) and the final price after applying discount and shipping cost
     $tax = round($totalPrice * 0.19, 2);
     $totalPriceWOtax = round($totalPrice - $tax, 2);
-    $finalPrice = round($totalPrice - $discount + $shipping, 2);
+    $orderDisc = $totalPrice * $orderDiscount;
+    $finalPrice = round($totalPrice - $orderDisc - $couponDisc + $shipping, 2);
 
+    
     return [
         'totalPriceWOtax' => $totalPriceWOtax,
         'tax' => $tax,
         'totalPrice' => $totalPrice,
         'shipping' => $shipping,
-        'discount' => $discount,
+        'orderDisc' => $orderDisc,
+        'couponDisc' => $couponDisc,
         'finalPrice' => $finalPrice
     ];
 }
 
-calculatePrices($cart, $productMap);
+$prices = calculatePrices($cart, $productMap, $orderDiscount);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
@@ -82,14 +107,15 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
                 'tax' => $prices['tax'],
                 'totalPrice' => $prices['totalPrice'],
                 'shipping' => $prices['shipping'],
-                'discount' => $prices['discount'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
                 'finalPrice' => $prices['finalPrice']
             ]);
             break;
@@ -101,14 +127,15 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
                 'tax' => $prices['tax'],
                 'totalPrice' => $prices['totalPrice'],
                 'shipping' => $prices['shipping'],
-                'discount' => $prices['discount'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
                 'finalPrice' => $prices['finalPrice']
             ]);
             break;
@@ -130,8 +157,9 @@ if (isset($input['action'])) {
             $cartData = json_decode(file_get_contents($shoppingFile), true);
             $cartData['status'] = 'confirmed';
             $cartData['shipping'] = $shipping;
-            $cartData['discount'] = $discount;
-            $cartData['totalPrice'] = $totalPrice;
+            $cartData['shipping'] = $shipping;
+            $cartData['orderDisc'] = $orderDisc;
+            $cartData['couponDisc'] = $couponDisc;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
             $cartData['datetime'] = date('Y-m-d H:i:s'); // Record the current date and time of the order
 
@@ -178,6 +206,7 @@ if (isset($input['action'])) {
 
     <main>
         <h1>Your Shopping Cart</h1>
+        <?php echo htmlspecialchars($prices["orderDisc"]); ?>
         <div class="container">
             <div class="container product-container">
                 <?php if (empty($cart)): ?>
@@ -238,10 +267,15 @@ if (isset($input['action'])) {
                         <div class="left"><strong>Subtotal</strong></div>
                         <div class="right" id="subtotal"><?php echo number_format($totalPrice, 2); ?>€</div>
                     </div>
-                    <?php if ($discount != 0): ?>
-                    <div class="container">
-                        <div class="left"><strong>Discount</strong></div>
-                        <div class="right" id="discount"><?php echo "- " . number_format($discount, 2); ?>€</div>
+                    <?php if ($orderDisc > 0): ?>
+                    <div class="container" id="discount-container">
+                        <div class="left">
+                            <strong>Discount</strong>
+                            <p style="font-size: 0.8em; color: grey;">
+                                <?php echo htmlspecialchars($orderDiscountMsg); ?>
+                            </p>
+                        </div>
+                        <div class="right" id="orderDisc"><?php echo "- " . number_format($orderDisc, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
                     <div class="container">
