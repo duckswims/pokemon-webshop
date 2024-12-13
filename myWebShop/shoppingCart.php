@@ -4,6 +4,7 @@ session_start();
 
 // Define file paths for products, shopping cart, and order history
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$isBlocked = isset($_SESSION["blocked"]) && $_SESSION["blocked"] === true;
 $productFile = 'json/product.json';
 $shoppingFile = isset($username) ? "users/$username/shoppingCart.json" : 'users/shoppingCart.json';
 $orderHistoryFile = isset($username) ? "users/$username/orderHistory.json" : null;
@@ -28,10 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') 
     exit;
 }
 
+// Check if the user is logged in and has an order history
+if ($username && file_exists($orderHistoryFile)) {
+    $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
+    $orderCount = count($orderHistory);
+
+    // Apply discount based on order count
+    if (($orderCount + 1) % 20 === 0) {
+        $orderDiscount = 0.20;  // 20% discount
+        $orderDiscountMsg = "20% off (" . ($orderCount + 1) . " order)";
+    } elseif (($orderCount + 1) % 10 === 0) {
+        $orderDiscount = 0.10;  // 10% discount
+        $orderDiscountMsg = "10% off (" . ($orderCount + 1) . " order)";
+    } else {
+        $orderDiscount = 0;  // No discount
+    }
+} else {
+    $orderDiscount = 0;  // No discount if user is not logged in or has no order history
+}
+
+
+
+
 // Helper Function to Calculate Price
-function calculatePrices($cart, $productMap)
+function calculatePrices($cart, $productMap, $orderDiscount)
 {
-    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $discount, $finalPrice;
+    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $orderDisc, $couponDisc, $finalPrice;
 
     // Calculate total price before tax
     $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
@@ -39,22 +62,28 @@ function calculatePrices($cart, $productMap)
         return $product ? $total + $product['price'] * $item['qty'] : $total;
     }, 0);
 
+    // Set shipping cost based on total price
+    $shipping = ($totalPrice >= 1000) ? 0 : 9.99;
+
     // Calculate tax (19%) and the final price after applying discount and shipping cost
     $tax = round($totalPrice * 0.19, 2);
     $totalPriceWOtax = round($totalPrice - $tax, 2);
-    $finalPrice = round($totalPrice - $discount + $shipping, 2);
+    $orderDisc = $totalPrice * $orderDiscount;
+    $finalPrice = round($totalPrice - $orderDisc - $couponDisc + $shipping, 2);
 
+    
     return [
         'totalPriceWOtax' => $totalPriceWOtax,
         'tax' => $tax,
         'totalPrice' => $totalPrice,
         'shipping' => $shipping,
-        'discount' => $discount,
+        'orderDisc' => $orderDisc,
+        'couponDisc' => $couponDisc,
         'finalPrice' => $finalPrice
     ];
 }
 
-calculatePrices($cart, $productMap);
+$prices = calculatePrices($cart, $productMap, $orderDiscount);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
@@ -78,14 +107,15 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
                 'tax' => $prices['tax'],
                 'totalPrice' => $prices['totalPrice'],
                 'shipping' => $prices['shipping'],
-                'discount' => $prices['discount'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
                 'finalPrice' => $prices['finalPrice']
             ]);
             break;
@@ -97,14 +127,15 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
                 'tax' => $prices['tax'],
                 'totalPrice' => $prices['totalPrice'],
                 'shipping' => $prices['shipping'],
-                'discount' => $prices['discount'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
                 'finalPrice' => $prices['finalPrice']
             ]);
             break;
@@ -124,10 +155,11 @@ if (isset($input['action'])) {
 
             // Update cart and order history data
             $cartData = json_decode(file_get_contents($shoppingFile), true);
-            $cartData['status'] = 'processing';
+            $cartData['status'] = 'confirmed';
             $cartData['shipping'] = $shipping;
-            $cartData['discount'] = $discount;
-            $cartData['totalPrice'] = $totalPrice;
+            $cartData['shipping'] = $shipping;
+            $cartData['orderDisc'] = $orderDisc;
+            $cartData['couponDisc'] = $couponDisc;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
             $cartData['datetime'] = date('Y-m-d H:i:s'); // Record the current date and time of the order
 
@@ -173,15 +205,17 @@ if (isset($input['action'])) {
     <header><?php include("header.php"); ?></header>
 
     <main>
-        <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :( </h1>
-        <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
-            alt="Pikachu" width="300px"><br>
-        <a href="all-products.php"><button>Back to Products</button></a>
-        <?php else: ?>
         <h1>Your Shopping Cart</h1>
+        <?php echo htmlspecialchars($prices["orderDisc"]); ?>
         <div class="container">
             <div class="container product-container">
+                <?php if (empty($cart)): ?>
+                <div class="container" style="flex-direction: column; align-items: center">
+                    <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
+                        alt="Pikachu" width="300px">
+                    <strong>So empty...</strong>
+                </div>
+                <?php else: ?>
                 <?php 
                     foreach ($cart as $item) {
                         $pid = $item['pid'];
@@ -213,6 +247,7 @@ if (isset($input['action'])) {
                         }
                     }
                     ?>
+                <?php endif; ?>
                 <a href="all-products.php"><button>Back to Products</button></a>
             </div>
 
@@ -232,32 +267,42 @@ if (isset($input['action'])) {
                         <div class="left"><strong>Subtotal</strong></div>
                         <div class="right" id="subtotal"><?php echo number_format($totalPrice, 2); ?>€</div>
                     </div>
-                    <?php if ($discount != 0): ?>
-                    <div class="container">
-                        <div class="left"><strong>Discount</strong></div>
-                        <div class="right" id="discount"><?php echo "- " . number_format($discount, 2); ?>€</div>
+                    <?php if ($orderDisc > 0): ?>
+                    <div class="container" id="discount-container">
+                        <div class="left">
+                            <strong>Discount</strong>
+                            <p style="font-size: 0.8em; color: grey;">
+                                <?php echo htmlspecialchars($orderDiscountMsg); ?>
+                            </p>
+                        </div>
+                        <div class="right" id="orderDisc"><?php echo "- " . number_format($orderDisc, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
                     <div class="container">
-                        <div class="left"><strong>Shipping</strong></div>
+                        <div class="left">
+                            <strong>Shipping</strong>
+                            <p id="shippingMessage" style="font-size: 0.8em; color: grey;">Free shipping after 1000€</p>
+                        </div>
                         <div class="right" id="shipping"><?php echo number_format($shipping, 2); ?>€</div>
                     </div>
                     <hr>
-                    <div class="container">
+                    <div class="container" style="align-items: center;">
                         <div class="left"><strong>Total</strong></div>
                         <div class="right subtotal" id="finalPrice"><?php echo number_format($finalPrice, 2); ?>€</div>
                     </div>
+                    <?php if (!$isBlocked): ?>
                     <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
+                    <?php else: ?>
+                    <button class="btn-red" disabled>Your account is blocked by the administrator</button>
+                    <?php endif; ?>
                 </div>
 
-                <div class="container discount-container">
+                <div class=" container discount-container">
                     Enter Discount Code
                     <input type="text">
                     <button>Redeem Voucher</button>
                 </div>
             </div>
-        </div>
-        <?php endif; ?>
     </main>
 
     <!-- Footer -->

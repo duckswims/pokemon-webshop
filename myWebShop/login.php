@@ -20,9 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($userData['password'] === $password) {
             // Check if the user is blocked
             if (isset($userData['blocked']) && $userData['blocked'] === true) {
-                // Redirect to blocked.php if the user is blocked
-                header("Location: blocked.php");
-                exit;
+                $_SESSION["blocked"] = true;
             }
 
             // Set session variables for the logged-in user

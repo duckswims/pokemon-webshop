@@ -28,6 +28,11 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     exit;
 }
 
+// Sort the order history by datetime (newest first)
+usort($orderHistory, function ($a, $b) {
+    return strtotime($b["datetime"]) - strtotime($a["datetime"]);
+});
+
 // Create a lookup array for product images
 $productImages = [];
 foreach ($productData["product"] as $product) {
@@ -39,10 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
     $orderID = $_POST["orderID"];
     $newStatus = $_POST["status"];
     
-    // Update the order status
+    // Update the order status and set the cancelled reason if applicable
     foreach ($orderHistory as &$order) {
         if ($order["orderID"] === $orderID) {
             $order["status"] = $newStatus;
+            if ($newStatus === "cancelled") {
+                $order["cancelledReason"] = "$username has cancelled this order.";
+            }
         }
     }
     
@@ -121,10 +129,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
                     <?php endforeach; ?>
                 </div>
 
+                <!-- Display cancelled reason -->
+                <?php if (strtolower($order["status"]) === "cancelled" && isset($order["cancelledReason"])): ?>
+                <p class="cancelled-message" style="color: red;">
+                    <?php echo strpos($order["cancelledReason"], $username) === 0 
+                        ? "You have cancelled this order." 
+                        : htmlspecialchars($order["cancelledReason"]); 
+                    ?>
+                </p>
+                <?php endif; ?>
 
                 <div style="display: flex; justify-content: center; gap: 10px;">
+                    <!-- View Order -->
+                    <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
+                        <button class="btn-blue">View Order</button>
+                    </a>
                     <!-- Cancel Order Button (if status is "processing") -->
-                    <?php if (strtolower($order["status"]) === "processing"): ?>
+                    <?php if (in_array(strtolower($order["status"]), ["processing", "confirmed"])): ?>
                     <form action="orderHistory.php" method="POST">
                         <input type="hidden" name="orderID"
                             value="<?php echo htmlspecialchars($order["orderID"]); ?>" />
@@ -132,10 +153,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
                         <button type="submit" class="btn-red">Cancel Order</button>
                     </form>
                     <?php endif; ?>
-                    <!-- View Order -->
-                    <a href="order.php?orderID=<?php echo urlencode($order['orderID']); ?>">
-                        <button class="btn-blue">View Order</button>
-                    </a>
                 </div>
             </div>
             <?php endforeach; ?>
