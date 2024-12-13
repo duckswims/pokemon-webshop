@@ -1,0 +1,90 @@
+.Bug {
+    color: white !important; 
+    background-color: rgb(101,143,63) !important;
+}
+
+.Dragon {
+    color: white !important; 
+    background: linear-gradient(to bottom, rgb(68,155,197) 50%, rgb(243,96,80) 50%) !important;
+}
+
+.Fairy {
+    color: black !important; 
+    background: rgb(255,176,288) !important;
+}
+
+.Fire {
+    color: white !important; 
+    background-color: rgb(255,110,44) !important;
+}
+
+
+.Ghost {
+    color: white !important; 
+    background-color: rgb(112,88,150) !important;
+}
+
+.Ground {
+    color: black !important; 
+    background: linear-gradient(to bottom, rgb(247,217,72) 50%, rgb(162,142,65) 50%) !important;
+}
+
+.Normal {
+    color: black !important; 
+    background: rgb(154,162,165) !important;
+}
+
+.Psychic {
+    color: white !important; 
+    background: rgb(245,88,174) !important;
+}
+
+.Steel {
+    color: black !important; 
+    background: rgb(146,175,175) !important;
+}
+
+.Dark {
+    color: white !important; 
+    background: rgb(100,100,100) !important;
+}
+
+.Electric {
+    color: black !important; 
+    background: rgb(237,206,65) !important;
+}
+
+.Fighting {
+    color: white !important; 
+    background: rgb(210,90,40) !important;
+}
+
+.Flying {
+    color: black !important; 
+    background: linear-gradient(to bottom, rgb(39,193,233) 50%, rgb(181,176,175) 50%) !important;
+}
+
+.Grass {
+    color: black !important; 
+    background-color: rgb(142,196,80) !important;
+}
+
+.Ice {
+    color: black !important; 
+    background-color: rgb(38,193,235) !important;
+}
+
+.Poison {
+    color: white !important; 
+    background-color: rgb(178,115,195) !important;
+}
+
+.Rock {
+    color: white !important; 
+    background-color: rgb(154,128,42) !important;
+}
+
+.Water {
+    color: white !important; 
+    background-color: rgb(55,136,186) !important;
+}

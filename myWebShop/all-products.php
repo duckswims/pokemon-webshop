@@ -71,6 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => true, 'cartCount' => $cartCount]);
     exit;
 }
+
+// Retrieve type list
+$typeList =  json_decode(file_get_contents("json/typeList.json"), true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,9 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_display.css">
+    <link rel="stylesheet" href="styles/type.css">
     <script src="script/collection-list.js"></script>
     <script src="script/cart-update.js"></script>
     <script src="script/search-filter.js"></script>
+    <script src="script/type-filter.js"></script>
 </head>
 
 <body>
@@ -106,7 +111,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="search-bar">
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
         </div><br>
-
+        
+        <div>
+        <?php foreach ($typeList as $x): ?>
+            <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)"><?= $x; ?></button>
+        <?php endforeach; ?> 
+        </div><br>
+        
         <div class="product-display" id="product-display">
             <?php
             // Load product data from JSON
@@ -115,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($data['product'])) {
                 foreach ($data['product'] as $product) {
                     echo '
-                    <div class="box product-box" data-pid="' . htmlspecialchars($product['pid']) . '" data-name="' . htmlspecialchars(strtolower($product['name'])) . '">
+                    <div class="box product-box" data-pid="' . htmlspecialchars($product['pid']) . '" data-name="' . htmlspecialchars(strtolower($product['name'])) . '"data-type=\'' . json_encode($product['type']) . '\'>
                         <div class="left">
                             <div class="box-content box-blank">
                                 <img src="' . htmlspecialchars($product['img_src']) . '" width="100px">
