@@ -37,6 +37,9 @@ session_start();
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="name" required placeholder="Your full name">
 
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required placeholder="Your username">
+
             <label for="email">Email Address:</label>
             <input type="email" id="email" name="email" required placeholder="Your email address">
 

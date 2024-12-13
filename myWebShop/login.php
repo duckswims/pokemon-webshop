@@ -2,46 +2,27 @@
 // Start session to manage login state
 session_start();
 
-$errorMessage = ''; // Initialize an error message variable
+$errorMessage = ''; // Error message for login errors
 
-// // == Cart Counter Function ===========
-// function updateCartCount($shoppingData) {
-//     // Initialize counter to 0
-//     $counter = 0;
-    
-//     // Check if 'cart' exists and is an array
-//     if (isset($shoppingData['cart']) && is_array($shoppingData['cart'])) {
-//         // Loop through the cart items and sum their quantities
-//         foreach ($shoppingData['cart'] as $item) {
-//             if (isset($item['quantity'])) {
-//                 $counter += $item['quantity'];
-//             }
-//         }
-//     }
-    
-//     // Update the session with the total quantity
-//     $_SESSION['counter'] = $counter;
-// }
-
-
-// Check if the form is submitted
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['uName'];
     $password = $_POST['password'];
 
-    // Define the path to the JSON file
     $jsonFile = "users/$username/info.json";
     $shoppingFile = "users/$username/shoppingCart.json";
+    $defaultShoppingFile = "users/shoppingCart.json";
 
-    // Check if the user exists
     if (file_exists($jsonFile)) {
-        // Read the JSON file
         $userData = json_decode(file_get_contents($jsonFile), true);
-        $shoppingData = json_decode(file_get_contents($shoppingFile), true);
-        $defaultShoppingFile = "users/shoppingCart.json";
+        $shoppingData = file_exists($shoppingFile) ? json_decode(file_get_contents($shoppingFile), true) : [];
 
-        // Check if the password matches
         if ($userData['password'] === $password) {
+            // Check if the user is blocked
+            if (isset($userData['blocked']) && $userData['blocked'] === true) {
+                $_SESSION["blocked"] = true;
+            }
+
             // Set session variables for the logged-in user
             $_SESSION['username'] = $username;
             $_SESSION['firstName'] = $userData['firstName'] ?? 'N/A';
@@ -49,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Clear default shopping cart
             file_put_contents($defaultShoppingFile, json_encode([], JSON_PRETTY_PRINT));
-            
+
             // Redirect to the customer page
             header("Location: customer.php");
             exit;
@@ -60,17 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMessage = 'User does not exist.';
     }
 }
-?>
-<?php
-// Generate a random number between 1 and 1025
-$randomNumber = rand(1, 1025);
 
-// Format the number to always be 3 digits (e.g., 001, 010, 100, etc.)
-$formattedNumber = sprintf("%03d", $randomNumber);
-
-// Construct the image URL using the formatted number
+// Generate a random Pokémon image URL
+$formattedNumber = sprintf("%03d", rand(1, 1025));
 $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/$formattedNumber.png";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

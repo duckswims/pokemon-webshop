@@ -55,7 +55,9 @@ $_SESSION['counter'] = $cartCount;
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
-                <a href="admin.php" target="_parent">Administrator</a>
+                <a href="admin-orders.php" target="_parent">Order Control</a>
+                <a href="admin-coupons.php" target="_parent">Coupon Control</a>
+                <a href="admin-users.php" target="_parent">User Control</a>
                 <?php endif; ?>
 
             </div>

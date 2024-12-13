@@ -4,6 +4,7 @@ session_start();
 
 // Define file paths for products, shopping cart, and order history
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$isBlocked = isset($_SESSION["blocked"]) && $_SESSION["blocked"] === true;
 $productFile = 'json/product.json';
 $shoppingFile = isset($username) ? "users/$username/shoppingCart.json" : 'users/shoppingCart.json';
 $orderHistoryFile = isset($username) ? "users/$username/orderHistory.json" : null;
@@ -28,71 +29,117 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET['action'] === 'getCartCount') 
     exit;
 }
 
-// == Price Calculation ==
-// Calculate the total price of items in the cart (before and after tax)
-$totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-    $product = $productMap[$item['pid']] ?? null;
-    return $product ? $total + $product['price'] * $item['qty'] : $total;
-}, 0);
+// Check if the user is logged in and has an order history
+if ($username && file_exists($orderHistoryFile)) {
+    $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
+    $orderCount = count($orderHistory);
 
-// Calculate tax (19% in this case) and the final price after applying discount and shipping cost
-$tax = round($totalPrice * 0.19, 2);
-$totalPriceWOtax = round($totalPrice - $tax, 2);
-$finalPrice = round($totalPrice - 1 + 4.99, 2);  // Applying discount and shipping
+    // Apply discount based on order count
+    if (($orderCount + 1) % 20 === 0) {
+        $orderDiscount = 0.20;  // 20% discount
+        $orderDiscountMsg = "20% off (" . ($orderCount + 1) . " order)";
+    } elseif (($orderCount + 1) % 10 === 0) {
+        $orderDiscount = 0.10;  // 10% discount
+        $orderDiscountMsg = "10% off (" . ($orderCount + 1) . " order)";
+    } else {
+        $orderDiscount = 0;  // No discount
+    }
+} else {
+    $orderDiscount = 0;  // No discount if user is not logged in or has no order history
+}
+
+
+
+
+// Helper Function to Calculate Price
+function calculatePrices($cart, $productMap, $orderDiscount)
+{
+    global $totalPriceWOtax, $tax, $totalPrice, $shipping, $orderDisc, $couponDisc, $finalPrice;
+
+    // Calculate total price before tax
+    $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
+        $product = $productMap[$item['pid']] ?? null;
+        return $product ? $total + $product['price'] * $item['qty'] : $total;
+    }, 0);
+
+    // Set shipping cost based on total price
+    $shipping = ($totalPrice >= 1000) ? 0 : 9.99;
+
+    // Calculate tax (19%) and the final price after applying discount and shipping cost
+    $tax = round($totalPrice * 0.19, 2);
+    $totalPriceWOtax = round($totalPrice - $tax, 2);
+    $orderDisc = $totalPrice * $orderDiscount;
+    $finalPrice = round($totalPrice - $orderDisc - $couponDisc + $shipping, 2);
+
+    
+    return [
+        'totalPriceWOtax' => $totalPriceWOtax,
+        'tax' => $tax,
+        'totalPrice' => $totalPrice,
+        'shipping' => $shipping,
+        'orderDisc' => $orderDisc,
+        'couponDisc' => $couponDisc,
+        'finalPrice' => $finalPrice
+    ];
+}
+
+$prices = calculatePrices($cart, $productMap, $orderDiscount);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
+
 if (isset($input['action'])) {
     switch ($input['action']) {
-        // Update the quantity of a product in the cart
         case 'update':
-            if (isset($input['pid'], $input['qty'])) {
-                $pid = $input['pid'];
-                $qty = (int)$input['qty'];
+            // Update cart quantity
+            $pid = $input['pid'];
+            $qty = (int)$input['qty'];
 
-                // Update the cart item with the new quantity
-                foreach ($cart as &$item) {
-                    if ($item['pid'] == $pid) {
-                        $item['qty'] = $qty;
-                        break;
-                    }
+            // Update the cart item with the new quantity
+            foreach ($cart as &$item) {
+                if ($item['pid'] == $pid) {
+                    $item['qty'] = $qty;
+                    break;
                 }
-
-                // Save the updated cart to the shopping cart file
-                file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
-
-                // Recalculate the total price after the update
-                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-                    $product = $productMap[$item['pid']] ?? null;
-                    return $product ? $total + $product['price'] * $item['qty'] : $total;
-                }, 0);
-
-                // Return the updated total price as a response
-                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
             }
+
+            // Save updated cart to the file
+            file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
+
+            // Recalculate the prices and return updated price data
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
+            echo json_encode([
+                'success' => true,
+                'totalPriceWOtax' => $prices['totalPriceWOtax'],
+                'tax' => $prices['tax'],
+                'totalPrice' => $prices['totalPrice'],
+                'shipping' => $prices['shipping'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
+                'finalPrice' => $prices['finalPrice']
+            ]);
             break;
 
-        // Remove an item from the cart
         case 'remove':
-            if (isset($input['pid'])) {
-                $pid = $input['pid'];
+            // Remove item from cart
+            $pid = $input['pid'];
+            $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
+            file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
 
-                // Remove the item with the given product ID from the cart
-                $cart = array_filter($cart, fn($item) => $item['pid'] !== $pid);
-                file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
-
-                // Recalculate the total price after removal
-                $totalPrice = array_reduce($cart, function ($total, $item) use ($productMap) {
-                    $product = $productMap[$item['pid']] ?? null;
-                    return $product ? $total + $product['price'] * $item['qty'] : $total;
-                }, 0);
-
-                // Return the updated total price as a response
-                echo json_encode(['success' => true, 'totalPrice' => round($totalPrice, 2)]);
-            }
+            // Recalculate the prices and return updated price data
+            $prices = calculatePrices($cart, $productMap, $orderDiscount);
+            echo json_encode([
+                'success' => true,
+                'totalPriceWOtax' => $prices['totalPriceWOtax'],
+                'tax' => $prices['tax'],
+                'totalPrice' => $prices['totalPrice'],
+                'shipping' => $prices['shipping'],
+                'orderDisc' => $prices['orderDisc'],
+                'couponDisc' => $prices['couponDisc'],
+                'finalPrice' => $prices['finalPrice']
+            ]);
             break;
 
-        // Proceed to the payment process and place an order
         case 'proceed_to_payment':
             // Check if the user is logged in
             if (!$username) {
@@ -108,10 +155,11 @@ if (isset($input['action'])) {
 
             // Update cart and order history data
             $cartData = json_decode(file_get_contents($shoppingFile), true);
-            $cartData['status'] = 'processing';
-            $cartData['shipping'] = 4.99;
-            $cartData['discount'] = 1;
-            $cartData['totalPrice'] = $totalPrice;
+            $cartData['status'] = 'confirmed';
+            $cartData['shipping'] = $shipping;
+            $cartData['shipping'] = $shipping;
+            $cartData['orderDisc'] = $orderDisc;
+            $cartData['couponDisc'] = $couponDisc;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
             $cartData['datetime'] = date('Y-m-d H:i:s'); // Record the current date and time of the order
 
@@ -134,16 +182,6 @@ if (isset($input['action'])) {
     }
     exit;
 }
-
-// Helper Function to Calculate Total Price
-function calculateTotalPrice($cart, $productMap) {
-    $totalPrice = 0;
-    foreach ($cart as $item) {
-        $product = $productMap[$item['pid']];
-        $totalPrice += $product['price'] * $item['qty'];
-    }
-    return $totalPrice;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -164,47 +202,52 @@ function calculateTotalPrice($cart, $productMap) {
 </head>
 
 <body>
-    <!-- Header -->
-    <header>
-        <?php include("header.php"); ?>
-    </header>
+    <header><?php include("header.php"); ?></header>
 
-    <!-- Main -->
     <main>
-        <?php if (empty($cart)): ?>
-        <h1>Empty shopping cart :( </h1>
-        <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
-            alt="Pikachu" width="300px"><br>
-        <a href="all-products.php"><button>Back to Products</button></a>
-        <?php else: ?>
         <h1>Your Shopping Cart</h1>
+        <?php echo htmlspecialchars($prices["orderDisc"]); ?>
         <div class="container">
             <div class="container product-container">
+                <?php if (empty($cart)): ?>
+                <div class="container" style="flex-direction: column; align-items: center">
+                    <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
+                        alt="Pikachu" width="300px">
+                    <strong>So empty...</strong>
+                </div>
+                <?php else: ?>
                 <?php 
-                foreach ($cart as $item) {
-                    $pid = $item['pid'];
-                    if (isset($productMap[$pid])) {
-                        $product = $productMap[$pid];
-                        $name = $product['name'];
-                        $img = $product['img_src'];
-                        $price = $product['price'];
-                        $qty = $item['qty'];
-
-                        echo "<div class='box' id='product-" . htmlspecialchars($pid) . "'>";
-                        echo "<img src='" . htmlspecialchars($img) . "' class='pImg' alt='" . htmlspecialchars($name) . "'>";
-                        echo "<div class='left'>";
-                        echo "<span class='pid'>#" . htmlspecialchars($pid) . "</span>";
-                        echo "<span class='pName'>" . htmlspecialchars($name) . "</span>";
-                        echo "</div>";
-                        echo "<div class='right'>";
-                        echo "<span class='price'>" . number_format(htmlspecialchars($price), 2) . "€ </span>";
-                        echo "<input type='number' value='" . htmlspecialchars($qty) . "' name='qty[" . htmlspecialchars($pid) . "]' id='qty-" . htmlspecialchars($pid) . "' min='1' onchange='updateCartQty(\"" . htmlspecialchars($pid) . "\", this.value)' />";
-                        echo "<img class='btn-delete' id='delete-" . htmlspecialchars($pid) . "' src='img/delete.png' alt='Delete' onclick='removeFromCart(\"" . htmlspecialchars($pid) . "\")' />";
-                        echo "</div>";
-                        echo "</div>";
+                    foreach ($cart as $item) {
+                        $pid = $item['pid'];
+                        if (isset($productMap[$pid])) {
+                            $product = $productMap[$pid];
+                            $name = $product['name'];
+                            $img = $product['img_src'];
+                            $price = $product['price'];
+                            $qty = $item['qty'];
+                    ?>
+                <div class="box" id="product-<?php echo htmlspecialchars($pid); ?>">
+                    <img src="<?php echo htmlspecialchars($img); ?>" class="pImg"
+                        alt="<?php echo htmlspecialchars($name); ?>">
+                    <div class="left">
+                        <span class="pid">#<?php echo htmlspecialchars($pid); ?></span>
+                        <span class="pName"><?php echo htmlspecialchars($name); ?></span>
+                    </div>
+                    <div class="right">
+                        <span class="price"><?php echo number_format(htmlspecialchars($price), 2); ?>€ </span>
+                        <input type="number" value="<?php echo htmlspecialchars($qty); ?>"
+                            name="qty[<?php echo htmlspecialchars($pid); ?>]"
+                            id="qty-<?php echo htmlspecialchars($pid); ?>" min="1"
+                            onchange="updateCartQty('<?php echo htmlspecialchars($pid); ?>', this.value)" />
+                        <img class="btn-delete" id="delete-<?php echo htmlspecialchars($pid); ?>" src="img/delete.png"
+                            alt="Delete" onclick="removeFromCart('<?php echo htmlspecialchars($pid); ?>')" />
+                    </div>
+                </div>
+                <?php 
+                        }
                     }
-                }
-                ?>
+                    ?>
+                <?php endif; ?>
                 <a href="all-products.php"><button>Back to Products</button></a>
             </div>
 
@@ -213,49 +256,57 @@ function calculateTotalPrice($cart, $productMap) {
                     Order Summary
                     <div class="container">
                         <div class="left"><strong>Total Price (without tax)</strong></div>
-                        <div class="right"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
+                        <div class="right" id="totalPriceWOtax"><?php echo number_format($totalPriceWOtax, 2); ?>€</div>
                     </div>
                     <div class="container">
                         <div class="left"><strong>Tax (19%)</strong></div>
-                        <div class="right"><?php echo number_format($tax, 2); ?>€</div>
+                        <div class="right" id="tax"><?php echo number_format($tax, 2); ?>€</div>
                     </div>
                     <hr>
                     <div class="container">
                         <div class="left"><strong>Subtotal</strong></div>
-                        <div class="right"><?php echo number_format($totalPrice, 2); ?>€</div>
+                        <div class="right" id="subtotal"><?php echo number_format($totalPrice, 2); ?>€</div>
                     </div>
-                    <?php if ($discount != 0): ?>
-                    <div class="container">
-                        <div class="left"><strong>Discount</strong></div>
-                        <div class="right"><?php echo "- " . number_format($discount, 2); ?>€</div>
+                    <?php if ($orderDisc > 0): ?>
+                    <div class="container" id="discount-container">
+                        <div class="left">
+                            <strong>Discount</strong>
+                            <p style="font-size: 0.8em; color: grey;">
+                                <?php echo htmlspecialchars($orderDiscountMsg); ?>
+                            </p>
+                        </div>
+                        <div class="right" id="orderDisc"><?php echo "- " . number_format($orderDisc, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
                     <div class="container">
-                        <div class="left"><strong>Shipping</strong></div>
-                        <div class="right"><?php echo number_format($shipping, 2); ?>€</div>
+                        <div class="left">
+                            <strong>Shipping</strong>
+                            <p id="shippingMessage" style="font-size: 0.8em; color: grey;">Free shipping after 1000€</p>
+                        </div>
+                        <div class="right" id="shipping"><?php echo number_format($shipping, 2); ?>€</div>
                     </div>
                     <hr>
-                    <div class="container">
+                    <div class="container" style="align-items: center;">
                         <div class="left"><strong>Total</strong></div>
-                        <div class="right subtotal"><span><?php echo number_format($finalPrice, 2); ?>€</span></div>
+                        <div class="right subtotal" id="finalPrice"><?php echo number_format($finalPrice, 2); ?>€</div>
                     </div>
+                    <?php if (!$isBlocked): ?>
                     <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
+                    <?php else: ?>
+                    <button class="btn-red" disabled>Your account is blocked by the administrator</button>
+                    <?php endif; ?>
                 </div>
 
-                <div class="container discount-container">
+                <div class=" container discount-container">
                     Enter Discount Code
                     <input type="text">
                     <button>Redeem Voucher</button>
                 </div>
             </div>
-        </div>
-        <?php endif; ?>
     </main>
 
     <!-- Footer -->
-    <footer>
-        <?php include("footer.php"); ?>
-    </footer>
+    <footer><?php include("footer.php"); ?></footer>
 </body>
 
 </html>
