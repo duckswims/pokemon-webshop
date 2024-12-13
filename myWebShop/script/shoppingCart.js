@@ -58,8 +58,11 @@ function updateCartPrices(data) {
     document.getElementById('shipping').textContent = `${data.shipping.toFixed(2)}€`;
     document.getElementById('finalPrice').textContent = `${data.finalPrice.toFixed(2)}€`;
 
-    if (data.discount > 0) {
-        document.getElementById('discount').textContent = `${data.discount.toFixed(2)}€`;
+    if (data.orderDisc > 0) {
+        document.getElementById('discount-container').style.display = 'flex';
+        document.getElementById('orderDisc').textContent = `- ${data.orderDisc.toFixed(2)}€`;
+    } else {
+        document.getElementById('discount-container').style.display = 'none';
     }
 
     // Dynamically display the "Free shipping after 1000€" message
