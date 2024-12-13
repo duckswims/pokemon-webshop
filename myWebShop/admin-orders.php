@@ -172,6 +172,10 @@ usort($allOrders, fn($a, $b) => strtotime($b['datetime']) - strtotime($a['dateti
 
 
                 <div style='display: flex; justify-content: center; gap: 10px;'>
+                    <!-- View Button -->
+                    <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
+                        <button>View Order</button>
+                    </a>
                     <!-- Process Order -->
                     <?php if (strtolower($order["status"]) === "confirmed"): ?>
                     <form method="POST">
@@ -182,7 +186,6 @@ usort($allOrders, fn($a, $b) => strtotime($b['datetime']) - strtotime($a['dateti
                         <button type="submit" class="btn-blue">Process Order</button>
                     </form>
                     <?php endif; ?>
-
                     <?php if (!in_array(strtolower($order["status"]), ["shipped", "cancelled", "received"])): ?>
                     <!-- Ship Order Form -->
                     <form method="POST" onsubmit="return confirmShip();">
@@ -192,7 +195,6 @@ usort($allOrders, fn($a, $b) => strtotime($b['datetime']) - strtotime($a['dateti
                         <input type="hidden" id="shippedStatus" name="ship_order" value="shipped">
                         <button type="submit" class="btn-blue">Ship Order</button>
                     </form>
-
                     <!-- Cancel Order Form -->
                     <form method="POST" onsubmit="return confirmCancel();">
                         <input type="hidden" name="username"
@@ -212,11 +214,6 @@ usort($allOrders, fn($a, $b) => strtotime($b['datetime']) - strtotime($a['dateti
                         <button type="submit" class="btn-green">Received Order</button>
                     </form>
                     <?php endif; ?>
-
-
-                    <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
-                        <button>View Order</button>
-                    </a>
                 </div>
             </div>
             <?php
