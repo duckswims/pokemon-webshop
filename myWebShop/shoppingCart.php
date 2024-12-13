@@ -124,7 +124,7 @@ if (isset($input['action'])) {
 
             // Update cart and order history data
             $cartData = json_decode(file_get_contents($shoppingFile), true);
-            $cartData['status'] = 'processing';
+            $cartData['status'] = 'confirmed';
             $cartData['shipping'] = $shipping;
             $cartData['discount'] = $discount;
             $cartData['totalPrice'] = $totalPrice;

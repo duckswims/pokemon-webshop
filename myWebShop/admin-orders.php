@@ -3,11 +3,7 @@
 session_start();
 
 // Check if the user is logged in and is an admin
-$admin = isset($_SESSION['admin']) ? $_SESSION['admin'] : false;
-
-// If the user is not logged in or not an admin, redirect to error.php
-if (!$admin) {
-    // Redirect to error page with a query parameter for the error message
+if (!isset($_SESSION['admin']) || !$_SESSION['admin']) {
     header("Location: error.php?error=" . urlencode("You must be logged in as an admin to access this page."));
     exit();
 }
@@ -21,81 +17,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['orderID'], $_POST['us
     if (file_exists($orderHistoryFile)) {
         $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
 
-        // Update the status or handle cancellation reason
         foreach ($orderHistory as &$order) {
             if ($order['orderID'] === $orderID) {
-                if (isset($_POST['ship_order'])) {
-                    $order['status'] = 'shipped';
-                }
-
+                if (isset($_POST['process_order'])) $order['status'] = 'processing';
+                if (isset($_POST['ship_order'])) $order['status'] = 'shipped';
+                if (isset($_POST['received_order'])) $order['status'] = 'received';
                 if (isset($_POST['cancelledReason'])) {
                     $order['status'] = 'cancelled';
-                    $order['cancelledReason'] = $_POST['cancelledReason']; // Store the cancellation reason
+                    $order['cancelledReason'] = $_POST['cancelledReason'];
                 }
                 break;
             }
         }
-        
-        // Save the updated order history back to the file
         file_put_contents($orderHistoryFile, json_encode($orderHistory, JSON_PRETTY_PRINT));
     }
 }
 
-
-
-// Load product data for images
-$productDataPath = "json/product.json"; // Path to product.json
-$productData = json_decode(file_get_contents($productDataPath), true);
-
-// Check if the JSON is valid
+// Load product data
+$productData = json_decode(file_get_contents("json/product.json"), true);
 if (json_last_error() !== JSON_ERROR_NONE) {
     echo "<p>Error reading product data.</p>";
     exit;
 }
 
 // Create a lookup array for product images
-$productImages = [];
-foreach ($productData["product"] as $product) {
-    $productImages[$product["pid"]] = $product["img_src"];
-}
+$productImages = array_column($productData["product"], "img_src", "pid");
 
 // Get the list of all orders
-$directory = "users"; // Replace with actual path
-$usernames = array_filter(scandir($directory), function ($item) use ($directory) {
-    return is_dir($directory . '/' . $item) && $item !== '.' && $item !== '..';
-});
-
 $allOrders = [];
-foreach ($usernames as $username) {
-    $orderHistoryFile = $directory . '/' . $username . '/orderHistory.json';
-
-    // Check if orderHistory.json exists and read it
+foreach (array_filter(scandir("users"), fn($item) => is_dir("users/$item") && $item !== '.' && $item !== '..') as $username) {
+    $orderHistoryFile = "users/$username/orderHistory.json";
     if (file_exists($orderHistoryFile)) {
         $orderHistory = json_decode(file_get_contents($orderHistoryFile), true);
-
-        // Add each order to the list of all orders
         foreach ($orderHistory as $order) {
-            // Add user info to each order
             $order['username'] = $username;
             $allOrders[] = $order;
         }
     }
 }
 
-// Check if a status filter is set
-$statusFilter = isset($_GET['status']) ? $_GET['status'] : '';
-
-// Filter the orders based on the selected status
+// Filter orders by status if set
+$statusFilter = $_GET['status'] ?? '';
 if ($statusFilter) {
-    $allOrders = array_filter($allOrders, function ($order) use ($statusFilter) {
-        return strtolower($order['status']) === strtolower($statusFilter);
-    });
+    $allOrders = array_filter($allOrders, fn($order) => strtolower($order['status']) === strtolower($statusFilter));
 }
 
-// Sort the orders by 'datetime' in descending order
-usort($allOrders, function ($a, $b) {
-    return strtotime($b['datetime']) - strtotime($a['datetime']);
-});
+// Sort orders by datetime
+usort($allOrders, fn($a, $b) => strtotime($b['datetime']) - strtotime($a['datetime']));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -164,7 +132,9 @@ usort($allOrders, function ($a, $b) {
                     </div>
                     <div class='right'>
                         <strong
-                            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : ''); ?>">
+                            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : 
+                                (strtolower($order["status"]) === "received" ? 'status-completed' : 
+                                (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : '')); ?>">
                             <?php echo htmlspecialchars(ucfirst($order["status"])); ?>
                         </strong>
                         <?php $finalPrice = $order["totalPrice"] - $order["discount"] + $order["shipping"]; ?>
@@ -202,7 +172,18 @@ usort($allOrders, function ($a, $b) {
 
 
                 <div style='display: flex; justify-content: center; gap: 10px;'>
-                    <?php if (strtolower($order["status"]) === "processing"): ?>
+                    <!-- Process Order -->
+                    <?php if (strtolower($order["status"]) === "confirmed"): ?>
+                    <form method="POST">
+                        <input type="hidden" name="username"
+                            value="<?php echo htmlspecialchars($order['username']); ?>">
+                        <input type="hidden" name="orderID" value="<?php echo htmlspecialchars($order['orderID']); ?>">
+                        <input type="hidden" id="shippedStatus" name="process_order" value="processing">
+                        <button type="submit" class="btn-blue">Process Order</button>
+                    </form>
+                    <?php endif; ?>
+
+                    <?php if (!in_array(strtolower($order["status"]), ["shipped", "cancelled", "received"])): ?>
                     <!-- Ship Order Form -->
                     <form method="POST" onsubmit="return confirmShip();">
                         <input type="hidden" name="username"
@@ -211,7 +192,6 @@ usort($allOrders, function ($a, $b) {
                         <input type="hidden" id="shippedStatus" name="ship_order" value="shipped">
                         <button type="submit" class="btn-blue">Ship Order</button>
                     </form>
-
 
                     <!-- Cancel Order Form -->
                     <form method="POST" onsubmit="return confirmCancel();">
@@ -222,6 +202,17 @@ usort($allOrders, function ($a, $b) {
                         <button type="submit" name="cancel_order" class="btn-red">Cancel Order</button>
                     </form>
                     <?php endif; ?>
+                    <!-- Received Order Form -->
+                    <?php if (strtolower($order["status"]) === "shipped"): ?>
+                    <form method="POST">
+                        <input type="hidden" name="username"
+                            value="<?php echo htmlspecialchars($order['username']); ?>">
+                        <input type="hidden" name="orderID" value="<?php echo htmlspecialchars($order['orderID']); ?>">
+                        <input type="hidden" id="shippedStatus" name="received_order" value="received">
+                        <button type="submit" class="btn-green">Received Order</button>
+                    </form>
+                    <?php endif; ?>
+
 
                     <a href='order.php?orderID=<?php echo urlencode($order['orderID']); ?>'>
                         <button>View Order</button>
