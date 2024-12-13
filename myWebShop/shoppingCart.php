@@ -4,6 +4,7 @@ session_start();
 
 // Define file paths for products, shopping cart, and order history
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$isBlocked = isset($_SESSION["blocked"]) && $_SESSION["blocked"] === true;
 $productFile = 'json/product.json';
 $shoppingFile = isset($username) ? "users/$username/shoppingCart.json" : 'users/shoppingCart.json';
 $orderHistoryFile = isset($username) ? "users/$username/orderHistory.json" : null;
@@ -247,10 +248,14 @@ if (isset($input['action'])) {
                         <div class="left"><strong>Total</strong></div>
                         <div class="right subtotal" id="finalPrice"><?php echo number_format($finalPrice, 2); ?>€</div>
                     </div>
+                    <?php if (!$isBlocked): ?>
                     <button class="btn-blue payment" id="paymentBtn">Proceed to Payment</button>
+                    <?php else: ?>
+                    <button class="btn-red" disabled>Your account is blocked by the administrator</button>
+                    <?php endif; ?>
                 </div>
 
-                <div class="container discount-container">
+                <div class=" container discount-container">
                     Enter Discount Code
                     <input type="text">
                     <button>Redeem Voucher</button>
