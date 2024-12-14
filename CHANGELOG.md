@@ -47,6 +47,7 @@
 - **Updates**
     - Standardized CSS classes.
     - Deprecated collection list in favor of the shopping cart feature.
+    - Added a main product page displaying all products with search and filter options, and added functionality to add products to the cart.
 
 
 ## Exercise-Sheet-4 (PHP Preparations and JSON)
