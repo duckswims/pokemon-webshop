@@ -39,6 +39,7 @@
     - Admins can validate or invalidate coupon codes (bug in display changes for coupons).
     - Guest shopping carts are transferred to registered accounts upon login.
     - Pokémon type emojis are displayed at random positions when the corresponding type is clicked.
+    - An error page is redirected with a custom error message sourced from other files or user inputs.
 - **Bug Fixes**
     - Added a hamburger menu for mobile users (fix for Exercise-Sheet-3 Style Modification).
     - Fixed product additions to the collection list (fix for Exercise-Sheet-3 Collection List).
