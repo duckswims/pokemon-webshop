@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Retrieve type list
-$typeList =  json_decode(file_get_contents("json/typeList.json"), true);
+$typeList = json_decode(file_get_contents("json/typeList.json"), true);
 
 // Load product data from JSON
 $data = json_decode(file_get_contents('json/product.json'), true);
@@ -105,12 +105,8 @@ $products = $data['product'] ?? [];
         </div><br>
 
         <div class="product-display" id="product-display">
-            <?php
-// Load product data from JSON
-$data = json_decode(file_get_contents('json/product.json'), true);
-
-if (isset($data['product'])):
-    foreach ($data['product'] as $product): ?>
+            <?php if (isset($data['product'])): ?>
+            <?php foreach ($data['product'] as $product): ?>
             <div class="box product-box" data-pid="<?= htmlspecialchars($product['pid']) ?>"
                 data-name="<?= htmlspecialchars(strtolower($product['name'])) ?>"
                 data-type='<?= json_encode($product['type']) ?>'>
@@ -135,11 +131,10 @@ if (isset($data['product'])):
                     </div>
                 </div>
             </div>
-            <?php endforeach; 
-else: ?>
+            <?php endforeach; ?>
+            <?php else: ?>
             <h2 style="color: red;">Error 404: Product information not found :(</h2>
             <?php endif; ?>
-
         </div>
     </main>
 

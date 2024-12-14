@@ -259,7 +259,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
 
     <main>
         <h1>Your Shopping Cart</h1>
-        <?php echo htmlspecialchars($prices["orderDisc"]); ?>
         <div class="container">
             <div class="container product-container">
                 <?php if (empty($cart)): ?>

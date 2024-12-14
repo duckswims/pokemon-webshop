@@ -1,27 +1,6 @@
 <?php
 // Start the session to access session variables
 session_start();
-
-// == Cart Number ==============
-
-// Determine the file path for the shopping cart
-$shoppingPath = 'users/shoppingCart.json';  // Default
-if ($username) {
-    $shoppingPath = 'users/' . $username . '/shoppingCart.json';
-}
-
-// Load the cart data if the file exists
-$fileData = json_decode(file_get_contents($shoppingPath), true);
-$cart = $fileData['cart'];
-
-// Count number of items in cart
-$cartCount = 0;
-foreach ($cart as $item) {
-    $cartCount += $item['qty'];
-}
-
-// Cast to session
-$_SESSION['counter'] = $cartCount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,26 +29,30 @@ $_SESSION['counter'] = $cartCount;
                 </div>
             </a>
         </div>
+
         <div class="right">
             <div class="nav-links">
                 <a href="about.php" target="_parent">About Us</a>
                 <a href="price-calculator.php" target="_parent">Price Calculator</a>
+
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
                 <a href="admin-orders.php" target="_parent">Order Control</a>
                 <a href="admin-coupons.php" target="_parent">Coupon Control</a>
                 <a href="admin-users.php" target="_parent">User Control</a>
                 <?php endif; ?>
-
             </div>
+
             <a href="shoppingCart.php" target="_parent">
                 <div id="cart-container">
                     <img id="cart-icon" src="img/cart.png" alt="Shopping Cart" width="30px">
                     <span id="cart-count" style="display: none;"><?php echo $_SESSION['counter']; ?></span>
                 </div>
             </a>
+
             <button class="user-button">
                 <img src="img/user.png" class="nav-img user-img">
             </button>
+
             <div class="user-dropdown">
                 <?php if (isset($_SESSION['username']) && $_SESSION['username']): ?>
                 <strong>Hello, <?php echo htmlspecialchars($_SESSION['firstName']); ?>!</strong>
@@ -83,14 +66,16 @@ $_SESSION['counter'] = $cartCount;
                 <a href="registration.php" target="_parent"><button class="btn-blue">Register</button></a>
                 <?php endif; ?>
             </div>
+
             <button class="mode-button">
                 <img src="img/mode/dark_moon.png" class="nav-img mode-img">
             </button>
+
             <button class="hamburger-btn hamburger-menu">
                 <img src="img/hamburger.png" alt="Menu" class="hamburger-icon">
             </button>
         </div>
     </header>
 </body>
-        
+
 </html>

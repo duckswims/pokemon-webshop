@@ -2,19 +2,19 @@
 // Start the session to access session variables
 session_start();
 
-// Check if username exists in session
+// Redirect to error.php if the username is not set in the session
 if (!isset($_SESSION["username"])) {
-    echo "<p>Please log in to view your order history.</p>";
+    header("Location: error.php?error=Please log in to view your order history.");
     exit;
 }
 
 $username = $_SESSION["username"];
 $orderHistoryPath = "users/$username/orderHistory.json";
-$productDataPath = "json/product.json";  // Path to product.json
+$productDataPath = "json/product.json"; // Path to product.json
 
-// Check if the order history file exists
+// Redirect to error.php if the order history file does not exist
 if (!file_exists($orderHistoryPath)) {
-    echo "<p>No order history found for user: $username</p>";
+    header("Location: error.php?error=No order history found for user: $username.");
     exit;
 }
 
@@ -22,9 +22,9 @@ if (!file_exists($orderHistoryPath)) {
 $orderHistory = json_decode(file_get_contents($orderHistoryPath), true);
 $productData = json_decode(file_get_contents($productDataPath), true);
 
-// Check if the JSON is valid
+// Redirect to error.php if JSON decoding fails
 if (json_last_error() !== JSON_ERROR_NONE) {
-    echo "<p>Error reading order history or product data.</p>";
+    header("Location: error.php?error=Error reading order history or product data.");
     exit;
 }
 
@@ -39,12 +39,11 @@ foreach ($productData["product"] as $product) {
     $productImages[$product["pid"]] = $product["img_src"];
 }
 
-// Function to update order status
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($_POST["status"])) {
+// Update order status if a POST request is made
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"], $_POST["status"])) {
     $orderID = $_POST["orderID"];
     $newStatus = $_POST["status"];
-    
-    // Update the order status and set the cancelled reason if applicable
+
     foreach ($orderHistory as &$order) {
         if ($order["orderID"] === $orderID) {
             $order["status"] = $newStatus;
@@ -53,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
             }
         }
     }
-    
+
     // Save the updated order history back to the file
     file_put_contents($orderHistoryPath, json_encode($orderHistory, JSON_PRETTY_PRINT));
-    
+
     // Refresh the page to display the updated status
     header("Location: orderHistory.php");
     exit;
@@ -110,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["orderID"]) && isset($
                     </div>
                     <div class="right">
                         <strong
-                            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : ''); ?>">
+                            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ["cancelled", "returned"]) ? 'status-cancelled-returned' : ''); ?>">
                             <?php echo htmlspecialchars(ucfirst($order["status"])); ?>
                         </strong>
                         <p>Total Price: <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> €</p>

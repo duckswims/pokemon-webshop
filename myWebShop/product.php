@@ -1,8 +1,7 @@
 <?php
 // Start the session to access session variables
 session_start();
-?>
-<?php
+
 // Get 'pid' for a single product, or 'pid1' and 'pid2' for two products
 $pid = isset($_GET['pid']) ? $_GET['pid'] : null;
 $pid1 = isset($_GET['pid1']) ? $_GET['pid1'] : null;
@@ -46,7 +45,11 @@ if ($pid1 && $pid2) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        #<?= $product1['pid']; ?> <?= $product1['name']; ?>
+        <?php if ($product1): ?>
+        #<?php echo $product1['pid']; ?> <?php echo htmlspecialchars($product1['name']); ?>
+        <?php else: ?>
+        Product Details
+        <?php endif; ?>
     </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +60,6 @@ if ($pid1 && $pid2) {
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_details.css">
     <script src="script/type-animations.js"></script>
-
 </head>
 
 <body>
@@ -80,29 +82,32 @@ if ($pid1 && $pid2) {
             <?php if ($product1): ?>
             <div class="product">
                 <div class="image">
-                    <img src="<?= $product1['img_src']; ?>" alt="<?= $product1['name']; ?>">
+                    <img src="<?php echo htmlspecialchars($product1['img_src']); ?>"
+                        alt="<?php echo htmlspecialchars($product1['name']); ?>">
                 </div>
                 <div class="info">
-                    <h2>#<?= $product1['pid']; ?> <?= $product1['name']; ?></h2>
+                    <h2>#<?php echo $product1['pid']; ?> <?php echo htmlspecialchars($product1['name']); ?></h2>
                     <div class='desc'>
                         <label>Description:</label>
-                        <p><?= $product1['desc']; ?></p>
+                        <p><?php echo htmlspecialchars($product1['desc']); ?></p>
                     </div>
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product1['type'] as $type): ?>
-                        <button class="<?= $type; ?>"><?= $type; ?></button>
+                        <button
+                            class="<?php echo htmlspecialchars($type); ?>"><?php echo htmlspecialchars($type); ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product1['weakness'] as $weakness): ?>
-                        <button class="<?= $weakness; ?>" disabled><?= $weakness; ?></button>
+                        <button class="<?php echo htmlspecialchars($weakness); ?>"
+                            disabled><?php echo htmlspecialchars($weakness); ?></button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>
                         <label>Price:</label>
-                        <p><?= $product1['price']; ?>€</p>
+                        <p><?php echo htmlspecialchars($product1['price']); ?>€</p>
                     </div>
                 </div>
             </div>
@@ -112,29 +117,34 @@ if ($pid1 && $pid2) {
             <?php if ($product2): ?>
             <div class="product">
                 <div class="image">
-                    <img src="<?= $product2['img_src']; ?>" alt="<?= $product2['name']; ?>">
+                    <img src="<?php echo htmlspecialchars($product2['img_src']); ?>"
+                        alt="<?php echo htmlspecialchars($product2['name']); ?>">
                 </div>
                 <div class="info">
-                    <h2>#<?= $product2['pid']; ?> <?= $product2['name']; ?></h2>
+                    <h2>#<?php echo $product2['pid']; ?> <?php echo htmlspecialchars($product2['name']); ?></h2>
                     <div class='desc'>
                         <label>Description:</label>
-                        <p><?= $product2['desc']; ?></p>
+                        <p><?php echo htmlspecialchars($product2['desc']); ?></p>
                     </div>
                     <div class='type'>
                         <label>Type:</label>
                         <?php foreach ($product2['type'] as $type): ?>
-                        <button class="<?= htmlspecialchars($type); ?>"><?= $type; ?></button>
+                        <button class="<?php echo htmlspecialchars($type); ?>">
+                            <?php echo htmlspecialchars($type); ?>
+                        </button>
                         <?php endforeach; ?>
                     </div>
                     <div class='weakness'>
                         <label>Weakness:</label>
                         <?php foreach ($product2['weakness'] as $weakness): ?>
-                        <button class="<?= htmlspecialchars($weakness); ?>" disabled><?= $weakness; ?></button>
+                        <button class="<?php echo htmlspecialchars($weakness); ?>"
+                            disabled><?php echo htmlspecialchars($weakness); ?>
+                        </button>
                         <?php endforeach; ?>
                     </div>
                     <div class='price'>
                         <label>Price:</label>
-                        <p><?= $product2['price']; ?>€</p>
+                        <p><?php echo htmlspecialchars($product2['price']); ?>€</p>
                     </div>
                 </div>
             </div>

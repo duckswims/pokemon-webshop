@@ -69,14 +69,14 @@ $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/poked
 <body>
     <!-- Header -->
     <header>
-        <?php include ("header.php"); ?>
+        <?php include("header.php"); ?>
     </header>
 
     <main>
         <div class="container">
             <div class="box box-content box-blank">
                 <h2>Welcome!</h2>
-                <img src="<?php echo $imageUrl; ?>" alt="Random Pokémon">
+                <img src="<?= $imageUrl ?>" alt="Random Pokémon">
             </div>
             <div class="box box-content">
                 <h2>Register</h2>
@@ -90,7 +90,7 @@ $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/poked
                     <input type="submit" value="Register" class="btn btn-blue">
                 </form>
                 <?php if (!empty($errorMessage)): ?>
-                <p style="color: red;"><?php echo htmlspecialchars($errorMessage); ?></p>
+                <p style="color: red;"><?= htmlspecialchars($errorMessage) ?></p>
                 <?php endif; ?>
                 <p class="stretch">or</p>
                 <p>Already a member? <a href="login.php">Login</a></p>
@@ -100,7 +100,7 @@ $imageUrl = "https://www.pokemon.com/static-assets/content-assets/cms2/img/poked
 
     <!-- Footer -->
     <footer>
-        <?php include ("footer.php"); ?>
+        <?php include("footer.php"); ?>
     </footer>
 
     <script src="script/user-creation.js"></script>

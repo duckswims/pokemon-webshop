@@ -26,7 +26,6 @@ if (!$orderID) {
 
 // Determine the username from the orderID if the user is an admin
 if ($isAdmin) {
-    // Find the last occurrence of '-' and separate the username
     $lastDashPos = strrpos($orderID, '-');
     if ($lastDashPos !== false) {
         $username = substr($orderID, 0, $lastDashPos); // Extract everything before the last '-'
@@ -37,10 +36,9 @@ if ($isAdmin) {
     }
 }
 
-
-// Path to the user's order history JSON file
+// Path to the user's order history and product data JSON files
 $orderHistoryPath = "users/$username/orderHistory.json";
-$productDataPath = "json/product.json";  // Path to product.json
+$productDataPath = "json/product.json";
 
 // Check if the order history file exists
 if (!file_exists($orderHistoryPath)) {
@@ -49,7 +47,7 @@ if (!file_exists($orderHistoryPath)) {
     exit;
 }
 
-// Read and decode the JSON file
+// Decode the JSON files
 $productData = json_decode(file_get_contents($productDataPath), true);
 $orderHistory = json_decode(file_get_contents($orderHistoryPath), true);
 if ($orderHistory === null) {
@@ -105,31 +103,35 @@ if (!$order) {
         <?php include("header.php"); ?>
     </header>
 
-    <!-- Main -->
+    <!-- Main Content -->
     <main>
         <h2>Order ID: <?php echo htmlspecialchars($order["orderID"]); ?></h2>
         <p><strong>Date:</strong> <?php echo htmlspecialchars($order["datetime"]); ?></p>
-        <strong
-            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : ''); ?>">
+        <strong class="<?php echo strtolower($order["status"]) === "completed" 
+            ? 'status-completed' 
+            : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) 
+            ? 'status-cancelled-returned' : ''); ?>">
             <strong>Status:</strong> <?php echo htmlspecialchars(ucfirst($order["status"])); ?>
         </strong>
+
         <?php if (strtolower($order["status"]) === "cancelled" && isset($order["cancelledReason"])): ?>
         <p class="cancelled-message" style="color: red;">
             <?php echo strpos($order["cancelledReason"], $username) === 0 
-                        ? "You have cancelled this order." 
-                        : htmlspecialchars($order["cancelledReason"]); 
-                    ?>
+                ? "You have cancelled this order." 
+                : htmlspecialchars($order["cancelledReason"]); ?>
         </p>
         <?php endif; ?>
-        <p><strong>Total Price:</strong> <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> €</p>
+
+        <p><strong>Total Price:</strong> <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> &euro;
+        </p>
 
         <h3>Products</h3>
-        <div class="container" style="display: flex; flex-wrap: wrap; ">
+        <div class="container" style="display: flex; flex-wrap: wrap;">
             <?php foreach ($order["cart"] as $item): ?>
             <?php if (isset($productImages[$item["pid"]])): ?>
             <div class="order-product-item box" style="flex-direction: column; align-items: center; min-width: 200px;">
                 <img src="<?php echo htmlspecialchars($productImages[$item["pid"]]); ?>" alt="Product Image"
-                    style="width: 80px; " />
+                    style="width: 80px;" />
                 <p>Quantity: <?php echo htmlspecialchars($item["qty"]); ?></p>
                 <a href="product.php?pid=<?php echo htmlspecialchars($item["pid"]); ?>">
                     <button>View Product</button>

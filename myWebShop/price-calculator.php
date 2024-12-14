@@ -18,34 +18,42 @@ session_start();
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/calculate.css">
     <script src="script/calculating-prices.js"></script>
-    <script src="script/extra-function.js"></script>
-
-
+    <script src="script/currency-converter.js"></script>
 </head>
 
 <body>
     <!-- Header -->
     <header>
-        <?php include ("header.php"); ?>
+        <?php include("header.php"); ?>
     </header>
 
     <!-- Main -->
     <main>
         <div class="container">
-            <div class="box  box-content">
-                <h2>Price Calculator</h2><br>
-                <label for="priceWOTax">Price without Tax (€)</label>
-                <input type="number" id="priceWOTax" required><br>
-                <label for="tax">Tax (€)</label>
-                <input type="number" id="tax-result" value="" disabled><br>
-                <label for="priceWTax">Price with Tax (€)</label>
-                <input type="number" id="priceWTax" value="" disabled><br>
-                <button id="calculate-button" class="btn-blue">Calculate</button><br>
-            </div>
+            <!-- Price Calculator Section -->
             <div class="box box-content">
-                <h2>Currency</h2><br>
+                <h2>Price Calculator</h2>
+                <br>
+                <label for="priceWOTax">Price without Tax (€)</label>
+                <input type="number" id="priceWOTax" required>
+                <br>
+                <label for="tax">Tax (€)</label>
+                <input type="number" id="tax-result" value="" disabled>
+                <br>
+                <label for="priceWTax">Price with Tax (€)</label>
+                <input type="number" id="priceWTax" value="" disabled>
+                <br>
+                <button id="calculate-button" class="btn-blue">Calculate</button>
+                <br>
+            </div>
+
+            <!-- Currency Converter Section -->
+            <div class="box box-content">
+                <h2>Currency</h2>
+                <br>
                 <label for="from-currency">Convert from EUR</label>
-                <input type="number" id="from-currency" required><br>
+                <input type="number" id="from-currency" required>
+                <br>
                 <label for="to-currency">To</label>
                 <select name="to-currency" id="to-currency">
                     <option value="usd">USD - United States Dollar</option>
@@ -59,17 +67,20 @@ session_start();
                     <option value="myr">MYR - Malaysian Ringgit</option>
                     <option value="krw">KRW - South Korean Won</option>
                     <option value="btc">BTC - Bitcoin</option>
-                </select><br>
+                </select>
+                <br>
                 <label for="converted-result">Converted</label>
-                <input type="number" id="converted-result" value="" disabled><br>
-                <button id="convert-button" class="btn-blue">Convert</button><br>
+                <input type="number" id="converted-result" value="" disabled>
+                <br>
+                <button id="convert-button" class="btn-blue">Convert</button>
+                <br>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
     <footer>
-        <?php include ("footer.php"); ?>
+        <?php include("footer.php"); ?>
     </footer>
 </body>
 
