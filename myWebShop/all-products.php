@@ -93,16 +93,21 @@ $products = $data['product'] ?? [];
         <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type
             and category.</p><br>
 
-        <div class="search-bar">
+        <div class="search-bar container">
+            <label for="search-field">Search</label>
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
         </div><br>
 
         <div>
-            <?php foreach ($typeList as $x): ?>
-            <button class="<?= $x; ?> type-btn" type="button"
-                onclick="filterTypes(this.textContent)"><?= $x; ?></button>
-            <?php endforeach; ?>
+            <label>Filter by Type</label>
+            <div class="type-buttons">
+                <?php foreach ($typeList as $x): ?>
+                <button class="<?= $x; ?> type-btn" type="button"
+                    onclick="filterTypes(this.textContent)"><?= $x; ?></button>
+                <?php endforeach; ?>
+            </div>
         </div><br>
+
 
         <div class="product-display" id="product-display">
             <?php if (isset($data['product'])): ?>
