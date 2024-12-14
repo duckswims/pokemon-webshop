@@ -75,7 +75,7 @@ if ($pid1 && $pid2) {
                 alt="Pikachu" width="300px">
         </div>
         <?php else: ?>
-        <div class="container product-container">
+        <div class="container product-container product-details-container">
             <!-- Display product1 if found -->
             <?php if ($product1): ?>
             <div class="product">

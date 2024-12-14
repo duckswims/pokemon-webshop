@@ -248,7 +248,7 @@ if (isset($input['action'])) {
                     }
                     ?>
                 <?php endif; ?>
-                <a href="all-products.php"><button>Back to Products</button></a>
+                <a href="all-products.php"><button id="back-to-products">Back to Products</button></a>
             </div>
 
             <div class="container summary-container">
