@@ -7,7 +7,7 @@ function filterProducts() {
         const name = box.getAttribute('data-name');
 
         if (pid.includes(searchInput) || name.includes(searchInput)) {
-            box.style.display = "block";
+            box.style.display = "flex";
         } else {
             box.style.display = "none";
         }
