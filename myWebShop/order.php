@@ -140,6 +140,12 @@ if (!$order) {
             <?php endif; ?>
             <?php endforeach; ?>
         </div>
+        <br>
+        <?php if ($isAdmin): ?>
+        <a href="admin-orders.php"><button>Back to Order Control</button></a>
+        <?php else: ?>
+        <a href="orderHistory.php"><button>Back to Order History</button></a>
+        <?php endif; ?>
     </main>
 
     <!-- Footer -->

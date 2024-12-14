@@ -151,6 +151,8 @@ if ($pid1 && $pid2) {
             <?php endif; ?>
         </div>
         <?php endif; ?>
+        <br>
+        <a href="all-products.php"><button>Back to all products</button></a>
     </main>
 
     <!-- Footer -->
