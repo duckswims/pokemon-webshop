@@ -1,5 +1,14 @@
 # Changelog
 
+## Table of Contents
+- [Ongoing Bugs](#ongoing-bugs)
+- [Exercise-Sheet-5 (Final Tasks)](#exercise-sheet-5-final-tasks)
+- [Exercise-Sheet-4 (PHP Preparations and JSON)](#exercise-sheet-4-php-preparations-and-json)
+- [Exercise-Sheet-3 (JavaScript)](#exercise-sheet-3-javascript)
+- [Exercise-Sheet-2 (CSS)](#exercise-sheet-2-css)
+- [Exercise-Sheet-1 (HTML)](#exercise-sheet-1-html)
+
+
 ## Ongoing Bugs
 - **Discount System:** Issue in applying the correct discount percentage or amount when a voucher code is used.
 - **Coupon Management:** Displayed coupon code changes incorrectly when an action is performed on one of the coupons.
