@@ -4,9 +4,8 @@
 - **Discount System:** Issue in applying the correct discount percentage or amount when a voucher code is used.
 - **Coupon Management:** Displayed coupon code changes incorrectly when an action is performed on one of the coupons.
 
----
 
-## Exercise-Sheet-5
+## Exercise-Sheet-5 (Final Tasks)
 - **Shopping Cart**
     - Added a dynamic shopping cart icon showing the quantity of items in the cart.
     - Cart page lists selected products with options to adjust quantities or remove items.
@@ -39,17 +38,15 @@
     - Standardized CSS classes.
     - Deprecated collection list in favor of the shopping cart feature.
 
----
 
-## Exercise-Sheet-4
+## Exercise-Sheet-4 (PHP Preparations and JSON)
 - Prepared the environment using XAMPP and Apache server.
 - Migrated all `.html` files to `.php`.
 - Created a JSON file (`product.json`) for the product list.
 - Implemented `product.php` to load product details dynamically using `$_GET` requests (bug in loading `pid1` and `pid2` queries).
 
----
 
-## Exercise-Sheet-3
+## Exercise-Sheet-3 (JavaScript)
 - Enhanced form validation and visualization:
     - Usernames must have at least 5 characters, with one uppercase and one lowercase letter.
     - Passwords must be at least 10 characters long, and the confirmation password must match.
@@ -59,16 +56,14 @@
 - Added currency conversion functionality (extra feature).
 - Enabled random redirection to a product page featuring a random Pokémon (extra feature).
 
----
 
-## Exercise-Sheet-2
+## Exercise-Sheet-2 (CSS)
 - Defined initial styles based on the task sheet.
 - Designed styles for form fields.
 - Established a consistent corporate identity.
 
----
 
-## Exercise-Sheet-1
+## Exercise-Sheet-1 (HTML)
 - Created the following HTML files:
     - `index.html`: Welcome homepage.
     - `login.html`: Login page for customer access.
