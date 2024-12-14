@@ -2,265 +2,183 @@
     {
         "cart": [
             {
-                "pid": "0001",
-                "qty": 1
-            },
-            {
-                "pid": "0003",
-                "qty": 3
-            },
-            {
-                "pid": "0004",
-                "qty": 3
-            }
-        ],
-        "status": "processing",
-        "shipping": null,
-        "discount": 0,
-        "totalPrice": 446,
-        "orderID": "BobMM-4bce6d2c5a",
-        "datetime": "2024-12-11 21:26:29"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0001",
-                "qty": 1
-            },
-            {
                 "pid": "0002",
                 "qty": 1
-            },
-            {
-                "pid": "0003",
-                "qty": 1
-            },
-            {
-                "pid": "0004",
-                "qty": 1
-            }
-        ],
-        "status": "processing",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 292,
-        "orderID": "BobMM-3f04c43ad4",
-        "datetime": "2024-12-11 21:29:46"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0002",
-                "qty": 8
-            }
-        ],
-        "status": "returned",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 784,
-        "orderID": "BobMM-835ec6b428",
-        "datetime": "2024-12-11 23:02:31"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0003",
-                "qty": 3
-            },
-            {
-                "pid": "0007",
-                "qty": 2
-            },
-            {
-                "pid": "0051",
-                "qty": 1
-            }
-        ],
-        "status": "shipped",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 283,
-        "orderID": "BobMM-7ce0322cc6",
-        "datetime": "2024-12-11 23:04:02"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0001",
-                "qty": 2
-            },
-            {
-                "pid": "0002",
-                "qty": 2
-            },
-            {
-                "pid": "0003",
-                "qty": 4
-            },
-            {
-                "pid": "0006",
-                "qty": 1
-            },
-            {
-                "pid": "0005",
-                "qty": 1
-            },
-            {
-                "pid": "0319",
-                "qty": 1
-            },
-            {
-                "pid": "0004",
-                "qty": 4
-            },
-            {
-                "pid": "1022",
-                "qty": 13
-            }
-        ],
-        "status": "shipped",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 1279,
-        "orderID": "BobMM-3e17282475",
-        "datetime": "2024-12-11 23:11:45"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0003",
-                "qty": 3
-            },
-            {
-                "pid": "0143",
-                "qty": 15
-            },
-            {
-                "pid": "0006",
-                "qty": 2
-            }
-        ],
-        "status": "completed",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 310,
-        "orderID": "BobMM-24e2ba0cf7",
-        "datetime": "2024-12-11 23:14:33"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0001",
-                "qty": 3
-            },
-            {
-                "pid": "0003",
-                "qty": 3
             }
         ],
         "status": "cancelled",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 405,
-        "orderID": "BobMM-368d2dc5f6",
-        "datetime": "2024-12-11 23:34:29"
+        "shipping": 9.9900000000000002131628207280300557613372802734375,
+        "discount": null,
+        "totalPrice": 98,
+        "orderID": "BobMM-def51135cd",
+        "datetime": "2024-12-13 04:13:36",
+        "cancelledReason": "BobMM has cancelled this order."
     },
     {
         "cart": [
             {
-                "pid": "0001",
+                "pid": "0007",
                 "qty": 1
-            },
+            }
+        ],
+        "status": "confirmed",
+        "shipping": 9.9900000000000002131628207280300557613372802734375,
+        "discount": null,
+        "totalPrice": 23,
+        "orderID": "BobMM-bd41b1c158",
+        "datetime": "2024-12-13 04:13:30"
+    },
+    {
+        "cart": [
             {
-                "pid": "0051",
-                "qty": 3
+                "pid": "0363",
+                "qty": 1
+            }
+        ],
+        "status": "confirmed",
+        "shipping": 9.9900000000000002131628207280300557613372802734375,
+        "discount": null,
+        "totalPrice": 35,
+        "orderID": "BobMM-218a2f403a",
+        "datetime": "2024-12-13 04:13:23"
+    },
+    {
+        "cart": [
+            {
+                "pid": "0777",
+                "qty": 1
+            }
+        ],
+        "status": "confirmed",
+        "shipping": 9.9900000000000002131628207280300557613372802734375,
+        "discount": null,
+        "totalPrice": 80,
+        "orderID": "BobMM-82856a5548",
+        "datetime": "2024-12-13 04:13:13"
+    },
+    {
+        "cart": [
+            {
+                "pid": "0778",
+                "qty": 1
+            }
+        ],
+        "status": "confirmed",
+        "shipping": null,
+        "discount": null,
+        "totalPrice": 50,
+        "orderID": "BobMM-6f837d56e4",
+        "datetime": "2024-12-13 03:48:46"
+    },
+    {
+        "cart": [
+            {
+                "pid": "0003",
+                "qty": 5
             },
             {
                 "pid": "0172",
-                "qty": 2
-            },
-            {
-                "pid": "0009",
                 "qty": 1
-            },
-            {
-                "pid": "0148",
-                "qty": 1
-            },
-            {
-                "pid": "0319",
-                "qty": 2
             },
             {
                 "pid": "0209",
                 "qty": 1
             },
             {
-                "pid": "0341",
-                "qty": 1
-            },
-            {
-                "pid": "0429",
-                "qty": 1
-            },
-            {
-                "pid": "0875",
-                "qty": 2
-            },
-            {
-                "pid": "1022",
-                "qty": 1
-            },
-            {
                 "pid": "0777",
                 "qty": 1
-            }
-        ],
-        "status": "processing",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 1019,
-        "orderID": "BobMM-3d4c103297",
-        "datetime": "2024-12-12 22:40:46"
-    },
-    {
-        "cart": [
-            {
-                "pid": "0008",
-                "qty": 1
             },
             {
-                "pid": "0009",
+                "pid": "0778",
                 "qty": 1
             }
         ],
-        "status": "processing",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 131,
-        "orderID": "BobMM-d719237b71",
-        "datetime": "2024-12-12 22:51:03"
+        "status": "received",
+        "shipping": null,
+        "discount": null,
+        "totalPrice": 591,
+        "orderID": "BobMM-3dd86d1bfb",
+        "datetime": "2024-12-13 02:34:19"
     },
     {
         "cart": [
-            {
-                "pid": "0147",
-                "qty": 1
-            },
-            {
-                "pid": "0009",
-                "qty": 1
-            },
             {
                 "pid": "0158",
                 "qty": 1
+            },
+            {
+                "pid": "0209",
+                "qty": 1
+            },
+            {
+                "pid": "0185",
+                "qty": 1
+            },
+            {
+                "pid": "0389",
+                "qty": 1
+            }
+        ],
+        "status": "cancelled",
+        "shipping": null,
+        "discount": null,
+        "totalPrice": 184,
+        "orderID": "BobMM-f47fbeb42d",
+        "datetime": "2024-12-13 02:34:06",
+        "cancelledReason": "Out of stock"
+    },
+    {
+        "cart": [
+            {
+                "pid": "0001",
+                "qty": 1
+            },
+            {
+                "pid": "0143",
+                "qty": 1
+            },
+            {
+                "pid": "0007",
+                "qty": 1
+            },
+            {
+                "pid": "0147",
+                "qty": 1
             }
         ],
         "status": "processing",
-        "shipping": 4.9900000000000002131628207280300557613372802734375,
-        "discount": 1,
-        "totalPrice": 116,
-        "orderID": "BobMM-9faa987ee7",
-        "datetime": "2024-12-12 22:51:16"
+        "shipping": null,
+        "discount": null,
+        "totalPrice": 120,
+        "orderID": "BobMM-f2cbb00b65",
+        "datetime": "2024-12-13 02:33:55",
+        "cancelledReason": ""
+    },
+    {
+        "cart": [
+            {
+                "pid": "0001",
+                "qty": 1
+            },
+            {
+                "pid": "0002",
+                "qty": 1
+            },
+            {
+                "pid": "0004",
+                "qty": 1
+            },
+            {
+                "pid": "0006",
+                "qty": 1
+            }
+        ],
+        "status": "cancelled",
+        "shipping": null,
+        "discount": null,
+        "totalPrice": 272,
+        "orderID": "BobMM-4b89f4749c",
+        "datetime": "2024-12-13 02:33:42",
+        "cancelledReason": "BobMM has cancelled this order."
     }
 ]

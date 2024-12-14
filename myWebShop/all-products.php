@@ -1,80 +1,65 @@
 <?php
 // Start the session to manage user data
 session_start();
-$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
-$shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
 
 // Retrieve the username from the session, if available
-$username = isset($_SESSION['username']) ? $_SESSION['username'] : null;
+$username = $_SESSION['username'] ?? null;
+$shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
 
 // == Adding item to the cart ====================================
-// Check if the request method is POST (i.e., adding an item to the cart)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Read the incoming JSON data from the request body
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Ensure the necessary data (pid and quantity) are provided
     if (!isset($data['pid'], $data['quantity'])) {
-        // Return an error response if the data is invalid
         echo json_encode(['success' => false, 'error' => 'Invalid data provided']);
         exit;
     }
 
-    // Sanitize and retrieve the product ID (pid) and quantity
     $pid = htmlspecialchars($data['pid']);
     $quantity = intval($data['quantity']);
 
-    // Determine the file path for the shopping cart based on whether the user is logged in
-    $shoppingPath = $username ? "users/$username/shoppingCart.json" : "users/shoppingCart.json";
-
-    // Ensure the directory for the cart file exists
     $directory = dirname($shoppingPath);
     if (!is_dir($directory)) {
-        // Create the directory if it doesn't exist
         mkdir($directory, 0777, true);
     }
 
-    // Initialize the cart as an empty array if the cart file doesn't exist
     $cart = [];
     if (file_exists($shoppingPath)) {
-        // Load the existing cart data from the JSON file
         $fileData = json_decode(file_get_contents($shoppingPath), true);
-        // Retrieve the cart items from the file or initialize an empty array if not set
         $cart = $fileData['cart'] ?? [];
     }
 
-    // Check if the product already exists in the cart
     $found = false;
     foreach ($cart as &$item) {
         if ($item['pid'] === $pid) {
-            // If the product is already in the cart, update its quantity
             $item['qty'] += $quantity;
             $found = true;
             break;
         }
     }
 
-    // If the product is not found in the cart, add it as a new item
     if (!$found) {
         $cart[] = ['pid' => $pid, 'qty' => $quantity];
     }
 
-    // Update the cart in the file with the modified cart data
     $fileData['cart'] = $cart;
     file_put_contents($shoppingPath, json_encode($fileData, JSON_PRETTY_PRINT));
 
-    // Calculate the total number of items in the cart and update the session
     $cartCount = array_sum(array_column($cart, 'qty'));
     $_SESSION['counter'] = $cartCount;
 
-    // Respond with a success message and the updated cart count
     echo json_encode(['success' => true, 'cartCount' => $cartCount]);
     exit;
 }
 
 // Retrieve type list
-$typeList =  json_decode(file_get_contents("json/typeList.json"), true);
+$typeList = json_decode(file_get_contents("json/typeList.json"), true);
+
+// Load product data from JSON
+$data = json_decode(file_get_contents('json/product.json'), true);
+$products = $data['product'] ?? [];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -110,7 +95,8 @@ $typeList =  json_decode(file_get_contents("json/typeList.json"), true);
         <p>This is a Pokédex webpage designed to provide detailed information about various Pokémon, categorized by type
             and category.</p><br>
 
-        <div class="search-bar">
+        <div class="search-bar container">
+            <label for="search-field">Search</label>
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
             <button style="background-color: #fff; color:black; margin: 5px" type="button" onclick="resetFilter()">Reset</button>
         </div> 
@@ -122,41 +108,39 @@ $typeList =  json_decode(file_get_contents("json/typeList.json"), true);
             <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)"><?= $x; ?></button>
         <?php endforeach; ?> 
         </div><br>
-        
+
         <div class="product-display" id="product-display">
-            <?php
-            // Load product data from JSON
-            $data = json_decode(file_get_contents('json/product.json'), true);
-
-            if (isset($data['product'])) {
-                foreach ($data['product'] as $product) {
-                    echo '
-                    <div class="box product-box" data-pid="' . htmlspecialchars($product['pid']) . '" data-name="' . htmlspecialchars(strtolower($product['name'])) . '"data-type=\'' . json_encode($product['type']) . '\'>
-                        <div class="left">
-                            <div class="box-content box-blank">
-                                <img src="' . htmlspecialchars($product['img_src']) . '" width="100px">
-                                <a href="product.php?pid=' . htmlspecialchars($product['pid']) . '">
-                                    <button>View</button>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <h3 class="title">#' . htmlspecialchars($product['pid']) . ' ' . htmlspecialchars($product['name']) . '</h3>
-                            <p class="desc">' . htmlspecialchars($product['desc']) . '</p>
-                            <p class="price"><strong>Price: </strong>' . htmlspecialchars($product['price']) . '€</p>
-                            <div class="add-div">
-                                <input type="number" class="qty-input" id="quantity" value="1" min="1">
-                                <button class="btn-blue add-cart" data-pid="' . htmlspecialchars($product['pid']) . '">Add to cart</button>
-                            </div>
-                        </div>
-                    </div>';
-                }
-            } else {
-                echo '<h2 style="color: red;">Error 404: Product information not found :(</h2>';
-            }
-            ?>
+            <?php if (isset($data['product'])): ?>
+            <?php foreach ($data['product'] as $product): ?>
+            <div class="box product-box" data-pid="<?= htmlspecialchars($product['pid']) ?>"
+                data-name="<?= htmlspecialchars(strtolower($product['name'])) ?>"
+                data-type='<?= json_encode($product['type']) ?>'>
+                <div class="left">
+                    <div class="box-content box-blank">
+                        <img src="<?= htmlspecialchars($product['img_src']) ?>" width="100px">
+                        <a href="product.php?pid=<?= htmlspecialchars($product['pid']) ?>">
+                            <button>View</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="right">
+                    <h3 class="title">#<?= htmlspecialchars($product['pid']) ?>
+                        <?= htmlspecialchars($product['name']) ?></h3>
+                    <p class="desc"><?= htmlspecialchars($product['desc']) ?></p>
+                    <p class="price"><strong>Price: </strong><?= htmlspecialchars($product['price']) ?>€</p>
+                    <div class="add-div">
+                        <input type="number" class="qty-input" id="quantity" value="1" min="1">
+                        <button class="btn-blue add-cart" data-pid="<?= htmlspecialchars($product['pid']) ?>">
+                            Add to cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <h2 style="color: red;">Error 404: Product information not found :(</h2>
+            <?php endif; ?>
         </div>
-
     </main>
 
     <!-- Footer -->

@@ -23,12 +23,15 @@ $errorMessage = isset($_GET["error"]) ? htmlspecialchars($_GET["error"]) : "An u
 
     <!-- Main -->
     <main>
-        <div class="error-container">
-            <h1>Error</h1>
-            <p><?php echo $errorMessage; ?></p>
+        <div class="container">
             <img src="https://media.printables.com/media/prints/599251/images/4771188_2e14b654-daa7-478c-8cc8-f5db25dce657_75ec0dd6-e0f7-4d1a-9c56-8a31dd407287/suprised-pikachu.png"
                 alt="Pikachu" width="300px">
-            <a href="index.php" class="button">Return to Home</a>
+            <div class="error-container">
+                <h1>Error</h1>
+                <p><strong><?php echo $errorMessage; ?></strong></p>
+                <br>
+                <a href="index.php" class="button"><button>Return to Home</button></a>
+            </div>
         </div>
     </main>
 

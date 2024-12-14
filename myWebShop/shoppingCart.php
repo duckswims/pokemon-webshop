@@ -182,6 +182,58 @@ if (isset($input['action'])) {
     }
     exit;
 }
+
+// Fetch coupon data from the JSON file
+function getCoupons() {
+    $jsonFile = 'json/coupon.json';
+
+    if (!file_exists($jsonFile)) {
+        return [];
+    }
+
+    $jsonData = file_get_contents($jsonFile);
+    return json_decode($jsonData, true)['coupons'];
+}
+
+// Validate the coupon code
+function validateCoupon($code) {
+    $coupons = getCoupons();
+
+    foreach ($coupons as $coupon) {
+        if ($coupon['code'] === strtoupper(trim($code))) {
+            return $coupon;
+        }
+    }
+
+    return null;
+}
+
+// Handle AJAX request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
+    $couponCode = $_POST['coupon_code'];
+    $coupon = validateCoupon($couponCode);
+
+    if ($coupon) {
+        if ($coupon['valid']) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => "Valid coupon: {$coupon['description']}.",
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => "The coupon '{$couponCode}' is invalid.",
+            ]);
+        }
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => "The coupon '{$couponCode}' does not exist.",
+        ]);
+    }
+
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -199,6 +251,7 @@ if (isset($input['action'])) {
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/shoppingCart.css">
     <script src="script/shoppingCart.js"></script>
+    <script src="script/coupon.js"></script>
 </head>
 
 <body>
@@ -206,7 +259,6 @@ if (isset($input['action'])) {
 
     <main>
         <h1>Your Shopping Cart</h1>
-        <?php echo htmlspecialchars($prices["orderDisc"]); ?>
         <div class="container">
             <div class="container product-container">
                 <?php if (empty($cart)): ?>
@@ -297,10 +349,11 @@ if (isset($input['action'])) {
                     <?php endif; ?>
                 </div>
 
-                <div class=" container discount-container">
-                    Enter Discount Code
-                    <input type="text">
-                    <button>Redeem Voucher</button>
+                <div class="container discount-container">
+                    <label for="coupon_code">Enter Discount Code</label>
+                    <input type="text" id="coupon_code">
+                    <button onclick="redeemVoucher()">Redeem Voucher</button>
+                    <p id="message"></p>
                 </div>
             </div>
     </main>
