@@ -91,10 +91,12 @@ $typeList =  json_decode(file_get_contents("json/typeList.json"), true);
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_display.css">
     <link rel="stylesheet" href="styles/type.css">
+    <link rel="stylesheet" href="styles/shaking.css">
     <script src="script/collection-list.js"></script>
     <script src="script/cart-update.js"></script>
     <script src="script/search-filter.js"></script>
     <script src="script/type-filter.js"></script>
+    <script src="script/shaking_pokeball.js"></script>
 </head>
 
 <body>
@@ -110,7 +112,10 @@ $typeList =  json_decode(file_get_contents("json/typeList.json"), true);
 
         <div class="search-bar">
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
-        </div><br>
+            <button style="background-color: #fff; color:black; margin: 5px" type="button" onclick="resetFilter()">Reset</button>
+        </div> 
+        
+        <br>
         
         <div>
         <?php foreach ($typeList as $x): ?>
