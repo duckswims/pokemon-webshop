@@ -40,6 +40,7 @@ if ($isAdmin) {
 
 // Path to the user's order history JSON file
 $orderHistoryPath = "users/$username/orderHistory.json";
+$productDataPath = "json/product.json";  // Path to product.json
 
 // Check if the order history file exists
 if (!file_exists($orderHistoryPath)) {
@@ -49,11 +50,18 @@ if (!file_exists($orderHistoryPath)) {
 }
 
 // Read and decode the JSON file
+$productData = json_decode(file_get_contents($productDataPath), true);
 $orderHistory = json_decode(file_get_contents($orderHistoryPath), true);
 if ($orderHistory === null) {
     $errorMessage = "Error: Unable to parse order history.";
     header("Location: error.php?error=" . urlencode($errorMessage));
     exit;
+}
+
+// Create a lookup array for product images
+$productImages = [];
+foreach ($productData["product"] as $product) {
+    $productImages[$product["pid"]] = $product["img_src"];
 }
 
 // Search for the order by orderID
@@ -86,7 +94,8 @@ if (!$order) {
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/product_details.css">
+    <link rel="stylesheet" href="styles/order-display.css">
+    <link rel="stylesheet" href="styles/order-status.css">
     <script src="script/type-animations.js"></script>
 </head>
 
@@ -98,22 +107,36 @@ if (!$order) {
 
     <!-- Main -->
     <main>
-        <div class="product">
-            <h2>Order Details</h2>
-            <p><strong>Order ID:</strong> <?php echo htmlspecialchars($order["orderID"]); ?></p>
-            <p><strong>Status:</strong> <?php echo htmlspecialchars($order["status"]); ?></p>
-            <p><strong>Date:</strong> <?php echo htmlspecialchars($order["datetime"]); ?></p>
-            <p><strong>Total Price:</strong> $<?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?>
-            </p>
-            <p><strong>Discount:</strong> $<?php echo htmlspecialchars(number_format($order["discount"], 2)); ?></p>
-            <p><strong>Shipping:</strong> $<?php echo htmlspecialchars(number_format($order["shipping"], 2)); ?></p>
-            <h3>Cart Items:</h3>
-            <ul>
-                <?php foreach ($order["cart"] as $item): ?>
-                <li>Product ID: <?php echo htmlspecialchars($item["pid"]); ?>, Quantity:
-                    <?php echo htmlspecialchars($item["qty"]); ?></li>
-                <?php endforeach; ?>
-            </ul>
+        <h2>Order ID: <?php echo htmlspecialchars($order["orderID"]); ?></h2>
+        <p><strong>Date:</strong> <?php echo htmlspecialchars($order["datetime"]); ?></p>
+        <strong
+            class="<?php echo strtolower($order["status"]) === "completed" ? 'status-completed' : (in_array(strtolower($order["status"]), ['cancelled', 'returned']) ? 'status-cancelled-returned' : ''); ?>">
+            <strong>Status:</strong> <?php echo htmlspecialchars(ucfirst($order["status"])); ?>
+        </strong>
+        <?php if (strtolower($order["status"]) === "cancelled" && isset($order["cancelledReason"])): ?>
+        <p class="cancelled-message" style="color: red;">
+            <?php echo strpos($order["cancelledReason"], $username) === 0 
+                        ? "You have cancelled this order." 
+                        : htmlspecialchars($order["cancelledReason"]); 
+                    ?>
+        </p>
+        <?php endif; ?>
+        <p><strong>Total Price:</strong> <?php echo htmlspecialchars(number_format($order["totalPrice"], 2)); ?> €</p>
+
+        <h3>Products</h3>
+        <div class="container" style="display: flex; flex-wrap: wrap; ">
+            <?php foreach ($order["cart"] as $item): ?>
+            <?php if (isset($productImages[$item["pid"]])): ?>
+            <div class="order-product-item box" style="flex-direction: column; align-items: center; min-width: 200px;">
+                <img src="<?php echo htmlspecialchars($productImages[$item["pid"]]); ?>" alt="Product Image"
+                    style="width: 80px; " />
+                <p>Quantity: <?php echo htmlspecialchars($item["qty"]); ?></p>
+                <a href="product.php?pid=<?php echo htmlspecialchars($item["pid"]); ?>">
+                    <button>View Product</button>
+                </a>
+            </div>
+            <?php endif; ?>
+            <?php endforeach; ?>
         </div>
     </main>
 
