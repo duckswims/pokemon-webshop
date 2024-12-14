@@ -8,22 +8,16 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon Store</title>
-
-    <!-- Google Fonts -->
+    <title>Pokémon Store</title>=
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-        rel="stylesheet">
-
-    <!-- Stylesheets -->
+        rel="stylesheet">=
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/darkmode.css">
     <link rel="stylesheet" href="styles/buttons.css">
-    <link rel="stylesheet" href="styles/main.css">
-
-    <!-- JavaScript -->
-    <script src="script/extra-function2.js"></script>
+    <link rel="stylesheet" href="styles/main.css">=
+    <script src="script/random-pokemon.js"></script>
 </head>
 
 <body>
