@@ -41,8 +41,7 @@ The **Pokémart** is an e-commerce platform for Pokémon enthusiasts, offering a
 
 ## Setup and Other Information
 - [Set Up](../setup.md)
-- [Changelog](../changelog.md)
-
+- [Changelog](../CHANGELOG.md)
 
 ---
 
