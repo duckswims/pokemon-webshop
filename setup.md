@@ -26,7 +26,7 @@
 3. **Configure PHP Path in VS Code**
     1. Locate the PHP executable in your XAMPP installation. It is typically at the default location described in the next steps.
     2. Open VS Code **Settings** (`Cmd+,`) and search for `php`.
-    3. Set the **PHP: Executable Path** to: 
+    3. Set the **PHP: Executable Path** to:  
         **For Windows**
         ```
         C:\xampp\php\php.exe
