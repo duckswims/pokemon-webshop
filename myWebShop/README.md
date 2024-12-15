@@ -3,7 +3,6 @@
 The **Pokéshop** is an e-commerce platform dedicated to Pokémon enthusiasts. Inspired by the vibrant world of Pokémon, this webshop allows users to browse, purchase, and manage Pokémon-themed products. Whether you're looking for Pokémon merchandise, collectibles, or items representing your favorite Pokémon types, the Pokéshop has something for every trainer!
 
 
-
 ## Key Features
 
 ### Dynamic Shopping Cart
@@ -15,6 +14,7 @@ The **Pokéshop** is an e-commerce platform dedicated to Pokémon enthusiasts. I
 *For Customers:*
 - View and track the status of orders.
 - Cancel orders before shipping.
+
 *For Admins:*
 - Manage orders and update statuses.
 - Block users or cancel orders with reasons provided.
@@ -48,6 +48,7 @@ The **Pokéshop** is an e-commerce platform dedicated to Pokémon enthusiasts. I
 ## Source
 This webshop is inspired by the official Pokémon Pokedex, which can be found at [Pokémon Pokedex](https://www.pokemon.com/us/pokedex).
 
---- 
 
-Feel free to explore, contribute, or raise issues to help improve the Pokémart!
+## Other information
+- Click [here](../setup.md) to be redirected to our setup guide.
+- Click [here](../changelog.md) to be redirected to our change log.
