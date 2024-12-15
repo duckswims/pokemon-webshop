@@ -157,7 +157,7 @@ if (isset($input['action'])) {
             $cartData = json_decode(file_get_contents($shoppingFile), true);
             $cartData['status'] = 'confirmed';
             $cartData['shipping'] = $shipping;
-            $cartData['shipping'] = $shipping;
+            $cartData['totalPrice'] = $totalPrice;
             $cartData['orderDisc'] = $orderDisc;
             $cartData['couponDisc'] = $couponDisc;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
