@@ -98,16 +98,24 @@ $products = $data['product'] ?? [];
         <div class="search-bar container">
             <label for="search-field">Search</label>
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
-            <button style="background-color: #fff; color:black; margin: 5px" type="button" onclick="resetFilter()">Reset</button>
-        </div> 
-        
+            <button style="background-color: #fff; color:black" type="button" onclick="resetFilter()">
+                Reset
+            </button>
+        </div>
+
         <br>
-        
-        <div>
-        <?php foreach ($typeList as $x): ?>
-            <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)"><?= $x; ?></button>
-        <?php endforeach; ?> 
-        </div><br>
+
+        <div class="container">
+            <p><strong>Filter by Type</strong></p>
+            <div class="container" style="flex-wrap: wrap; gap: 10px;">
+                <?php foreach ($typeList as $x): ?>
+                <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)">
+                    <?= $x; ?>
+                </button>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <br>
 
         <div class="product-display" id="product-display">
             <?php if (isset($data['product'])): ?>
