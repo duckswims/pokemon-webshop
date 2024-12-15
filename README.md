@@ -9,8 +9,10 @@ Our goal is to apply these technologies effectively while adhering to modern web
 - [Pokémart Web-Shop](myWebShop/README.md)
 
 
-## Skills learnt
+#### Skills learnt
 ![HTML5](https://img.shields.io/badge/HTML5-%23E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-%231572B6?logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-%23F7DF1E?logo=javascript&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-%23777BB4?logo=php&logoColor=white)
+![XAMPP](https://img.shields.io/badge/XAMPP-%23FB7A24?logo=xampp&logoColor=white)
+![Apache](https://img.shields.io/badge/Apache-%23D22128?logo=apache&logoColor=white)
