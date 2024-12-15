@@ -52,7 +52,7 @@ if ($username && file_exists($orderHistoryFile)) {
 
 
 // Helper Function to Calculate Price
-function calculatePrices($cart, $productMap, $orderDiscount)
+function calculatePrices($cart, $productMap, $orderDiscount, $couponDisc, $couponPerc)
 {
     global $totalPriceWOtax, $tax, $totalPrice, $shipping, $orderDisc, $couponDisc, $finalPrice;
 
@@ -69,8 +69,12 @@ function calculatePrices($cart, $productMap, $orderDiscount)
     $tax = round($totalPrice * 0.19, 2);
     $totalPriceWOtax = round($totalPrice - $tax, 2);
     $orderDisc = $totalPrice * $orderDiscount;
-    $finalPrice = round($totalPrice - $orderDisc - $couponDisc + $shipping, 2);
 
+    if ($couponPerc) {
+        $couponDisc = $totalPrice * $couponPerc;
+    }
+
+    $finalPrice = round($totalPrice - $orderDisc - $couponDisc + $shipping, 2);
     
     return [
         'totalPriceWOtax' => $totalPriceWOtax,
@@ -83,7 +87,52 @@ function calculatePrices($cart, $productMap, $orderDiscount)
     ];
 }
 
-$prices = calculatePrices($cart, $productMap, $orderDiscount);
+
+// Fetch coupon data from the JSON file
+function getCoupons() {
+    $jsonFile = 'json/coupon.json';
+
+    if (!file_exists($jsonFile)) {
+        return [];
+    }
+
+    $jsonData = file_get_contents($jsonFile);
+    return json_decode($jsonData, true)['coupons'];
+}
+
+// Validate the coupon code
+function validateCoupon($code) {
+    global $cart, $productMap, $orderDiscount, $couponDisc, $couponPerc;
+    $coupons = getCoupons();
+
+    foreach ($coupons as $coupon) {
+        if ($coupon['code'] === strtoupper(trim($code))) {
+            // Check discount type and assign corresponding value
+            if ($coupon['discount']['type'] === 'percentage') {
+                $couponPerc = $coupon['discount']['value']; // Percentage discount
+                return [
+                    'valid' => $coupon['valid'],
+                    'description' => $coupon['description'],
+                    'type' => 'percentage',
+                    'value' => $couponPerc
+                ];
+            } elseif ($coupon['discount']['type'] === 'value') {
+                $couponDisc = $coupon['discount']['value']; // Flat value discount
+                return [
+                    'valid' => $coupon['valid'],
+                    'description' => $coupon['description'],
+                    'type' => 'value',
+                    'value' => $couponDisc
+                ];
+            }
+            calculatePrices($cart, $productMap, $orderDiscount, $couponDisc, $couponPerc);
+        }
+    }
+
+    return null; // Coupon not found
+}
+
+$prices = calculatePrices($cart, $productMap, $orderDiscount, $couponDisc, $couponPerc);
 
 // Handle AJAX requests for cart operations (update, remove, proceed to payment)
 $input = json_decode(file_get_contents('php://input'), true);
@@ -107,7 +156,7 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => $cart], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap, $orderDiscount);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount, $couponDisc, $couponPerc);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
@@ -127,7 +176,7 @@ if (isset($input['action'])) {
             file_put_contents($shoppingFile, json_encode(['cart' => array_values($cart)], JSON_PRETTY_PRINT));
 
             // Recalculate the prices and return updated price data
-            $prices = calculatePrices($cart, $productMap, $orderDiscount);
+            $prices = calculatePrices($cart, $productMap, $orderDiscount, $couponDisc, $couponPerc);
             echo json_encode([
                 'success' => true,
                 'totalPriceWOtax' => $prices['totalPriceWOtax'],
@@ -183,35 +232,14 @@ if (isset($input['action'])) {
     exit;
 }
 
-// Fetch coupon data from the JSON file
-function getCoupons() {
-    $jsonFile = 'json/coupon.json';
-
-    if (!file_exists($jsonFile)) {
-        return [];
-    }
-
-    $jsonData = file_get_contents($jsonFile);
-    return json_decode($jsonData, true)['coupons'];
-}
-
-// Validate the coupon code
-function validateCoupon($code) {
-    $coupons = getCoupons();
-
-    foreach ($coupons as $coupon) {
-        if ($coupon['code'] === strtoupper(trim($code))) {
-            return $coupon;
-        }
-    }
-
-    return null;
-}
 
 // Handle AJAX request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
+
+    global $couponPerc, $couponDisc;
     $couponCode = $_POST['coupon_code'];
     $coupon = validateCoupon($couponCode);
+    
 
     if ($coupon) {
         if ($coupon['valid']) {
@@ -330,6 +358,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
                         <div class="right" id="orderDisc"><?php echo "- " . number_format($orderDisc, 2); ?>€</div>
                     </div>
                     <?php endif; ?>
+                    <?php if ($couponDisc > 0): ?>
+                    <div class="container" id="couponDisc-container">
+                        <div class="left">
+                            <strong>Coupon</strong>
+                            <p style="font-size: 0.8em; color: grey;">
+                                <?php echo isset($coupon) ? $coupon['code'] : 'Coupon code not applied'; ?>
+                            </p>
+                        </div>
+                        <div class="right" id="orderDisc"><?php echo "- " . number_format($couponDisc, 2); ?>€</div>
+                    </div>
+                    <?php endif; ?>
                     <div class="container">
                         <div class="left">
                             <strong>Shipping</strong>
@@ -352,7 +391,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
                 <div class="container discount-container">
                     <label for="coupon_code">Enter Discount Code</label>
                     <input type="text" id="coupon_code">
-                    <button onclick="redeemVoucher()">Redeem Voucher</button>
+                    <button class="btn-redeem" id="redeem-voucher" onclick="redeemVoucher()">Redeem Voucher</button>
                     <p id="message"></p>
                 </div>
             </div>
