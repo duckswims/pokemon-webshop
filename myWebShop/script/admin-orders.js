@@ -1,25 +1,28 @@
 // Function to filter table rows based on search input and selected status filter
-function searchOrders() {
-    const searchInput = document.getElementById("search").value.toLowerCase();
-    const statusFilter = document.getElementById("status-filter").value.toLowerCase();
-    const rows = document.querySelectorAll("table tbody tr");
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search");
+    const rows = document.querySelectorAll(".order-display .order-display-box");
 
-    rows.forEach(row => {
-        const orderID = row.querySelector("td:nth-child(2)").textContent.toLowerCase();
-        const orderStatus = row.querySelector("td:nth-child(5) select").value.toLowerCase();
-        
-        // Check if the row matches the search and filter criteria
-        const matchesSearch = orderID.includes(searchInput);
-        const matchesStatus = statusFilter === "" || orderStatus === statusFilter;
+    function searchOrders() {
+        const searchQuery = searchInput.value.toLowerCase().trim();
 
-        // Show or hide row based on the criteria
-        if (matchesSearch && matchesStatus) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
-    });
-}
+        rows.forEach(row => {
+            const orderIDElement = row.querySelector(".left strong");
+            const orderID = orderIDElement ? orderIDElement.textContent.toLowerCase() : "";
+
+            // Show or hide the row based on the search query
+            if (orderID.includes(searchQuery)) {
+                row.style.display = "block";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener("input", searchOrders);
+    }
+});
 
 function confirmCancel() {
     // Retrieve the orderID and username from hidden form fields
