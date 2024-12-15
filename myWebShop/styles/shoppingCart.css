@@ -24,6 +24,11 @@
     gap: 20px !important;
     flex: 0 1 auto;
     align-self: flex-start;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
 .box {

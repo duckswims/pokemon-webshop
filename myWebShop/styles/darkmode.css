@@ -1,6 +1,6 @@
 /* Dark-Mode General Styles */
 body.dark-mode {
-    background-color: #1e1e1e; /* Unified background color */
+    background-color: #383838; /* Unified background color */
     color: #d9d9d9;
     transition: all 0.3s ease;
 }
@@ -9,10 +9,11 @@ body.dark-mode table,
 body.dark-mode th,
 body.dark-mode td {
     border: 1px solid #d9d9d9;
+    color: #d9d9d9;
 }
 
 body.dark-mode thead {
-    background-color: darkgray;
+    background-color: #1e1e1e;
 }
 
 /* Dark-Mode for Specific Elements */
@@ -42,5 +43,40 @@ body.dark-mode .seller-details {
 
 /* Add specific styles for the background of 'Currency' on the Price Calculator page */
 body.dark-mode .box {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .summary-container, body.dark-mode .product-details-container {
+    background-color: #1e1e1e;
+    padding: 10px;
+    border: 1px solid;
+    border-color: #d9d9d9;
+    border-radius: 5px;
+}
+
+body.dark-mode .nav-links {
     background-color: #383838;
+}
+
+body.dark-mode a:visited {
+    color: violet;
+}
+
+body.dark-mode header {
+    border-bottom: solid 1px #d9d9d9
+}
+
+body.dark-mode footer {
+    border-top: solid 1px #d9d9d9
+}
+
+body.dark-mode button {
+    background-color: #383838;
+    color: #d9d9d9;
+}
+
+body.dark-mode #back-to-products { 
+    background-color: #1e1e1e;
+    /* border:solid 1px #d9d9d9;
+    border-radius: 5px; */
 }

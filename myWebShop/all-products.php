@@ -76,10 +76,12 @@ $products = $data['product'] ?? [];
     <link rel="stylesheet" href="styles/buttons.css">
     <link rel="stylesheet" href="styles/product_display.css">
     <link rel="stylesheet" href="styles/type.css">
+    <link rel="stylesheet" href="styles/shaking.css">
     <script src="script/collection-list.js"></script>
     <script src="script/cart-update.js"></script>
     <script src="script/search-filter.js"></script>
     <script src="script/type-filter.js"></script>
+    <script src="script/shaking_pokeball.js"></script>
 </head>
 
 <body>
@@ -96,18 +98,16 @@ $products = $data['product'] ?? [];
         <div class="search-bar container">
             <label for="search-field">Search</label>
             <input type="text" id="search-field" placeholder="Search by PID or Name..." onkeyup="filterProducts()">
-        </div><br>
-
+            <button style="background-color: #fff; color:black; margin: 5px" type="button" onclick="resetFilter()">Reset</button>
+        </div> 
+        
+        <br>
+        
         <div>
-            <label>Filter by Type</label>
-            <div class="type-buttons">
-                <?php foreach ($typeList as $x): ?>
-                <button class="<?= $x; ?> type-btn" type="button"
-                    onclick="filterTypes(this.textContent)"><?= $x; ?></button>
-                <?php endforeach; ?>
-            </div>
+        <?php foreach ($typeList as $x): ?>
+            <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)"><?= $x; ?></button>
+        <?php endforeach; ?> 
         </div><br>
-
 
         <div class="product-display" id="product-display">
             <?php if (isset($data['product'])): ?>

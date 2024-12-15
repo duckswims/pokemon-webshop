@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
         if ($coupon['code'] === $couponCode) {
             // Flip the current validity status
             $coupon['valid'] = !$coupon['valid'];  // Toggle the 'valid' field
-            break;
+            // break;
         }
     }
 

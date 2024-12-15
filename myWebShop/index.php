@@ -29,7 +29,7 @@ session_start();
     <!-- Main Content -->
     <main class="welcome">
         <div class="info-board">
-            <h1>
+            <h1 style="text-shadow: 2px 2px 2px black">
                 <?php
                 if (isset($_SESSION['username']) && $_SESSION['username']) {
                     echo "Welcome back, " . htmlspecialchars($_SESSION['firstName']) . "!";
@@ -38,16 +38,13 @@ session_start();
                 }
                 ?>
             </h1>
-            <p>We offer a wide variety of Pokémon-themed products to suit your needs.</p>
+            <p style="text-shadow: 2px 2px 2px black">We offer a wide variety of Pokémon-themed products to suit your needs.</p>
 
             <div class="container">
-                <button id="i-choose-you" class="btn btn-pastel-blue">
-                    I Choose You!
+                <button style="color:black" id="i-choose-you" class="btn btn-pastel-blue">I Choose You!
                     <img src="img/pokeball.png" width="10%" alt="PokeBall">
                 </button>
-                <a href="all-products.php">
-                    <button class="btn btn-pastel-blue">View All Products</button>
-                </a>
+                <a href="all-products.php"><button style="color:black" class="btn btn-pastel-blue">View All Products</button></a>
             </div>
         </div>
     </main>

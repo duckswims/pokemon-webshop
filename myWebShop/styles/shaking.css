@@ -1,0 +1,22 @@
+.shake {
+    /* Start the shake animation and make the animation last for 0.5 seconds */
+    animation: shake 1s;
+  
+    /* When the animation is finished, start again */
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes shake {
+    0% { transform: translate(0px) rotate(0deg) scale(0.5); }
+    10% { transform: translate(-3px) rotate(-10deg) scale(0.5); }
+    20% { transform: translate(3px) rotate(10deg) scale(0.5); }
+    30% { transform: translate(0px) rotate(0deg) scale(0.5); }
+    40% { transform: translate(0px) rotate(0deg) scale(0.5); }
+    50% { transform: translate(-3px) rotate(-10deg) scale(0.5); }
+    60% { transform: translate(3px) rotate(10deg) scale(0.5); }
+    70% { transform: translate(0px) rotate(0deg) scale(0.5); }
+    80% { transform: translate(0px) rotate(0deg) scale(0.5); }
+    90% { transform: translate(-3px) rotate(-10deg) scale(0.5); }
+    100% { transform: translate(3px) rotate(10deg) scale(0.5); }
+  }
+  

@@ -157,7 +157,7 @@ if (isset($input['action'])) {
             $cartData = json_decode(file_get_contents($shoppingFile), true);
             $cartData['status'] = 'confirmed';
             $cartData['shipping'] = $shipping;
-            $cartData['shipping'] = $shipping;
+            $cartData['totalPrice'] = $totalPrice;
             $cartData['orderDisc'] = $orderDisc;
             $cartData['couponDisc'] = $couponDisc;
             $cartData['orderID'] = $username . '-' . bin2hex(random_bytes(5)); // Generate a unique order ID
@@ -300,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['coupon_code'])) {
                     }
                     ?>
                 <?php endif; ?>
-                <a href="all-products.php"><button>Back to Products</button></a>
+                <a href="all-products.php"><button id="back-to-products">Back to Products</button></a>
             </div>
 
             <div class="container summary-container">
