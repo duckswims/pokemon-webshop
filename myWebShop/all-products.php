@@ -109,9 +109,7 @@ $products = $data['product'] ?? [];
             <p><strong>Filter by Type</strong></p>
             <div class="container" style="flex-wrap: wrap; gap: 10px;">
                 <?php foreach ($typeList as $x): ?>
-                <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)">
-                    <?= $x; ?>
-                </button>
+                <button class="<?= $x; ?> type-btn" type="button" onclick="filterTypes(this.textContent)"><?= $x; ?></button>
                 <?php endforeach; ?>
             </div>
         </div>
