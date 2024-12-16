@@ -11,7 +11,6 @@
 
 ## Ongoing Bugs
 - **Discount System:** Issue in applying the correct discount percentage or amount when a voucher code is used.
-- **Coupon Management:** Displayed coupon code changes incorrectly when an action is performed on one of the coupons.
 
 
 ## Exercise-Sheet-5 (Final Tasks)
@@ -36,9 +35,10 @@
     - Products and orders are searchable by their IDs.
     - Products can be filtered by type.
     - Users can add and update billing and shipping addresses.
-    - Admins can validate or invalidate coupon codes (bug in display changes for coupons).
+    - Admins can validate or invalidate coupon codes.
     - Guest shopping carts are transferred to registered accounts upon login.
     - Pokémon type emojis are displayed at random positions when the corresponding type is clicked.
+    - An error page is redirected with a custom error message sourced from other files or user inputs.
 - **Bug Fixes**
     - Added a hamburger menu for mobile users (fix for Exercise-Sheet-3 Style Modification).
     - Fixed product additions to the collection list (fix for Exercise-Sheet-3 Collection List).
